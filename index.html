@@ -6,19 +6,25 @@
 <title>発音すごろく 宇宙の旅</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+}
 
 body{
-  margin:0;
-  min-height:100vh;
   color:white;
   font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
   background:
-    radial-gradient(circle at 15% 20%,#fff 0 1px,transparent 2px),
-    radial-gradient(circle at 72% 32%,#fff 0 1px,transparent 2px),
-    radial-gradient(circle at 35% 75%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 10% 20%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 70% 35%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 40% 75%,#fff 0 1px,transparent 2px),
     linear-gradient(#102a61,#030818);
-  background-size:120px 120px,170px 170px,210px 210px,auto;
+  background-size:100px 100px,140px 140px,180px 180px,auto;
 }
 
 button{
@@ -27,111 +33,56 @@ button{
 }
 
 #app{
-  max-width:1100px;
+  width:100%;
+  max-width:1400px;
   margin:auto;
-  padding:12px;
+  padding:6px;
 }
 
-h1{
-  text-align:center;
-  margin:5px 0;
-  font-size:28px;
-}
-
-.subtitle{
-  text-align:center;
-  color:#cbd9ff;
-  margin-bottom:12px;
-}
-
-/* ================================
-   プレイヤー
-================================ */
-
-.players{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.player{
-  background:rgba(255,255,255,.12);
-  border-radius:18px;
-  padding:10px;
-  border:2px solid transparent;
-}
-
-.player.active{
-  border-color:#ffd84d;
-  background:rgba(255,255,255,.20);
-}
-
-.player-title{
-  font-size:18px;
-  font-weight:bold;
-}
-
-.inventory{
+.topTitle{
+  height:34px;
   display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  min-height:32px;
-  margin-top:7px;
-}
-
-.item{
-  background:white;
-  color:#10244a;
-  padding:5px 8px;
-  border-radius:10px;
-  font-size:12px;
-  font-weight:bold;
-}
-
-/* ================================
-   凡例
-================================ */
-
-.legend{
-  display:flex;
+  align-items:center;
   justify-content:center;
-  flex-wrap:wrap;
-  gap:6px;
-  margin:8px 0;
+  gap:12px;
 }
 
-.legend span{
-  background:rgba(255,255,255,.12);
-  padding:5px 8px;
-  border-radius:999px;
+.topTitle h1{
+  margin:0;
+  font-size:21px;
+}
+
+.topTitle span{
+  color:#cbd9ff;
   font-size:12px;
 }
 
-/* ================================
-   盤面
-================================ */
+.gameLayout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 260px;
+  gap:7px;
+}
 
-.boardOuter{
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
+.boardPanel{
   background:rgba(0,0,0,.22);
-  border-radius:22px;
-  padding:8px;
+  border-radius:16px;
+  padding:5px;
+  min-width:0;
 }
 
 #boardStage{
-  width:950px;
-  height:690px;
   position:relative;
-  margin:auto;
-  border-radius:20px;
+  width:100%;
+  aspect-ratio:16/9;
+  max-height:calc(100dvh - 48px);
   overflow:hidden;
+  border-radius:14px;
+
   background:
-    radial-gradient(circle at 8% 82%,#287fd1 0 24px,#1e5798 25px 38px,transparent 39px),
-    radial-gradient(circle at 90% 18%,#935ee4 0 23px,#6334a8 24px 34px,transparent 35px),
-    radial-gradient(circle at 45% 12%,rgba(255,255,255,.15),transparent 85px),
-    radial-gradient(circle at 70% 70%,rgba(177,109,255,.16),transparent 120px);
+    radial-gradient(circle at 7% 83%,#3d9ded 0 18px,#2266a8 19px 30px,transparent 31px),
+    radial-gradient(circle at 92% 12%,#9661e9 0 17px,#5d369d 18px 28px,transparent 29px),
+    radial-gradient(circle at 53% 47%,rgba(153,89,255,.18),transparent 23%),
+    linear-gradient(135deg,rgba(19,48,98,.8),rgba(3,7,30,.95));
 }
 
 #connections{
@@ -139,45 +90,46 @@ h1{
   inset:0;
   width:100%;
   height:100%;
-  pointer-events:none;
   z-index:1;
+  pointer-events:none;
 }
 
 .pathLine{
-  stroke:rgba(190,220,255,.50);
-  stroke-width:7;
+  stroke:rgba(205,226,255,.42);
+  stroke-width:1.1;
   stroke-linecap:round;
 }
 
 .pathLine.short{
-  stroke:#82cfff;
+  stroke:#6fc9ff;
+  stroke-width:1.4;
 }
 
 .pathLine.long{
-  stroke:#8fe79d;
+  stroke:#82e79a;
+  stroke-width:1.4;
 }
 
-.zoneLabel{
+.zone{
   position:absolute;
   z-index:0;
+  font-size:clamp(10px,1.25vw,18px);
   font-weight:bold;
-  opacity:.22;
-  font-size:24px;
+  opacity:.2;
   pointer-events:none;
 }
 
 .space{
-  width:62px;
-  height:62px;
-  border-radius:18px;
   position:absolute;
+  width:clamp(29px,4vw,47px);
+  height:clamp(29px,4vw,47px);
   transform:translate(-50%,-50%);
-  background:#f4f7ff;
+  border-radius:12px;
+  border:1.5px solid white;
+  background:#f5f7ff;
   color:#10244a;
-  border:2px solid white;
-  box-shadow:0 4px 10px rgba(0,0,0,.42);
+  box-shadow:0 2px 5px rgba(0,0,0,.38);
   z-index:2;
-
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -188,209 +140,259 @@ h1{
 
 .spaceNumber{
   position:absolute;
-  left:5px;
-  top:2px;
-  font-size:10px;
-  opacity:.58;
+  top:1px;
+  left:3px;
+  font-size:clamp(6px,.75vw,9px);
+  opacity:.65;
 }
 
 .spaceIcon{
-  font-size:22px;
+  font-size:clamp(13px,1.7vw,20px);
   line-height:1;
 }
 
 .spaceLabel{
-  font-size:9px;
-  margin-top:3px;
+  font-size:clamp(5px,.65vw,8px);
+  margin-top:2px;
+  line-height:1;
 }
 
-.space.normal{
-  background:linear-gradient(#fff,#e7edff);
+.normal{
+  background:linear-gradient(#fff,#e9eeff);
 }
 
-.space.itemSpace{
-  background:linear-gradient(#d9ffe0,#8dea9f);
+.itemSpace{
+  background:linear-gradient(#d9ffe0,#84e99b);
 }
 
-.space.eventSpace{
-  background:linear-gradient(#ffe1f2,#ffacd5);
+.eventSpace{
+  background:linear-gradient(#ffe0f2,#ffafd7);
 }
 
-.space.restSpace{
-  background:linear-gradient(#ddf2ff,#92d0ff);
+.restSpace{
+  background:linear-gradient(#dff3ff,#8ed1ff);
 }
 
-.space.branchSpace{
-  background:linear-gradient(#fff1c5,#ffc86b);
-  border:3px solid #ffe28b;
+.branchSpace{
+  background:linear-gradient(#fff2c5,#ffc76b);
+  border-color:#ffe38e;
 }
 
-.space.startSpace{
-  background:linear-gradient(#d7f8ff,#72d7ff);
+.startSpace{
+  background:linear-gradient(#d8f9ff,#70d9ff);
 }
 
-.space.goalSpace{
-  background:linear-gradient(#fff8b7,#ffd532);
-  width:72px;
-  height:72px;
-  border-radius:24px;
+.goalSpace{
+  background:linear-gradient(#fff8b7,#ffd636);
+  border-color:#fff3a1;
 }
 
-.space.routeShort{
-  border-color:#8dd5ff;
+.routeShort{
+  border-color:#69c8ff;
 }
 
-.space.routeLong{
-  border-color:#a3f0ac;
+.routeLong{
+  border-color:#7ce292;
 }
-
-/* コマ */
 
 .pieces{
   position:absolute;
-  left:-5px;
-  right:-5px;
-  bottom:-14px;
+  left:-8px;
+  right:-8px;
+  bottom:-13px;
   display:flex;
   justify-content:center;
-  gap:0;
-  font-size:27px;
+  font-size:clamp(18px,2.1vw,25px);
   white-space:nowrap;
   pointer-events:none;
 }
 
 .pieceMoving{
-  animation:jump .32s ease;
+  animation:jump .3s ease;
 }
 
 @keyframes jump{
-  0%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-15px) scale(1.18)}
-  100%{transform:translateY(0) scale(1)}
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-10px) scale(1.15)}
+  100%{transform:translateY(0)}
 }
 
-/* ================================
-   操作
-================================ */
-
-.controls{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
+.sidePanel{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  min-width:0;
 }
 
-.panel{
+.player{
   background:rgba(255,255,255,.12);
-  border-radius:20px;
-  padding:12px;
+  border-radius:12px;
+  border:2px solid transparent;
+  padding:6px 8px;
+}
+
+.player.active{
+  border-color:#ffd84d;
+  background:rgba(255,255,255,.2);
+}
+
+.playerTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.player-title{
+  font-size:13px;
+  font-weight:bold;
+}
+
+.player-position{
+  font-size:11px;
+  color:#dce6ff;
+}
+
+.inventory{
+  display:flex;
+  flex-wrap:wrap;
+  gap:3px;
+  min-height:23px;
+  margin-top:3px;
+}
+
+.item{
+  padding:3px 5px;
+  border-radius:7px;
+  background:white;
+  color:#10244a;
+  font-size:9px;
+  font-weight:bold;
+}
+
+.controlBox{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  background:rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:7px;
 }
 
 #turnText{
   text-align:center;
-  font-size:20px;
+  font-size:14px;
   font-weight:bold;
 }
 
 #dice{
-  min-height:76px;
   text-align:center;
-  font-size:65px;
-}
-
-#message{
-  min-height:45px;
-  padding-top:8px;
-  text-align:center;
-  line-height:1.5;
+  font-size:46px;
+  line-height:1.05;
+  min-height:49px;
 }
 
 .mainButton{
   width:100%;
   border:0;
-  border-radius:15px;
-  padding:14px;
+  border-radius:11px;
+  padding:9px 5px;
   background:#ffd84d;
   color:#14203e;
-  font-size:18px;
+  font-size:14px;
   font-weight:bold;
 }
 
 .mainButton:disabled{
-  opacity:.45;
+  opacity:.4;
 }
 
-/* ================================
-   モーダル
-================================ */
+#message{
+  text-align:center;
+  min-height:28px;
+  margin-top:4px;
+  font-size:11px;
+  line-height:1.25;
+}
+
+.itemTitle{
+  margin:5px 0 3px;
+  text-align:center;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.help{
+  text-align:center;
+  font-size:9px;
+  line-height:1.25;
+  color:#dce6ff;
+  margin-top:3px;
+}
 
 .overlay{
   position:fixed;
   inset:0;
+  z-index:100;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:18px;
-  background:rgba(0,0,0,.83);
-  z-index:100;
+  padding:12px;
+  background:rgba(0,0,0,.82);
 }
 
 .modal{
-  width:min(92vw,500px);
+  width:min(90vw,430px);
   max-height:90vh;
   overflow:auto;
+  border-radius:20px;
+  padding:17px;
   background:white;
   color:#13244a;
-  border-radius:25px;
-  padding:22px;
   text-align:center;
-  box-shadow:0 25px 70px rgba(0,0,0,.6);
 }
 
 .bigEmoji{
-  font-size:82px;
+  font-size:62px;
 }
 
 .bigWord{
-  margin:8px 0;
-  font-size:50px;
+  margin:4px 0;
+  font-size:40px;
   font-weight:bold;
 }
 
 .okButton{
-  margin-top:14px;
+  margin-top:10px;
   border:0;
-  border-radius:15px;
-  padding:13px 25px;
+  border-radius:12px;
+  padding:10px 20px;
   background:#ffd84d;
   color:#14203e;
-  font-size:20px;
+  font-size:17px;
   font-weight:bold;
 }
-
-/* 分岐 */
 
 .routes{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
+  gap:8px;
+  margin-top:10px;
 }
 
 .routeButton{
   border:0;
-  border-radius:18px;
-  padding:15px 8px;
+  border-radius:14px;
+  padding:12px 5px;
   color:#10244a;
+  font-size:16px;
   font-weight:bold;
-  font-size:18px;
 }
 
 .routeButton small{
   display:block;
-  margin-top:8px;
-  font-size:13px;
-  line-height:1.5;
+  margin-top:5px;
+  font-size:11px;
+  line-height:1.35;
 }
 
 .shortRoute{
@@ -401,40 +403,95 @@ h1{
   background:#c7f7cd;
 }
 
-/* 数字選択 */
-
 .numberButtons{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:15px;
+  gap:7px;
 }
 
 .numberButton{
   border:0;
-  border-radius:16px;
-  padding:15px;
+  border-radius:12px;
+  padding:12px;
   background:#dcecff;
   color:#10244a;
-  font-size:25px;
+  font-size:22px;
   font-weight:bold;
 }
 
-@media(max-width:650px){
-  .players{
+@media(orientation:portrait){
+
+  .gameLayout{
     grid-template-columns:1fr;
   }
 
-  .controls{
-    grid-template-columns:1fr;
+  #boardStage{
+    min-width:700px;
   }
 
-  h1{
-    font-size:24px;
+  .boardPanel{
+    overflow-x:auto;
   }
 
-  .bigWord{
-    font-size:43px;
+  .sidePanel{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .controlBox{
+    grid-column:1 / -1;
+  }
+}
+
+@media(orientation:landscape) and (max-height:500px){
+
+  #app{
+    padding:3px;
+  }
+
+  .topTitle{
+    height:25px;
+  }
+
+  .topTitle h1{
+    font-size:16px;
+  }
+
+  .topTitle span{
+    font-size:9px;
+  }
+
+  .gameLayout{
+    grid-template-columns:minmax(0,1fr) 225px;
+    gap:4px;
+  }
+
+  .player{
+    padding:3px 5px;
+  }
+
+  .player-title{
+    font-size:11px;
+  }
+
+  .item{
+    font-size:8px;
+    padding:2px 4px;
+  }
+
+  #dice{
+    font-size:37px;
+    min-height:38px;
+  }
+
+  .mainButton{
+    padding:6px;
+    font-size:12px;
+  }
+
+  #message{
+    font-size:9px;
+    min-height:21px;
   }
 }
 </style>
@@ -444,231 +501,279 @@ h1{
 
 <div id="app">
 
-<h1>🚀 発音すごろく</h1>
-
-<div class="subtitle">
-🌍 地球から未知の惑星へ！
+<div class="topTitle">
+  <h1>🚀 発音すごろく</h1>
+  <span>🌍 地球 → 🪐 未知の惑星</span>
 </div>
 
-<div class="players">
+<div class="gameLayout">
 
-  <div id="playerCard0" class="player active">
-    <div class="player-title">🚀 チャレンジャー</div>
-    <div id="pos0">START</div>
-    <div id="inventory0" class="inventory"></div>
-  </div>
+<div class="boardPanel">
 
-  <div id="playerCard1" class="player">
-    <div class="player-title">🛸 先生</div>
-    <div id="pos1">START</div>
-    <div id="inventory1" class="inventory"></div>
-  </div>
+<div id="boardStage">
 
-</div>
+<svg
+  id="connections"
+  viewBox="0 0 100 56.25"
+  preserveAspectRatio="none"
+></svg>
 
-<div class="legend">
-  <span>⭐ 発音</span>
-  <span>🎁 アイテム</span>
-  <span>🌠 宇宙イベント</span>
-  <span>💤 1回休み</span>
-  <span>🔀 分かれ道</span>
-</div>
-
-<div class="boardOuter">
-
-  <div id="boardStage">
-
-    <svg id="connections"></svg>
-
-    <div class="zoneLabel" style="left:25px;top:600px;">🌍 地球</div>
-    <div class="zoneLabel" style="left:330px;top:585px;">🌙 月</div>
-    <div class="zoneLabel" style="left:690px;top:500px;">☄️ 小惑星帯</div>
-    <div class="zoneLabel" style="left:290px;top:300px;">🪐 惑星</div>
-    <div class="zoneLabel" style="left:620px;top:90px;">✨ 深宇宙</div>
-    <div class="zoneLabel" style="left:40px;top:400px;">🌌 未知の惑星</div>
-
-  </div>
-
-</div>
-
-<div class="controls">
-
-  <div class="panel">
-
-    <div id="turnText">
-      🚀 チャレンジャーのばん
-    </div>
-
-    <div id="dice">
-      🎲
-    </div>
-
-    <button id="rollButton" class="mainButton">
-      🎲 サイコロをふる
-    </button>
-
-    <div id="message">
-      宇宙へ出発しよう！
-    </div>
-
-  </div>
-
-  <div class="panel">
-
-    <div style="font-weight:bold;margin-bottom:8px;">
-      🎒 アイテム
-    </div>
-
-    <button
-      id="itemButton"
-      class="mainButton"
-      style="background:#bde4ff;"
-    >
-      アイテムをつかう
-    </button>
-
-    <div style="margin-top:10px;font-size:13px;line-height:1.5;">
-      持てるアイテムは3個まで。<br>
-      🛡️ バリアは自動で発動します。
-    </div>
-
-  </div>
+<div class="zone" style="left:2%;top:82%;">🌍 地球</div>
+<div class="zone" style="left:26%;top:72%;">🌙 月</div>
+<div class="zone" style="left:67%;top:70%;">☄️ 小惑星帯</div>
+<div class="zone" style="left:30%;top:35%;">🪐 惑星</div>
+<div class="zone" style="left:69%;top:6%;">✨ 深宇宙</div>
+<div class="zone" style="left:4%;top:12%;">🌌 未知の惑星</div>
 
 </div>
 
 </div>
 
-<!-- 発音 -->
+<div class="sidePanel">
+
+<div id="playerCard0" class="player active">
+
+<div class="playerTop">
+
+<div class="player-title">
+🚀 チャレンジャー
+</div>
+
+<div id="pos0" class="player-position">
+START
+</div>
+
+</div>
+
+<div id="inventory0" class="inventory"></div>
+
+</div>
+
+<div id="playerCard1" class="player">
+
+<div class="playerTop">
+
+<div class="player-title">
+🛸 先生
+</div>
+
+<div id="pos1" class="player-position">
+START
+</div>
+
+</div>
+
+<div id="inventory1" class="inventory"></div>
+
+</div>
+
+<div class="controlBox">
+
+<div id="turnText">
+🚀 チャレンジャーのばん
+</div>
+
+<div id="dice">
+🎲
+</div>
+
+<button
+  id="rollButton"
+  class="mainButton"
+>
+🎲 サイコロをふる
+</button>
+
+<div id="message">
+宇宙へ出発！
+</div>
+
+<div class="itemTitle">
+🎒 アイテム
+</div>
+
+<button
+  id="itemButton"
+  class="mainButton"
+  style="background:#bde4ff;"
+>
+アイテムをつかう
+</button>
+
+<div class="help">
+🎁 アイテム　
+🌠 イベント　
+💤 休み　
+🔀 分岐
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 <div id="wordOverlay" class="overlay">
-  <div class="modal">
 
-    <div id="wordEmoji" class="bigEmoji">🍉</div>
+<div class="modal">
 
-    <div id="wordText" class="bigWord">すいか</div>
-
-    <div style="font-size:22px;font-weight:bold;">
-      3回 発音しよう
-    </div>
-
-    <button id="wordOK" class="okButton">
-      先生がOK
-    </button>
-
-  </div>
+<div id="wordEmoji" class="bigEmoji">
+🍉
 </div>
 
-<!-- 分岐 -->
+<div id="wordText" class="bigWord">
+すいか
+</div>
+
+<div style="font-size:18px;font-weight:bold;">
+3回 発音しよう
+</div>
+
+<button id="wordOK" class="okButton">
+先生がOK
+</button>
+
+</div>
+
+</div>
+
 <div id="routeOverlay" class="overlay">
-  <div class="modal">
 
-    <h2>🔀 どっちの道にする？</h2>
+<div class="modal">
 
-    <p>
-      盤面を見ながら選ぼう
-    </p>
+<h2 style="margin-top:0;">
+🔀 どっちの道？
+</h2>
 
-    <div class="routes">
+<div class="routes">
 
-      <button id="shortButton" class="routeButton shortRoute">
-        🚀 短い道
-        <small>
-          3マスで合流<br>
-          💤 1回休みがある
-        </small>
-      </button>
+<button
+  id="shortButton"
+  class="routeButton shortRoute"
+>
+🚀 短い道
 
-      <button id="longButton" class="routeButton longRoute">
-        🎁 長い道
-        <small>
-          5マスで合流<br>
-          🎁 アイテムマスが多い
-        </small>
-      </button>
+<small>
+3マス<br>
+💤 1回休みあり
+</small>
 
-    </div>
+</button>
 
-  </div>
+<button
+  id="longButton"
+  class="routeButton longRoute"
+>
+🎁 長い道
+
+<small>
+5マス<br>
+🎁 アイテムあり
+</small>
+
+</button>
+
 </div>
 
-<!-- お知らせ -->
+</div>
+
+</div>
+
 <div id="infoOverlay" class="overlay">
-  <div class="modal">
 
-    <div id="infoEmoji" class="bigEmoji">🌠</div>
+<div class="modal">
 
-    <h2 id="infoTitle">
-      宇宙イベント
-    </h2>
-
-    <div id="infoText"></div>
-
-    <button id="infoOK" class="okButton">
-      OK
-    </button>
-
-  </div>
+<div id="infoEmoji" class="bigEmoji">
+🌠
 </div>
 
-<!-- アイテム -->
+<h2 id="infoTitle"></h2>
+
+<div id="infoText"></div>
+
+<button id="infoOK" class="okButton">
+OK
+</button>
+
+</div>
+
+</div>
+
 <div id="itemOverlay" class="overlay">
-  <div class="modal">
 
-    <h2>🎒 アイテムをつかう</h2>
+<div class="modal">
 
-    <div id="itemList"></div>
+<h2>
+🎒 アイテムをつかう
+</h2>
 
-    <button
-      id="itemCancel"
-      class="okButton"
-      style="background:#dce4f4;"
-    >
-      やめる
-    </button>
+<div id="itemList"></div>
 
-  </div>
+<button
+  id="itemCancel"
+  class="okButton"
+  style="background:#dce4f4;"
+>
+やめる
+</button>
+
 </div>
 
-<!-- ぴったりサイコロ -->
+</div>
+
 <div id="exactOverlay" class="overlay">
-  <div class="modal">
 
-    <div class="bigEmoji">🎯</div>
+<div class="modal">
 
-    <h2>ぴったりサイコロ</h2>
-
-    <p>次に進む数を選んでね</p>
-
-    <div id="exactButtons" class="numberButtons"></div>
-
-  </div>
+<div class="bigEmoji">
+🎯
 </div>
 
-<!-- ゴール -->
+<h2>
+進む数を選んでね
+</h2>
+
+<div
+  id="exactButtons"
+  class="numberButtons"
+></div>
+
+</div>
+
+</div>
+
 <div id="goalOverlay" class="overlay">
-  <div class="modal">
 
-    <div class="bigEmoji">🪐✨</div>
+<div class="modal">
 
-    <h2 id="goalText">ゴール！</h2>
+<div class="bigEmoji">
+🪐✨
+</div>
 
-    <p>
-      未知の惑星にとうちゃく！
-    </p>
+<h2 id="goalText">
+ゴール！
+</h2>
 
-    <button class="okButton" onclick="location.reload()">
-      もう一度あそぶ
-    </button>
+<div>
+未知の惑星にとうちゃく！
+</div>
 
-  </div>
+<button
+  class="okButton"
+  onclick="location.reload()"
+>
+もう一度
+</button>
+
+</div>
+
 </div>
 
 <script src="./words.js"></script>
 
 <script>
-
-/* ==================================================
-   単語
-================================================== */
 
 const ALL_WORDS = [
   ...WORD_DATA.start,
@@ -676,15 +781,7 @@ const ALL_WORDS = [
   ...WORD_DATA.middle
 ];
 
-/* ==================================================
-   ノード
-================================================== */
-
 const NODES = {};
-
-/*
-  x/y は盤面上の座標。
-*/
 
 function addNode(
   id,
@@ -707,105 +804,317 @@ function addNode(
   };
 }
 
-/* ==================================================
-   START ～ 分岐1
-================================================== */
+/* START → 分岐1 */
 
-addNode("start","START",0,45,625,"start");
+addNode("start","S",0,5,89,"start");
 
-addNode("n1","1",1,125,625);
-addNode("n2","2",2,205,625);
-addNode("n3","3",3,285,625);
-addNode("n4","4",4,365,625,"item");
-addNode("n5","5",5,445,625);
-addNode("n6","6",6,525,625);
-addNode("n7","7",7,605,625);
-addNode("n8","8",8,685,625,"event");
-addNode("n9","9",9,765,625);
-addNode("b10","10",10,845,625,"branch");
+addNode("n1","1",1,12,89);
+addNode("n2","2",2,19,89);
+addNode("n3","3",3,26,89);
+addNode("n4","4",4,33,89,"item");
+addNode("n5","5",5,40,89);
+addNode("n6","6",6,47,89);
+addNode("n7","7",7,54,89);
+addNode("n8","8",8,61,89,"event");
+addNode("n9","9",9,68,89);
+addNode("b10","10",10,75,89,"branch");
 
 /* 分岐1 短い */
-addNode("b1s1","S1",11,845,545,"normal","short");
-addNode("b1s2","S2",12,765,485,"rest","short");
-addNode("b1s3","S3",13,685,425,"normal","short");
+
+addNode(
+  "b1s1",
+  "S1",
+  11,
+  77,
+  76,
+  "normal",
+  "short"
+);
+
+addNode(
+  "b1s2",
+  "S2",
+  12,
+  70,
+  66,
+  "rest",
+  "short"
+);
+
+addNode(
+  "b1s3",
+  "S3",
+  13,
+  62,
+  58,
+  "normal",
+  "short"
+);
 
 /* 分岐1 長い */
-addNode("b1l1","L1",11,925,575,"item","long");
-addNode("b1l2","L2",12,925,495,"normal","long");
-addNode("b1l3","L3",13,925,415,"item","long");
-addNode("b1l4","L4",14,845,365,"normal","long");
-addNode("b1l5","L5",15,765,365,"normal","long");
 
-addNode("n16","16",16,685,365);
+addNode(
+  "b1l1",
+  "L1",
+  11,
+  84,
+  84,
+  "item",
+  "long"
+);
 
-/* ==================================================
-   分岐2まで
-================================================== */
+addNode(
+  "b1l2",
+  "L2",
+  12,
+  91,
+  76,
+  "normal",
+  "long"
+);
 
-addNode("n17","17",17,605,365);
-addNode("n18","18",18,525,365,"event");
-addNode("n19","19",19,445,365);
-addNode("b20","20",20,365,365,"branch");
+addNode(
+  "b1l3",
+  "L3",
+  13,
+  91,
+  63,
+  "item",
+  "long"
+);
+
+addNode(
+  "b1l4",
+  "L4",
+  14,
+  84,
+  54,
+  "normal",
+  "long"
+);
+
+addNode(
+  "b1l5",
+  "L5",
+  15,
+  75,
+  52,
+  "normal",
+  "long"
+);
+
+addNode("n16","16",16,62,47);
+
+/* 分岐2 */
+
+addNode("n17","17",17,54,47);
+addNode("n18","18",18,46,47,"event");
+addNode("n19","19",19,38,47);
+addNode("b20","20",20,30,47,"branch");
 
 /* 分岐2 短い */
-addNode("b2s1","S1",21,365,285,"normal","short");
-addNode("b2s2","S2",22,365,205,"rest","short");
-addNode("b2s3","S3",23,365,125,"normal","short");
+
+addNode(
+  "b2s1",
+  "S1",
+  21,
+  29,
+  35,
+  "normal",
+  "short"
+);
+
+addNode(
+  "b2s2",
+  "S2",
+  22,
+  36,
+  25,
+  "rest",
+  "short"
+);
+
+addNode(
+  "b2s3",
+  "S3",
+  23,
+  44,
+  20,
+  "normal",
+  "short"
+);
 
 /* 分岐2 長い */
-addNode("b2l1","L1",21,285,365,"item","long");
-addNode("b2l2","L2",22,285,285,"normal","long");
-addNode("b2l3","L3",23,285,205,"item","long");
-addNode("b2l4","L4",24,285,125,"normal","long");
-addNode("b2l5","L5",25,365,65,"normal","long");
 
-addNode("n26","26",26,445,65);
+addNode(
+  "b2l1",
+  "L1",
+  21,
+  21,
+  45,
+  "item",
+  "long"
+);
 
-/* ==================================================
-   深宇宙へ
-================================================== */
+addNode(
+  "b2l2",
+  "L2",
+  22,
+  14,
+  37,
+  "normal",
+  "long"
+);
 
-addNode("n27","27",27,525,65,"item");
-addNode("n28","28",28,605,65);
-addNode("n29","29",29,685,65);
-addNode("n30","30",30,765,65,"event");
-addNode("n31","31",31,845,65);
-addNode("n32","32",32,885,125);
-addNode("n33","33",33,885,205);
-addNode("n34","34",34,885,285,"item");
-addNode("n35","35",35,885,365);
-addNode("b36","36",36,885,445,"branch");
+addNode(
+  "b2l3",
+  "L3",
+  23,
+  14,
+  25,
+  "item",
+  "long"
+);
+
+addNode(
+  "b2l4",
+  "L4",
+  24,
+  21,
+  16,
+  "normal",
+  "long"
+);
+
+addNode(
+  "b2l5",
+  "L5",
+  25,
+  31,
+  13,
+  "normal",
+  "long"
+);
+
+addNode("n26","26",26,45,12);
+
+/* 上段 */
+
+addNode("n27","27",27,53,12,"item");
+addNode("n28","28",28,61,12);
+addNode("n29","29",29,69,12);
+addNode("n30","30",30,77,12,"event");
+addNode("n31","31",31,85,12);
+addNode("n32","32",32,92,20);
+addNode("n33","33",33,92,31);
+addNode("n34","34",34,92,42,"item");
+addNode("n35","35",35,92,53);
+addNode("b36","36",36,92,64,"branch");
 
 /* 分岐3 短い */
-addNode("b3s1","S1",37,805,445,"normal","short");
-addNode("b3s2","S2",38,725,445,"rest","short");
-addNode("b3s3","S3",39,645,445,"normal","short");
+
+addNode(
+  "b3s1",
+  "S1",
+  37,
+  84,
+  65,
+  "normal",
+  "short"
+);
+
+addNode(
+  "b3s2",
+  "S2",
+  38,
+  76,
+  64,
+  "rest",
+  "short"
+);
+
+addNode(
+  "b3s3",
+  "S3",
+  39,
+  68,
+  63,
+  "normal",
+  "short"
+);
 
 /* 分岐3 長い */
-addNode("b3l1","L1",37,885,525,"item","long");
-addNode("b3l2","L2",38,805,565,"normal","long");
-addNode("b3l3","L3",39,725,565,"item","long");
-addNode("b3l4","L4",40,645,565,"normal","long");
-addNode("b3l5","L5",41,565,525,"normal","long");
 
-addNode("n42","42",42,565,445,"item");
+addNode(
+  "b3l1",
+  "L1",
+  37,
+  92,
+  76,
+  "item",
+  "long"
+);
 
-/* ==================================================
-   ゴールまで
-================================================== */
+addNode(
+  "b3l2",
+  "L2",
+  38,
+  84,
+  82,
+  "normal",
+  "long"
+);
 
-addNode("n43","43",43,485,445);
-addNode("n44","44",44,405,445,"event");
-addNode("n45","45",45,325,445);
-addNode("n46","46",46,245,445);
-addNode("n47","47",47,165,445,"item");
-addNode("n48","48",48,85,445);
-addNode("n49","49",49,85,525);
-addNode("goal","50",50,85,585,"goal");
+addNode(
+  "b3l3",
+  "L3",
+  39,
+  75,
+  81,
+  "item",
+  "long"
+);
 
-/* ==================================================
-   接続
-================================================== */
+addNode(
+  "b3l4",
+  "L4",
+  40,
+  67,
+  77,
+  "normal",
+  "long"
+);
+
+addNode(
+  "b3l5",
+  "L5",
+  41,
+  60,
+  69,
+  "normal",
+  "long"
+);
+
+addNode("n42","42",42,58,61,"item");
+
+/* GOAL */
+
+addNode("n43","43",43,50,61);
+addNode("n44","44",44,42,61,"event");
+addNode("n45","45",45,34,61);
+addNode("n46","46",46,26,61);
+addNode("n47","47",47,18,61,"item");
+addNode("n48","48",48,10,58);
+addNode("n49","49",49,6,45);
+
+addNode(
+  "goal",
+  "50",
+  50,
+  6,
+  27,
+  "goal"
+);
 
 function link(a,b){
   NODES[a].next.push(b);
@@ -822,7 +1131,6 @@ link("n7","n8");
 link("n8","n9");
 link("n9","b10");
 
-/* 分岐1 */
 link("b10","b1s1");
 link("b10","b1l1");
 
@@ -841,7 +1149,6 @@ link("n17","n18");
 link("n18","n19");
 link("n19","b20");
 
-/* 分岐2 */
 link("b20","b2s1");
 link("b20","b2l1");
 
@@ -866,7 +1173,6 @@ link("n33","n34");
 link("n34","n35");
 link("n35","b36");
 
-/* 分岐3 */
 link("b36","b3s1");
 link("b36","b3l1");
 
@@ -888,10 +1194,6 @@ link("n46","n47");
 link("n47","n48");
 link("n48","n49");
 link("n49","goal");
-
-/* ==================================================
-   プレイヤー
-================================================== */
 
 const players = [
   {
@@ -916,433 +1218,349 @@ const players = [
   }
 ];
 
-let currentPlayer = 0;
-let busy = false;
-let extraTurn = false;
-let gameEnded = false;
+let currentPlayer=0;
+let busy=false;
+let extraTurn=false;
+let gameEnded=false;
 
-/* ==================================================
-   DOM
-================================================== */
-
-const boardStage =
+const boardStage=
   document.getElementById("boardStage");
 
-const connections =
+const connections=
   document.getElementById("connections");
 
-const rollButton =
+const rollButton=
   document.getElementById("rollButton");
 
-const itemButton =
+const itemButton=
   document.getElementById("itemButton");
 
-const dice =
+const dice=
   document.getElementById("dice");
 
-const message =
+const message=
   document.getElementById("message");
 
-const turnText =
+const turnText=
   document.getElementById("turnText");
-
-/* ==================================================
-   盤面描画
-================================================== */
 
 function nodeIcon(node){
 
-  if(node.type === "start") return "🌍";
-  if(node.type === "goal") return "🪐";
-  if(node.type === "item") return "🎁";
-  if(node.type === "event") return "🌠";
-  if(node.type === "rest") return "💤";
-  if(node.type === "branch") return "🔀";
+  if(node.type==="start") return "🌍";
+  if(node.type==="goal") return "🪐";
+  if(node.type==="item") return "🎁";
+  if(node.type==="event") return "🌠";
+  if(node.type==="rest") return "💤";
+  if(node.type==="branch") return "🔀";
 
   return "⭐";
 }
 
 function nodeText(node){
 
-  if(node.type === "start") return "START";
-  if(node.type === "goal") return "GOAL";
-  if(node.type === "item") return "アイテム";
-  if(node.type === "event") return "イベント";
-  if(node.type === "rest") return "1回休み";
-  if(node.type === "branch") return "分かれ道";
+  if(node.type==="start") return "START";
+  if(node.type==="goal") return "GOAL";
+  if(node.type==="item") return "ITEM";
+  if(node.type==="event") return "EVENT";
+  if(node.type==="rest") return "休み";
+  if(node.type==="branch") return "分岐";
 
-  return "発音";
+  return "";
 }
 
 function createBoard(){
 
   Object.values(NODES).forEach(node=>{
 
-    const el =
+    const el=
       document.createElement("div");
 
-    let className = "space ";
+    let cls="space ";
 
-    if(node.type === "item"){
-      className += "itemSpace";
-    }
-    else if(node.type === "event"){
-      className += "eventSpace";
-    }
-    else if(node.type === "rest"){
-      className += "restSpace";
-    }
-    else if(node.type === "branch"){
-      className += "branchSpace";
-    }
-    else if(node.type === "start"){
-      className += "startSpace";
-    }
-    else if(node.type === "goal"){
-      className += "goalSpace";
-    }
-    else{
-      className += "normal";
+    if(node.type==="item") cls+="itemSpace";
+    else if(node.type==="event") cls+="eventSpace";
+    else if(node.type==="rest") cls+="restSpace";
+    else if(node.type==="branch") cls+="branchSpace";
+    else if(node.type==="start") cls+="startSpace";
+    else if(node.type==="goal") cls+="goalSpace";
+    else cls+="normal";
+
+    if(node.route==="short"){
+      cls+=" routeShort";
     }
 
-    if(node.route === "short"){
-      className += " routeShort";
+    if(node.route==="long"){
+      cls+=" routeLong";
     }
 
-    if(node.route === "long"){
-      className += " routeLong";
-    }
+    el.className=cls;
+    el.id=`node-${node.id}`;
 
-    el.className = className;
+    el.style.left=`${node.x}%`;
+    el.style.top=`${node.y}%`;
 
-    el.id =
-      `node-${node.id}`;
-
-    el.style.left =
-      `${node.x}px`;
-
-    el.style.top =
-      `${node.y}px`;
-
-    el.innerHTML = `
-      <div class="spaceNumber">
-        ${node.label}
-      </div>
-
-      <div class="spaceIcon">
-        ${nodeIcon(node)}
-      </div>
-
-      <div class="spaceLabel">
-        ${nodeText(node)}
-      </div>
-
+    el.innerHTML=`
+      <div class="spaceNumber">${node.label}</div>
+      <div class="spaceIcon">${nodeIcon(node)}</div>
+      <div class="spaceLabel">${nodeText(node)}</div>
       <div class="pieces"></div>
     `;
 
     boardStage.appendChild(el);
+
   });
 
   drawConnections();
   renderPieces();
 }
 
-/* ==================================================
-   線
-================================================== */
-
 function drawConnections(){
 
-  connections.innerHTML = "";
+  connections.innerHTML="";
 
   Object.values(NODES).forEach(node=>{
 
     node.next.forEach(nextId=>{
 
-      const next =
-        NODES[nextId];
+      const next=NODES[nextId];
 
-      const line =
+      const line=
         document.createElementNS(
           "http://www.w3.org/2000/svg",
           "line"
         );
 
       line.setAttribute("x1",node.x);
-      line.setAttribute("y1",node.y);
-      line.setAttribute("x2",next.x);
-      line.setAttribute("y2",next.y);
-
-      let className =
-        "pathLine";
-
-      if(next.route === "short"){
-        className += " short";
-      }
-
-      if(next.route === "long"){
-        className += " long";
-      }
-
       line.setAttribute(
-        "class",
-        className
+        "y1",
+        node.y*0.5625
       );
 
+      line.setAttribute("x2",next.x);
+      line.setAttribute(
+        "y2",
+        next.y*0.5625
+      );
+
+      let cls="pathLine";
+
+      if(next.route==="short"){
+        cls+=" short";
+      }
+
+      if(next.route==="long"){
+        cls+=" long";
+      }
+
+      line.setAttribute("class",cls);
+
       connections.appendChild(line);
+
     });
+
   });
 }
 
-/* ==================================================
-   コマ
-================================================== */
-
-function renderPieces(movingIndex=null){
+function renderPieces(moving=null){
 
   document
     .querySelectorAll(".pieces")
     .forEach(el=>{
-      el.innerHTML = "";
+      el.innerHTML="";
     });
 
   players.forEach((player,index)=>{
 
-    const nodeEl =
+    const node=
       document.getElementById(
         `node-${player.node}`
       );
 
-    if(!nodeEl) return;
+    if(!node) return;
 
-    const holder =
-      nodeEl.querySelector(".pieces");
+    const holder=
+      node.querySelector(".pieces");
 
-    const span =
+    const piece=
       document.createElement("span");
 
-    span.textContent =
+    piece.textContent=
       player.piece;
 
-    if(index === movingIndex){
-      span.className =
-        "pieceMoving";
+    if(index===moving){
+      piece.className="pieceMoving";
     }
 
-    holder.appendChild(span);
+    holder.appendChild(piece);
+
   });
 
-  updatePlayerUI();
+  updateUI();
 }
 
-/* ==================================================
-   UI
-================================================== */
-
-function updatePlayerUI(){
+function updateUI(){
 
   players.forEach((player,index)=>{
 
-    const card =
-      document.getElementById(
+    document
+      .getElementById(
         `playerCard${index}`
+      )
+      .classList.toggle(
+        "active",
+        index===currentPlayer
       );
 
-    card.classList.toggle(
-      "active",
-      index === currentPlayer
-    );
-
-    const node =
-      NODES[player.node];
+    const node=NODES[player.node];
 
     document.getElementById(
       `pos${index}`
-    ).textContent =
-      node.progress === 0
-        ? "START"
-        : `${node.progress}付近`;
+    ).textContent=
+      node.progress===0
+      ? "START"
+      : `${node.progress}`;
 
-    const inventory =
+    const inventory=
       document.getElementById(
         `inventory${index}`
       );
 
-    inventory.innerHTML = "";
+    inventory.innerHTML="";
 
-    if(player.items.length === 0){
+    if(player.items.length===0){
 
-      inventory.innerHTML = `
-        <span style="font-size:12px;opacity:.7;">
-          アイテムなし
-        </span>
-      `;
+      inventory.innerHTML=
+        `<span style="font-size:9px;opacity:.65;">アイテムなし</span>`;
+
     }
 
     player.items.forEach(item=>{
 
-      const el =
+      const el=
         document.createElement("div");
 
-      el.className =
-        "item";
+      el.className="item";
 
-      el.textContent =
+      el.textContent=
         `${item.emoji} ${item.name}`;
 
       inventory.appendChild(el);
+
     });
+
   });
 
-  const player =
+  const player=
     players[currentPlayer];
 
-  turnText.textContent =
+  turnText.textContent=
     `${player.piece} ${player.name}のばん`;
 
-  const usable =
+  const usable=
     player.items.filter(
-      item=>item.id !== "barrier"
+      item=>item.id!=="barrier"
     );
 
-  itemButton.disabled =
+  itemButton.disabled=
     busy ||
     gameEnded ||
-    usable.length === 0;
+    usable.length===0;
 
-  rollButton.disabled =
+  rollButton.disabled=
     busy || gameEnded;
 }
 
-/* ==================================================
-   待機
-================================================== */
-
 function wait(ms){
+
   return new Promise(
     resolve=>setTimeout(resolve,ms)
   );
-}
 
-/* ==================================================
-   分岐選択
-================================================== */
+}
 
 function chooseRoute(){
 
   return new Promise(resolve=>{
 
-    const overlay =
+    const overlay=
       document.getElementById(
         "routeOverlay"
       );
 
-    overlay.style.display =
-      "flex";
+    overlay.style.display="flex";
 
     document.getElementById(
       "shortButton"
-    ).onclick = ()=>{
+    ).onclick=()=>{
 
-      overlay.style.display =
-        "none";
-
+      overlay.style.display="none";
       resolve("short");
+
     };
 
     document.getElementById(
       "longButton"
-    ).onclick = ()=>{
+    ).onclick=()=>{
 
-      overlay.style.display =
-        "none";
-
+      overlay.style.display="none";
       resolve("long");
+
     };
+
   });
+
 }
 
-async function ensureRouteChoice(
-  playerIndex,
-  node
-){
+async function getNextNode(playerIndex){
 
-  const player =
+  const player=
     players[playerIndex];
 
-  if(node.type !== "branch"){
-    return null;
-  }
-
-  if(player.routes[node.id]){
-    return player.routes[node.id];
-  }
-
-  const choice =
-    await chooseRoute();
-
-  player.routes[node.id] =
-    choice;
-
-  return choice;
-}
-
-/* ==================================================
-   次のマス
-================================================== */
-
-async function getNextNode(
-  playerIndex
-){
-
-  const player =
-    players[playerIndex];
-
-  const node =
+  const node=
     NODES[player.node];
 
-  if(node.next.length === 0){
+  if(node.next.length===0){
     return null;
   }
 
-  if(node.type === "branch"){
+  if(node.type==="branch"){
 
-    const choice =
-      await ensureRouteChoice(
-        playerIndex,
-        node
-      );
+    let choice=
+      player.routes[node.id];
 
-    const wanted =
-      node.next.find(id=>
-        NODES[id].route === choice
-      );
+    if(!choice){
 
-    return wanted || node.next[0];
+      choice=
+        await chooseRoute();
+
+      player.routes[node.id]=choice;
+
+    }
+
+    return node.next.find(id=>
+      NODES[id].route===choice
+    );
+
   }
 
   return node.next[0];
 }
-
-/* ==================================================
-   1マスずつ進む
-================================================== */
 
 async function moveForward(
   playerIndex,
   steps
 ){
 
+  const player=
+    players[playerIndex];
+
   for(let i=0;i<steps;i++){
 
-    const player =
-      players[playerIndex];
-
-    if(player.node === "goal"){
+    if(player.node==="goal"){
       break;
     }
 
-    const next =
+    const next=
       await getNextNode(
         playerIndex
       );
@@ -1351,121 +1569,95 @@ async function moveForward(
       break;
     }
 
-    player.node =
-      next;
-
-    renderPieces(
-      playerIndex
-    );
-
-    await wait(330);
-  }
-
-  return players[playerIndex].node === "goal";
-}
-
-/* ==================================================
-   ひとつ前のマス
-================================================== */
-
-function getPreviousCandidates(nodeId){
-
-  const list = [];
-
-  Object.values(NODES).forEach(node=>{
-
-    if(
-      node.next.includes(nodeId)
-    ){
-      list.push(node.id);
-    }
-  });
-
-  return list;
-}
-
-function selectPrevious(
-  player,
-  candidates
-){
-
-  if(candidates.length <= 1){
-    return candidates[0];
-  }
-
-  /*
-    合流点から戻る時は、
-    そのプレイヤーが選んだ道を優先。
-  */
-
-  for(
-    const branchId
-    of ["b10","b20","b36"]
-  ){
-
-    const selected =
-      player.routes[branchId];
-
-    if(!selected) continue;
-
-    const found =
-      candidates.find(id=>
-        NODES[id].route === selected
-      );
-
-    if(found){
-      return found;
-    }
-  }
-
-  return candidates[0];
-}
-
-/* ==================================================
-   1マスずつ戻る
-================================================== */
-
-async function moveBackward(
-  playerIndex,
-  steps
-){
-
-  const player =
-    players[playerIndex];
-
-  for(let i=0;i<steps;i++){
-
-    if(player.node === "start"){
-      break;
-    }
-
-    const candidates =
-      getPreviousCandidates(
-        player.node
-      );
-
-    if(candidates.length === 0){
-      player.node = "start";
-    }
-    else{
-      player.node =
-        selectPrevious(
-          player,
-          candidates
-        );
-    }
+    player.node=next;
 
     renderPieces(
       playerIndex
     );
 
     await wait(280);
+
   }
+
 }
 
-/* ==================================================
-   発音
-================================================== */
+function previousNodes(nodeId){
+
+  return Object
+    .values(NODES)
+    .filter(node=>
+      node.next.includes(nodeId)
+    )
+    .map(node=>node.id);
+
+}
+
+async function moveBackward(
+  playerIndex,
+  steps
+){
+
+  const player=
+    players[playerIndex];
+
+  for(let i=0;i<steps;i++){
+
+    if(player.node==="start"){
+      break;
+    }
+
+    const list=
+      previousNodes(player.node);
+
+    if(list.length===0){
+
+      player.node="start";
+
+    }
+
+    else if(list.length===1){
+
+      player.node=list[0];
+
+    }
+
+    else{
+
+      let chosen=null;
+
+      for(const id of list){
+
+        const route=
+          NODES[id].route;
+
+        if(
+          route &&
+          Object.values(
+            player.routes
+          ).includes(route)
+        ){
+
+          chosen=id;
+          break;
+
+        }
+
+      }
+
+      player.node=
+        chosen || list[0];
+
+    }
+
+    renderPieces(
+      playerIndex
+    );
+
+    await wait(250);
+
+  }
+
+}
 
 function pronunciation(
   playerIndex=currentPlayer
@@ -1473,57 +1665,51 @@ function pronunciation(
 
   return new Promise(resolve=>{
 
-    const player =
+    const player=
       players[playerIndex];
 
-    const node =
-      NODES[player.node];
-
-    const progress =
+    const progress=
       Math.max(
         1,
-        node.progress
+        NODES[player.node].progress
       );
 
-    const word =
+    const word=
       ALL_WORDS[
-        (progress - 1) %
+        (progress-1)%
         ALL_WORDS.length
       ];
 
     document.getElementById(
       "wordEmoji"
-    ).textContent =
+    ).textContent=
       word.emoji;
 
     document.getElementById(
       "wordText"
-    ).textContent =
+    ).textContent=
       word.word;
 
-    const overlay =
+    const overlay=
       document.getElementById(
         "wordOverlay"
       );
 
-    overlay.style.display =
-      "flex";
+    overlay.style.display="flex";
 
     document.getElementById(
       "wordOK"
-    ).onclick = ()=>{
+    ).onclick=()=>{
 
-      overlay.style.display =
-        "none";
+      overlay.style.display="none";
 
       resolve();
-    };
-  });
-}
 
-/* ==================================================
-   お知らせ
-================================================== */
+    };
+
+  });
+
+}
 
 function showInfo(
   emoji,
@@ -1533,55 +1719,49 @@ function showInfo(
 
   return new Promise(resolve=>{
 
-    const overlay =
+    document.getElementById(
+      "infoEmoji"
+    ).textContent=emoji;
+
+    document.getElementById(
+      "infoTitle"
+    ).textContent=title;
+
+    document.getElementById(
+      "infoText"
+    ).textContent=text;
+
+    const overlay=
       document.getElementById(
         "infoOverlay"
       );
 
-    document.getElementById(
-      "infoEmoji"
-    ).textContent =
-      emoji;
-
-    document.getElementById(
-      "infoTitle"
-    ).textContent =
-      title;
-
-    document.getElementById(
-      "infoText"
-    ).textContent =
-      text;
-
-    overlay.style.display =
-      "flex";
+    overlay.style.display="flex";
 
     document.getElementById(
       "infoOK"
-    ).onclick = ()=>{
+    ).onclick=()=>{
 
-      overlay.style.display =
-        "none";
+      overlay.style.display="none";
 
       resolve();
+
     };
+
   });
+
 }
 
-/* ==================================================
-   アイテム
-================================================== */
-
-const ITEM_POOL = [
+const ITEM_POOL=[
   {
     id:"plus3",
-    name:"3マスすすむ",
+    name:"3マス",
     emoji:"🚀",
     weight:28
   },
   {
     id:"double",
-    name:"ダブルサイコロ",
+    name:"ダブル",
     emoji:"🎲🎲",
     weight:22
   },
@@ -1593,7 +1773,7 @@ const ITEM_POOL = [
   },
   {
     id:"exact",
-    name:"ぴったりサイコロ",
+    name:"ぴったり",
     emoji:"🎯",
     weight:14
   },
@@ -1605,7 +1785,7 @@ const ITEM_POOL = [
   },
   {
     id:"back3",
-    name:"相手を3マスもどす",
+    name:"3もどす",
     emoji:"🌀",
     weight:6
   },
@@ -1619,79 +1799,59 @@ const ITEM_POOL = [
 
 function randomItem(){
 
-  const total =
+  const total=
     ITEM_POOL.reduce(
-      (sum,item)=>
-        sum + item.weight,
+      (a,b)=>a+b.weight,
       0
     );
 
-  let random =
-    Math.random() * total;
+  let r=
+    Math.random()*total;
 
-  for(
-    const item
-    of ITEM_POOL
-  ){
+  for(const item of ITEM_POOL){
 
-    random -= item.weight;
+    r-=item.weight;
 
-    if(random <= 0){
+    if(r<=0){
+
       return {...item};
+
     }
+
   }
 
   return {...ITEM_POOL[0]};
 }
 
-/* ==================================================
-   バリア
-================================================== */
-
 function useBarrier(player){
 
-  const index =
+  const i=
     player.items.findIndex(
-      item=>item.id === "barrier"
+      item=>item.id==="barrier"
     );
 
-  if(index === -1){
+  if(i===-1){
     return false;
   }
 
-  player.items.splice(
-    index,
-    1
-  );
-
-  updatePlayerUI();
+  player.items.splice(i,1);
 
   return true;
 }
 
-/* ==================================================
-   アイテムマス
-================================================== */
+async function resolveItem(){
 
-async function resolveItemSpace(){
-
-  const player =
+  const player=
     players[currentPlayer];
 
-  const opponent =
-    players[
-      1-currentPlayer
-    ];
+  const opponent=
+    players[1-currentPlayer];
 
-  /*
-    横どり 8%
-  */
+  if(Math.random()<.08){
 
-  if(Math.random() < .08){
+    if(useBarrier(opponent)){
 
-    if(
-      useBarrier(opponent)
-    ){
+      updateUI();
 
       await showInfo(
         "🛡️",
@@ -1702,91 +1862,69 @@ async function resolveItemSpace(){
       return;
     }
 
-    if(
-      opponent.items.length === 0
-    ){
+    if(opponent.items.length===0){
 
       await showInfo(
         "🎁",
         "よこどり！",
-        "でも相手はアイテムを持っていなかった！"
+        "相手はアイテムを持っていなかった！"
       );
 
       return;
     }
 
-    const index =
+    const i=
       Math.floor(
-        Math.random() *
+        Math.random()*
         opponent.items.length
       );
 
-    const stolen =
-      opponent.items.splice(
-        index,
-        1
-      )[0];
+    const stolen=
+      opponent.items.splice(i,1)[0];
 
-    if(player.items.length < 3){
+    if(player.items.length<3){
 
-      player.items.push(
-        stolen
-      );
+      player.items.push(stolen);
 
       await showInfo(
         "🎁",
         "よこどり！",
         `${stolen.name}をゲット！`
       );
-    }
-    else{
 
-      await showInfo(
-        "🎁",
-        "よこどり！",
-        `${stolen.name}を取ったけど、持ち物がいっぱいだった！`
-      );
     }
 
-    updatePlayerUI();
+    updateUI();
 
     return;
   }
 
-  const item =
-    randomItem();
+  const item=randomItem();
 
-  if(
-    player.items.length >= 3
-  ){
+  if(player.items.length>=3){
 
     await showInfo(
       item.emoji,
-      "アイテム！",
-      `${item.name}が出た！ でも持ち物が3個なので今回は持てない。`
+      "持ち物いっぱい！",
+      `${item.name}が出たけど持てない！`
     );
 
     return;
   }
 
-  player.items.push(
-    item
-  );
+  player.items.push(item);
 
-  updatePlayerUI();
+  updateUI();
 
   await showInfo(
     item.emoji,
     "アイテムゲット！",
     `${item.name}を手に入れた！`
   );
+
 }
 
-/* ==================================================
-   宇宙イベント
-================================================== */
-
-const EVENTS = [
+const EVENTS=[
   {
     emoji:"🌀",
     title:"ワームホール！",
@@ -1795,7 +1933,7 @@ const EVENTS = [
   },
   {
     emoji:"☄️",
-    title:"いん石だ！",
+    title:"いん石！",
     text:"2人とも3マスもどる！",
     move:-3
   },
@@ -1813,12 +1951,12 @@ const EVENTS = [
   }
 ];
 
-async function resolveEventSpace(){
+async function resolveEvent(){
 
-  const event =
+  const event=
     EVENTS[
       Math.floor(
-        Math.random() *
+        Math.random()*
         EVENTS.length
       )
     ];
@@ -1831,314 +1969,223 @@ async function resolveEventSpace(){
 
   for(let i=0;i<2;i++){
 
-    if(event.move > 0){
+    if(event.move>0){
 
       await moveForward(
         i,
         event.move
       );
+
     }
+
     else{
 
       await moveBackward(
         i,
         Math.abs(event.move)
       );
+
     }
 
-    if(
-      players[i].node === "goal"
-    ){
+    if(players[i].node==="goal"){
 
-      await goalPlayer(i);
+      goal(i);
 
       return true;
+
     }
+
   }
 
   return false;
 }
 
-/* ==================================================
-   1回休み
-================================================== */
+function goal(index){
 
-async function resolveRestSpace(){
+  gameEnded=true;
 
-  const player =
-    players[currentPlayer];
-
-  player.skip = true;
-
-  await showInfo(
-    "💤",
-    "1回休み！",
-    `${player.name}は次の番を1回休みます。`
-  );
-}
-
-/* ==================================================
-   分岐マス
-================================================== */
-
-async function resolveBranchSpace(){
-
-  const player =
-    players[currentPlayer];
-
-  const node =
-    NODES[player.node];
-
-  if(
-    player.routes[node.id]
-  ){
-    return;
-  }
-
-  const choice =
-    await chooseRoute();
-
-  player.routes[node.id] =
-    choice;
-
-  if(choice === "short"){
-
-    await showInfo(
-      "🚀",
-      "短い道を選んだ！",
-      "近道だけど、途中に💤1回休みがあります。"
-    );
-  }
-  else{
-
-    await showInfo(
-      "🎁",
-      "長い道を選んだ！",
-      "遠回りだけど、途中に🎁アイテムマスがあります。"
-    );
-  }
-}
-
-/* ==================================================
-   ゴール
-================================================== */
-
-async function goalPlayer(
-  playerIndex
-){
-
-  if(gameEnded){
-    return;
-  }
-
-  gameEnded = true;
-
-  const player =
-    players[playerIndex];
+  const player=
+    players[index];
 
   document.getElementById(
     "goalText"
-  ).textContent =
+  ).textContent=
     `${player.piece} ${player.name} ゴール！`;
 
   document.getElementById(
     "goalOverlay"
-  ).style.display =
-    "flex";
+  ).style.display="flex";
 
-  updatePlayerUI();
+  updateUI();
 }
-
-/* ==================================================
-   着地処理
-================================================== */
 
 async function resolveLanding(){
 
-  const player =
+  const player=
     players[currentPlayer];
 
-  const node =
+  const node=
     NODES[player.node];
-
-  /*
-    ゴールでも最後に発音
-  */
 
   await pronunciation(
     currentPlayer
   );
 
-  if(node.type === "goal"){
+  if(node.type==="goal"){
 
-    await goalPlayer(
-      currentPlayer
-    );
+    goal(currentPlayer);
 
     return;
   }
 
-  if(node.type === "item"){
+  if(node.type==="item"){
 
-    await resolveItemSpace();
+    await resolveItem();
+
   }
 
-  else if(node.type === "event"){
+  else if(node.type==="event"){
 
-    const ended =
-      await resolveEventSpace();
+    const ended=
+      await resolveEvent();
 
     if(ended){
       return;
     }
+
   }
 
-  else if(node.type === "rest"){
+  else if(node.type==="rest"){
 
-    await resolveRestSpace();
+    player.skip=true;
+
+    await showInfo(
+      "💤",
+      "1回休み！",
+      "次の番はお休みです。"
+    );
+
   }
 
-  else if(node.type === "branch"){
-
-    await resolveBranchSpace();
-  }
-
-  if(!gameEnded){
-    await finishTurn();
-  }
+  await finishTurn();
 }
-
-/* ==================================================
-   ターン終了
-================================================== */
 
 async function finishTurn(){
 
-  busy = false;
+  busy=false;
 
   if(extraTurn){
 
-    extraTurn = false;
+    extraTurn=false;
 
-    message.textContent =
+    message.textContent=
       "🎲 もう1回！";
 
-    updatePlayerUI();
+    updateUI();
 
     return;
   }
 
-  currentPlayer =
+  currentPlayer=
     1-currentPlayer;
 
-  const next =
+  const player=
     players[currentPlayer];
 
-  if(next.skip){
+  if(player.skip){
 
-    next.skip = false;
+    player.skip=false;
 
-    updatePlayerUI();
+    busy=true;
 
-    message.textContent =
-      `💤 ${next.name}は1回休み！`;
+    updateUI();
 
-    busy = true;
+    message.textContent=
+      `💤 ${player.name}は1回休み`;
 
-    await wait(1100);
+    await wait(800);
 
-    currentPlayer =
+    currentPlayer=
       1-currentPlayer;
 
-    busy = false;
+    busy=false;
+
   }
 
-  message.textContent =
-    "次の人のばん！";
+  message.textContent=
+    "次の人のばん";
 
-  updatePlayerUI();
+  updateUI();
 }
-
-/* ==================================================
-   サイコロ
-================================================== */
 
 async function rollDice(){
 
-  if(
-    busy ||
-    gameEnded
-  ){
+  if(busy || gameEnded){
     return;
   }
 
-  busy = true;
+  busy=true;
 
-  updatePlayerUI();
+  updateUI();
 
-  const player =
+  const player=
     players[currentPlayer];
 
   let amount;
 
-  if(
-    player.exact !== null
-  ){
+  if(player.exact!==null){
 
-    amount =
-      player.exact;
+    amount=player.exact;
 
-    player.exact =
-      null;
+    player.exact=null;
 
-    dice.textContent =
+    dice.textContent=
       `🎯${amount}`;
+
   }
 
-  else if(
-    player.double
-  ){
+  else if(player.double){
 
-    const first =
+    const a=
       Math.floor(
         Math.random()*6
       )+1;
 
-    const second =
+    const b=
       Math.floor(
         Math.random()*6
       )+1;
 
-    amount =
-      first+second;
+    amount=a+b;
 
-    player.double =
-      false;
+    player.double=false;
 
-    dice.textContent =
-      `${first}＋${second}`;
+    dice.textContent=
+      `${a}+${b}`;
+
   }
 
   else{
 
-    amount =
+    amount=
       Math.floor(
         Math.random()*6
       )+1;
 
-    const faces = [
+    const faces=[
       "⚀","⚁","⚂",
       "⚃","⚄","⚅"
     ];
 
-    dice.textContent =
+    dice.textContent=
       faces[amount-1];
+
   }
 
-  message.textContent =
+  message.textContent=
     `${amount}マスすすむ！`;
 
-  await wait(350);
+  await wait(250);
 
   await moveForward(
     currentPlayer,
@@ -2148,111 +2195,81 @@ async function rollDice(){
   await resolveLanding();
 }
 
-/* ==================================================
-   ぴったりサイコロ
-================================================== */
-
-function chooseExactNumber(){
+function chooseExact(){
 
   return new Promise(resolve=>{
 
-    const overlay =
-      document.getElementById(
-        "exactOverlay"
-      );
-
-    const holder =
+    const holder=
       document.getElementById(
         "exactButtons"
       );
 
-    holder.innerHTML = "";
+    holder.innerHTML="";
 
     for(let n=1;n<=6;n++){
 
-      const button =
+      const button=
         document.createElement(
           "button"
         );
 
-      button.className =
+      button.className=
         "numberButton";
 
-      button.textContent = n;
+      button.textContent=n;
 
-      button.onclick = ()=>{
+      button.onclick=()=>{
 
-        overlay.style.display =
-          "none";
+        document.getElementById(
+          "exactOverlay"
+        ).style.display="none";
 
         resolve(n);
+
       };
 
-      holder.appendChild(
-        button
-      );
+      holder.appendChild(button);
+
     }
 
-    overlay.style.display =
-      "flex";
-  });
-}
+    document.getElementById(
+      "exactOverlay"
+    ).style.display="flex";
 
-/* ==================================================
-   アイテム使用
-================================================== */
+  });
+
+}
 
 async function useItem(index){
 
-  if(
-    busy ||
-    gameEnded
-  ){
+  if(busy || gameEnded){
     return;
   }
 
-  const player =
+  const player=
     players[currentPlayer];
 
-  const opponent =
-    players[
-      1-currentPlayer
-    ];
+  const opponent=
+    players[1-currentPlayer];
 
-  const item =
+  const item=
     player.items[index];
 
   if(!item){
     return;
   }
 
-  player.items.splice(
-    index,
-    1
-  );
+  player.items.splice(index,1);
 
   document.getElementById(
     "itemOverlay"
-  ).style.display =
-    "none";
+  ).style.display="none";
 
-  updatePlayerUI();
+  updateUI();
 
-  /* ----------------
-     3マスすすむ
-  ---------------- */
+  if(item.id==="plus3"){
 
-  if(item.id === "plus3"){
-
-    busy = true;
-
-    updatePlayerUI();
-
-    await showInfo(
-      "🚀",
-      "3マスすすむ！",
-      "3マス前へ進みます！"
-    );
+    busy=true;
 
     await moveForward(
       currentPlayer,
@@ -2264,53 +2281,34 @@ async function useItem(index){
     return;
   }
 
-  /* ----------------
-     ダブルサイコロ
-  ---------------- */
+  if(item.id==="double"){
 
-  if(item.id === "double"){
-
-    player.double = true;
+    player.double=true;
 
     await showInfo(
       "🎲🎲",
       "ダブルサイコロ",
-      "次にサイコロを2個ふります！"
+      "次はサイコロ2個！"
     );
+
   }
 
-  /* ----------------
-     ぴったり
-  ---------------- */
+  if(item.id==="exact"){
 
-  if(item.id === "exact"){
+    player.exact=
+      await chooseExact();
 
-    const number =
-      await chooseExactNumber();
-
-    player.exact =
-      number;
-
-    await showInfo(
-      "🎯",
-      "ぴったりサイコロ",
-      `次は${number}マス進みます！`
-    );
   }
 
-  /* ----------------
-     いれかえ
-  ---------------- */
+  if(item.id==="swap"){
 
-  if(item.id === "swap"){
-
-    const temp =
+    const temp=
       player.node;
 
-    player.node =
+    player.node=
       opponent.node;
 
-    opponent.node =
+    opponent.node=
       temp;
 
     renderPieces();
@@ -2318,150 +2316,123 @@ async function useItem(index){
     await showInfo(
       "🔄",
       "いれかえ！",
-      "相手と場所をいれかえた！"
+      "場所を入れ替えた！"
     );
+
   }
 
-  /* ----------------
-     相手を3マスもどす
-  ---------------- */
+  if(item.id==="back3"){
 
-  if(item.id === "back3"){
-
-    if(
-      useBarrier(opponent)
-    ){
+    if(useBarrier(opponent)){
 
       await showInfo(
         "🛡️",
         "バリア！",
-        "相手のバリアでふせがれた！"
+        "ふせがれた！"
       );
+
     }
 
     else{
-
-      await showInfo(
-        "🌀",
-        "3マスもどす！",
-        "相手を3マスもどします！"
-      );
 
       await moveBackward(
         1-currentPlayer,
         3
       );
+
     }
+
   }
 
-  /* ----------------
-     もう1回
-  ---------------- */
+  if(item.id==="again"){
 
-  if(item.id === "again"){
-
-    extraTurn = true;
+    extraTurn=true;
 
     await showInfo(
       "🎲",
       "もう1回！",
-      "この番のあと、もう1回できます！"
+      "この番のあともう1回！"
     );
+
   }
 
-  updatePlayerUI();
+  updateUI();
 }
 
-/* ==================================================
-   アイテム一覧
-================================================== */
+itemButton.onclick=()=>{
 
-itemButton.onclick = ()=>{
-
-  if(
-    busy ||
-    gameEnded
-  ){
+  if(busy || gameEnded){
     return;
   }
 
-  const player =
+  const player=
     players[currentPlayer];
 
-  const list =
+  const list=
     document.getElementById(
       "itemList"
     );
 
-  list.innerHTML = "";
+  list.innerHTML="";
 
   player.items.forEach(
     (item,index)=>{
 
-      if(
-        item.id === "barrier"
-      ){
+      if(item.id==="barrier"){
         return;
       }
 
-      const button =
+      const button=
         document.createElement(
           "button"
         );
 
-      button.className =
+      button.className=
         "mainButton";
 
-      button.style.margin =
-        "6px 0";
+      button.style.margin=
+        "5px 0";
 
-      button.style.background =
+      button.style.background=
         "#dcecff";
 
-      button.textContent =
+      button.textContent=
         `${item.emoji} ${item.name}`;
 
-      button.onclick =
+      button.onclick=
         ()=>useItem(index);
 
-      list.appendChild(
-        button
-      );
+      list.appendChild(button);
+
     }
   );
 
-  if(
-    list.children.length === 0
-  ){
+  if(list.children.length===0){
     return;
   }
 
   document.getElementById(
     "itemOverlay"
-  ).style.display =
-    "flex";
+  ).style.display="flex";
+
 };
 
 document.getElementById(
   "itemCancel"
-).onclick = ()=>{
+).onclick=()=>{
 
   document.getElementById(
     "itemOverlay"
-  ).style.display =
-    "none";
+  ).style.display="none";
+
 };
 
-/* ==================================================
-   開始
-================================================== */
-
-rollButton.onclick =
+rollButton.onclick=
   rollDice;
 
 createBoard();
 
-updatePlayerUI();
+updateUI();
 
 </script>
 
