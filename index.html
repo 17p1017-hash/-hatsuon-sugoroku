@@ -1,1 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>発音すごろく 宇宙版</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont,
+                   "Hiragino Kaku Gothic ProN", sans-serif;
+      background:
+        radial-gradient(circle at 50% 20%, #183b76, #07142f 55%, #020611);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 15px;
+      font-size: 30px;
+    }
+
+    #turn {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    #board {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 35px auto;
+      max-width: 600px;
+    }
+
+    .space {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: white;
+      color: #10234a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .goal {
+      background: #ffd84d;
+    }
+
+    .piece {
+      position: absolute;
+      font-size: 25px;
+      top: -25px;
+    }
+
+    #dice {
+      font-size: 90px;
+      margin: 20px;
+      min-height: 110px;
+    }
+
+    button {
+      border: none;
+      border-radius: 18px;
+      padding: 18px 28px;
+      font-size: 22px;
+      font-weight: bold;
+      background: #ffd84d;
+      color: #17213b;
+      margin: 8px;
+      cursor: pointer;
+    }
+
+    #wordScreen {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .wordBox {
+      background: white;
+      color: #17213b;
+      width: 90%;
+      max-width: 450px;
+      padding: 35px 20px;
+      border-radius: 25px;
+    }
+
+    #wordEmoji {
+      font-size: 80px;
+    }
+
+    #word {
+      font-size: 55px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .instruction {
+      color: #53627e;
+      font-size: 18px;
+    }
+
+    #message {
+      min-height: 35px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🚀 発音すごろく</h1>
+  <p>宇宙版・動作確認</p>
+
+  <div id="turn">🚀 チャレンジャーのばん</div>
+
+  <div id="board"></div>
+
+  <div id="dice">🎲</div>
+
+  <button id="rollButton">
+    🎲 サイコロをふる
+  </button>
+
+  <div id="message">
+    ボタンを押してスタート！
+  </div>
+
+
+  <div id="wordScreen">
+
+    <div class="wordBox">
+
+      <div id="wordEmoji">
+        🍉
+      </div>
+
+      <div id="word">
+        すいか
+      </div>
+
+      <div class="instruction">
+        3回 発音しよう
+      </div>
+
+      <button id="okButton">
+        OK
+      </button>
+
+    </div>
+
+  </div>
+
+
+<script>
+
+const words = [
+  ["すいか","🍉"],
+  ["すず","🔔"],
+  ["すな","🏖️"],
+  ["すずめ","🐦"],
+  ["すもう","🤼"],
+  ["いす","🪑"],
+  ["ナス","🍆"],
+  ["バス","🚌"],
+  ["リス","🐿️"],
+  ["アイス","🍨"]
+];
+
+const players = [
+  {
+    name:"チャレンジャー",
+    piece:"🚀",
+    position:0
+  },
+  {
+    name:"先生",
+    piece:"🛸",
+    position:0
+  }
+];
+
+let currentPlayer = 0;
+
+const board =
+  document.getElementById("board");
+
+const turn =
+  document.getElementById("turn");
+
+const dice =
+  document.getElementById("dice");
+
+const message =
+  document.getElementById("message");
+
+const rollButton =
+  document.getElementById("rollButton");
+
+const wordScreen =
+  document.getElementById("wordScreen");
+
+const word =
+  document.getElementById("word");
+
+const wordEmoji =
+  document.getElementById("wordEmoji");
+
+const okButton =
+  document.getElementById("okButton");
+
+
+function drawBoard(){
+
+  board.innerHTML = "";
+
+  for(let i=0;i<=10;i++){
+
+    const space =
+      document.createElement("div");
+
+    space.className =
+      "space" + (i===10 ? " goal" : "");
+
+    space.textContent =
+      i===0 ? "START" :
+      i===10 ? "GOAL" :
+      i;
+
+    players.forEach(player=>{
+
+      if(player.position===i){
+
+        const piece =
+          document.createElement("div");
+
+        piece.className="piece";
+
+        piece.textContent=
+          player.piece;
+
+        space.appendChild(piece);
+
+      }
+
+    });
+
+    board.appendChild(space);
+
+  }
+
+}
+
+
+function updateTurn(){
+
+  const player =
+    players[currentPlayer];
+
+  turn.textContent =
+    player.piece +
+    " " +
+    player.name +
+    " のばん";
+
+}
+
+
+function rollDice(){
+
+  rollButton.disabled = true;
+
+  const number =
+    Math.floor(Math.random()*6)+1;
+
+  dice.textContent =
+    ["⚀","⚁","⚂","⚃","⚄","⚅"][number-1];
+
+  const player =
+    players[currentPlayer];
+
+  player.position += number;
+
+  if(player.position >= 10){
+
+    player.position = 10;
+
+    drawBoard();
+
+    message.textContent =
+      player.name + " ゴール！ 🎉";
+
+    rollButton.style.display =
+      "none";
+
+    return;
+
+  }
+
+  drawBoard();
+
+  message.textContent =
+    number + "マスすすんだ！";
+
+  setTimeout(showWord,400);
+
+}
+
+
+function showWord(){
+
+  const player =
+    players[currentPlayer];
+
+  const index =
+    Math.max(0,player.position-1);
+
+  word.textContent =
+    words[index][0];
+
+  wordEmoji.textContent =
+    words[index][1];
+
+  wordScreen.style.display =
+    "flex";
+
+}
+
+
+function finishPronunciation(){
+
+  wordScreen.style.display =
+    "none";
+
+  currentPlayer =
+    currentPlayer===0 ? 1 : 0;
+
+  updateTurn();
+
+  rollButton.disabled = false;
+
+  message.textContent =
+    "次の人のばん！";
+
+}
+
+
+rollButton.addEventListener(
+  "click",
+  rollDice
+);
+
+okButton.addEventListener(
+  "click",
+  finishPronunciation
+);
+
+
+drawBoard();
+
+updateTurn();
+
+</script>
+
+</body>
+</html>
