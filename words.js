@@ -1,7 +1,6 @@
 const WORD_DATA = {
   target: "ス",
 
-  // 語頭
   start: [
     { word: "すいか", emoji: "🍉" },
     { word: "すいとう", emoji: "🧴" },
@@ -25,7 +24,6 @@ const WORD_DATA = {
     { word: "すがた", emoji: "🧍" }
   ],
 
-  // 語尾
   end: [
     { word: "いす", emoji: "🪑" },
     { word: "ナス", emoji: "🍆" },
@@ -49,7 +47,6 @@ const WORD_DATA = {
     { word: "テニス", emoji: "🎾" }
   ],
 
-  // 語中
   middle: [
     { word: "くすり", emoji: "💊" },
     { word: "やすみ", emoji: "😴" },
