@@ -13,10 +13,6 @@
 
   <style>
 
-    /* =====================================================
-       基本
-    ===================================================== */
-
     * {
       box-sizing: border-box;
     }
@@ -27,6 +23,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -35,7 +32,12 @@
         sans-serif;
 
       background:
-        radial-gradient(circle at 30% 20%, #26336f 0%, #11183d 35%, #070b21 100%);
+        radial-gradient(
+          circle at 30% 20%,
+          #26336f 0%,
+          #11183d 35%,
+          #070b21 100%
+        );
 
       color: white;
     }
@@ -53,8 +55,10 @@
 
     body::before {
       content: "";
+
       position: fixed;
       inset: 0;
+
       pointer-events: none;
 
       background-image:
@@ -83,6 +87,7 @@
     #rotateMessage {
       position: fixed;
       inset: 0;
+
       z-index: 9999;
 
       display: none;
@@ -109,9 +114,11 @@
     }
 
     @media (orientation: portrait) {
+
       #rotateMessage {
         display: flex;
       }
+
     }
 
 
@@ -122,6 +129,7 @@
     #soundScreen {
       position: fixed;
       inset: 0;
+
       z-index: 1000;
 
       display: flex;
@@ -203,6 +211,7 @@
 
     .soundButton:active {
       transform: translateY(5px);
+
       box-shadow:
         0 2px 0 #9eb4e3;
     }
@@ -214,6 +223,7 @@
 
     #app {
       position: relative;
+
       z-index: 2;
 
       display: none;
@@ -252,6 +262,7 @@
     .gameTitle {
       font-size: clamp(16px, 2.2vw, 24px);
       font-weight: 1000;
+
       white-space: nowrap;
     }
 
@@ -318,12 +329,26 @@
       border: 2px solid rgba(255,255,255,.18);
 
       background:
-        radial-gradient(circle at 50% 50%, rgba(85,102,191,.18), transparent 45%),
-        linear-gradient(180deg, rgba(12,19,58,.96), rgba(5,9,31,.96));
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(85,102,191,.18),
+          transparent 45%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(12,19,58,.96),
+          rgba(5,9,31,.96)
+        );
 
       box-shadow:
         inset 0 0 50px rgba(0,0,0,.35);
     }
+
+
+    /*
+       ★今回の変更部分
+       マップ全体を少し上へ移動
+    */
 
     #board {
       position: absolute;
@@ -332,6 +357,8 @@
 
       width: 100%;
       height: 100%;
+
+      transform: translateY(-4%);
     }
 
 
@@ -343,13 +370,14 @@
       position: absolute;
 
       pointer-events: none;
-
       user-select: none;
 
       opacity: .8;
 
       filter:
-        drop-shadow(0 3px 4px rgba(0,0,0,.4));
+        drop-shadow(
+          0 3px 4px rgba(0,0,0,.4)
+        );
     }
 
     .earth {
@@ -389,7 +417,7 @@
 
 
     /* =====================================================
-       線
+       道
     ===================================================== */
 
     #linkLayer {
@@ -545,7 +573,9 @@
       font-size: clamp(16px, 2.3vw, 28px);
 
       filter:
-        drop-shadow(0 3px 2px rgba(0,0,0,.55));
+        drop-shadow(
+          0 3px 2px rgba(0,0,0,.55)
+        );
 
       line-height: 1;
     }
@@ -588,7 +618,9 @@
 
     .playersBox {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr 1fr;
 
       gap: 5px;
     }
@@ -600,9 +632,11 @@
 
       border-radius: 13px;
 
-      background: rgba(255,255,255,.08);
+      background:
+        rgba(255,255,255,.08);
 
-      border: 2px solid transparent;
+      border:
+        2px solid transparent;
 
       text-align: center;
     }
@@ -610,7 +644,8 @@
     .playerCard.active {
       border-color: #ffe566;
 
-      background: rgba(255,229,102,.13);
+      background:
+        rgba(255,229,102,.13);
 
       box-shadow:
         0 0 14px rgba(255,229,102,.25);
@@ -629,6 +664,7 @@
       margin-top: 2px;
 
       font-size: 9px;
+
       opacity: .8;
     }
 
@@ -648,11 +684,14 @@
 
       border-radius: 14px;
 
-      background: rgba(255,255,255,.08);
+      background:
+        rgba(255,255,255,.08);
 
       text-align: center;
 
-      font-size: clamp(11px, 1.35vw, 15px);
+      font-size:
+        clamp(11px, 1.35vw, 15px);
+
       font-weight: 900;
     }
 
@@ -674,7 +713,8 @@
 
       gap: 8px;
 
-      font-size: clamp(42px, 6vw, 66px);
+      font-size:
+        clamp(42px, 6vw, 66px);
 
       line-height: 1;
     }
@@ -683,8 +723,15 @@
       display: inline-block;
 
       filter:
-        drop-shadow(0 5px 5px rgba(0,0,0,.45));
+        drop-shadow(
+          0 5px 5px rgba(0,0,0,.45)
+        );
     }
+
+
+    /*
+       サイコロ回転
+    */
 
     .diceRolling {
       animation:
@@ -725,6 +772,7 @@
 
     }
 
+
     #rollButton {
       width: 100%;
 
@@ -742,7 +790,9 @@
 
       color: #4c2a00;
 
-      font-size: clamp(15px, 2vw, 20px);
+      font-size:
+        clamp(15px, 2vw, 20px);
+
       font-weight: 1000;
 
       box-shadow:
@@ -750,7 +800,8 @@
     }
 
     #rollButton:active:not(:disabled) {
-      transform: translateY(4px);
+      transform:
+        translateY(4px);
 
       box-shadow:
         0 1px 0 #c67815;
@@ -778,6 +829,7 @@
 
     #inventory {
       display: grid;
+
       grid-template-columns: 1fr;
 
       gap: 4px;
@@ -786,12 +838,15 @@
     .itemButton {
       width: 100%;
 
-      border: 1px solid rgba(255,255,255,.18);
+      border:
+        1px solid rgba(255,255,255,.18);
+
       border-radius: 10px;
 
       padding: 5px 6px;
 
-      background: rgba(255,255,255,.1);
+      background:
+        rgba(255,255,255,.1);
 
       color: white;
 
@@ -822,6 +877,7 @@
 
     .modal {
       position: fixed;
+
       inset: 0;
 
       z-index: 5000;
@@ -832,7 +888,8 @@
 
       padding: 16px;
 
-      background: rgba(2,5,20,.74);
+      background:
+        rgba(2,5,20,.74);
     }
 
     .modal.show {
@@ -840,9 +897,12 @@
     }
 
     .modalCard {
-      width: min(500px, 90vw);
+      width:
+        min(500px, 90vw);
 
-      border: 2px solid rgba(255,255,255,.2);
+      border:
+        2px solid rgba(255,255,255,.2);
+
       border-radius: 26px;
 
       padding: 22px;
@@ -861,26 +921,34 @@
     }
 
     .modalTitle {
-      font-size: clamp(20px, 3vw, 30px);
+      font-size:
+        clamp(20px, 3vw, 30px);
+
       font-weight: 1000;
     }
 
     .practicePicture {
-      margin: 10px 0 2px;
+      margin:
+        10px 0 2px;
 
-      font-size: clamp(52px, 9vw, 86px);
+      font-size:
+        clamp(52px, 9vw, 86px);
+
       line-height: 1.1;
     }
 
     .practiceWord {
       margin-top: 6px;
 
-      font-size: clamp(30px, 6vw, 54px);
+      font-size:
+        clamp(30px, 6vw, 54px);
+
       font-weight: 1000;
     }
 
     .practiceInstruction {
-      margin: 8px 0 16px;
+      margin:
+        8px 0 16px;
 
       font-size: 18px;
       font-weight: 900;
@@ -908,10 +976,13 @@
     }
 
     .infoText {
-      margin: 18px 0;
+      margin:
+        18px 0;
 
       font-size: 18px;
+
       line-height: 1.6;
+
       font-weight: 900;
     }
 
@@ -919,7 +990,8 @@
       border: 0;
       border-radius: 14px;
 
-      padding: 11px 18px;
+      padding:
+        11px 18px;
 
       background: white;
 
@@ -936,7 +1008,9 @@
 
     .exactButtons {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
 
       gap: 9px;
 
@@ -947,7 +1021,8 @@
       border: 0;
       border-radius: 15px;
 
-      padding: 13px 0;
+      padding:
+        13px 0;
 
       background: white;
 
@@ -962,7 +1037,9 @@
        小さい横画面
     ===================================================== */
 
-    @media (orientation: landscape) and (max-height: 520px) {
+    @media
+      (orientation: landscape)
+      and (max-height: 520px) {
 
       #app {
         padding: 4px;
@@ -973,7 +1050,8 @@
       }
 
       .gameArea {
-        height: calc(100vh - 44px);
+        height:
+          calc(100vh - 44px);
 
         margin-top: 4px;
 
@@ -995,15 +1073,21 @@
       }
 
       .space {
-        width: clamp(24px, 3vw, 36px);
-        height: clamp(24px, 3vw, 36px);
+        width:
+          clamp(24px, 3vw, 36px);
+
+        height:
+          clamp(24px, 3vw, 36px);
 
         border-radius: 9px;
       }
 
       .space.goal {
-        width: clamp(32px, 4vw, 45px);
-        height: clamp(32px, 4vw, 45px);
+        width:
+          clamp(32px, 4vw, 45px);
+
+        height:
+          clamp(32px, 4vw, 45px);
       }
 
       #diceDisplay {
@@ -1013,7 +1097,8 @@
       }
 
       #rollButton {
-        padding: 7px 5px;
+        padding:
+          7px 5px;
 
         font-size: 15px;
       }
@@ -1031,7 +1116,8 @@
       }
 
       .itemButton {
-        padding: 3px 5px;
+        padding:
+          3px 5px;
 
         font-size: 9px;
       }
@@ -1054,9 +1140,11 @@
 
     <div class="rotateBox">
 
-      📱 ↻<br><br>
+      📱 ↻
+      <br><br>
 
-      よこむきにして<br>
+      よこむきにして
+      <br>
       あそんでね！
 
     </div>
@@ -1065,7 +1153,7 @@
 
 
   <!-- =====================================================
-       音選択画面
+       音選択
   ====================================================== -->
 
   <div id="soundScreen">
@@ -1088,7 +1176,7 @@
 
 
   <!-- =====================================================
-       ゲーム本体
+       ゲーム
   ====================================================== -->
 
   <div id="app">
@@ -1116,9 +1204,7 @@
     <div class="gameArea">
 
 
-      <!-- =================================================
-           マップ
-      ================================================== -->
+      <!-- マップ -->
 
       <div id="boardWrap">
 
@@ -1156,14 +1242,10 @@
       </div>
 
 
-      <!-- =================================================
-           右UI
-      ================================================== -->
+      <!-- 右UI -->
 
       <div class="sidePanel">
 
-
-        <!-- プレイヤー -->
 
         <div class="panelBox playersBox">
 
@@ -1215,8 +1297,6 @@
         </div>
 
 
-        <!-- メッセージ -->
-
         <div
           id="messageBox"
           class="panelBox"
@@ -1224,8 +1304,6 @@
           🚀 チャレンジャーのばん！
         </div>
 
-
-        <!-- サイコロ -->
 
         <div class="panelBox dicePanel">
 
@@ -1246,8 +1324,6 @@
 
         </div>
 
-
-        <!-- アイテム -->
 
         <div class="panelBox">
 
@@ -1367,12 +1443,29 @@
 
       <div class="exactButtons">
 
-        <button class="exactButton" data-value="1">1</button>
-        <button class="exactButton" data-value="2">2</button>
-        <button class="exactButton" data-value="3">3</button>
-        <button class="exactButton" data-value="4">4</button>
-        <button class="exactButton" data-value="5">5</button>
-        <button class="exactButton" data-value="6">6</button>
+        <button class="exactButton" data-value="1">
+          1
+        </button>
+
+        <button class="exactButton" data-value="2">
+          2
+        </button>
+
+        <button class="exactButton" data-value="3">
+          3
+        </button>
+
+        <button class="exactButton" data-value="4">
+          4
+        </button>
+
+        <button class="exactButton" data-value="5">
+          5
+        </button>
+
+        <button class="exactButton" data-value="6">
+          6
+        </button>
 
       </div>
 
@@ -1382,7 +1475,7 @@
 
 
   <!-- =====================================================
-       外部データ
+       データ
   ====================================================== -->
 
   <script src="./sounds.js"></script>
@@ -1392,7 +1485,7 @@
   <script>
 
     /* =====================================================
-       基本データ
+       基本
     ===================================================== */
 
     let ALL_WORDS = [];
@@ -1451,7 +1544,6 @@
         id: "plus3",
         icon: "🚀",
         name: "3マスすすむ",
-        short: "+3",
         weight: 28
       },
 
@@ -1459,7 +1551,6 @@
         id: "double",
         icon: "🎲🎲",
         name: "ダブルサイコロ",
-        short: "ダブル",
         weight: 22
       },
 
@@ -1467,7 +1558,6 @@
         id: "barrier",
         icon: "🛡️",
         name: "バリア",
-        short: "バリア",
         weight: 18
       },
 
@@ -1475,7 +1565,6 @@
         id: "exact",
         icon: "🎯",
         name: "ぴったりサイコロ",
-        short: "ぴったり",
         weight: 14
       },
 
@@ -1483,7 +1572,6 @@
         id: "swap",
         icon: "🔄",
         name: "いれかえ",
-        short: "交換",
         weight: 8
       },
 
@@ -1491,7 +1579,6 @@
         id: "back3",
         icon: "🌀",
         name: "相手を3マスもどす",
-        short: "戻す",
         weight: 6
       },
 
@@ -1499,7 +1586,6 @@
         id: "again",
         icon: "🎲",
         name: "もう1回",
-        short: "もう1回",
         weight: 4
       }
 
@@ -1596,66 +1682,85 @@
 
       soundButtons.innerHTML = "";
 
+
       if (
         typeof SOUND_LIST === "undefined" ||
         !Array.isArray(SOUND_LIST) ||
         SOUND_LIST.length === 0
       ) {
 
-        soundButtons.innerHTML =
+        soundButtons.textContent =
           "sounds.js が読み込めません";
 
         return;
       }
 
 
-      SOUND_LIST.forEach(sound => {
+      SOUND_LIST.forEach(
+        sound => {
 
-        const button =
-          document.createElement("button");
+          const button =
+            document.createElement("button");
 
-        button.className =
-          "soundButton";
 
-        button.textContent =
-          sound.label;
+          button.className =
+            "soundButton";
 
-        button.addEventListener(
-          "click",
-          () => {
 
-            loadSound(sound);
+          button.textContent =
+            sound.label;
 
-          }
-        );
 
-        soundButtons.appendChild(button);
+          button.addEventListener(
+            "click",
+            () => {
 
-      });
+              loadSound(sound);
+
+            }
+          );
+
+
+          soundButtons.appendChild(
+            button
+          );
+
+        }
+      );
 
     }
 
 
-    async function loadSound(sound) {
+    function loadSound(sound) {
 
-      currentSound = sound;
+      currentSound =
+        sound;
 
-      window.WORD_DATA = null;
+
+      window.WORD_DATA =
+        null;
 
 
       const oldScript =
-        document.getElementById("wordDataScript");
+        document.getElementById(
+          "wordDataScript"
+        );
+
 
       if (oldScript) {
+
         oldScript.remove();
+
       }
 
 
       const script =
         document.createElement("script");
 
+
       script.id =
         "wordDataScript";
+
 
       script.src =
         sound.file +
@@ -1677,6 +1782,7 @@
 
           }
 
+
           const data =
             window.WORD_DATA;
 
@@ -1684,19 +1790,24 @@
           ALL_WORDS = [
 
             ...(data.start || []),
+
             ...(data.end || []),
+
             ...(data.middle || [])
 
           ];
 
 
-          if (ALL_WORDS.length === 0) {
+          if (
+            ALL_WORDS.length === 0
+          ) {
 
             alert(
               "Wordが入っていません"
             );
 
             return;
+
           }
 
 
@@ -1716,7 +1827,9 @@
         };
 
 
-      document.body.appendChild(script);
+      document.body.appendChild(
+        script
+      );
 
     }
 
@@ -1738,6 +1851,7 @@
         );
 
         return;
+
       }
 
 
@@ -1761,6 +1875,7 @@
       soundScreen.style.display =
         "none";
 
+
       app.style.display =
         "block";
 
@@ -1774,27 +1889,29 @@
 
     function resetPlayers() {
 
-      players.forEach(player => {
+      players.forEach(
+        player => {
 
-        player.node =
-          "start";
+          player.node =
+            "start";
 
-        player.history =
-          ["start"];
+          player.history =
+            ["start"];
 
-        player.items =
-          [];
+          player.items =
+            [];
 
-        player.skip =
-          false;
+          player.skip =
+            false;
 
-        player.double =
-          false;
+          player.double =
+            false;
 
-        player.exact =
-          false;
+          player.exact =
+            false;
 
-      });
+        }
+      );
 
     }
 
@@ -1806,7 +1923,8 @@
     function getNode(id) {
 
       return MAP_DATA.nodes.find(
-        node => node.id === id
+        node =>
+          node.id === id
       );
 
     }
@@ -1814,98 +1932,104 @@
 
     function createBoard() {
 
-      /*
-        linkLayer以外の古いマスを消す
-      */
-
       board
         .querySelectorAll(".space")
-        .forEach(element => element.remove());
+        .forEach(
+          element =>
+            element.remove()
+        );
 
 
-      linkLayer.innerHTML = "";
+      linkLayer.innerHTML =
+        "";
 
 
-      /*
-        50マスを作る
-      */
+      MAP_DATA.nodes.forEach(
+        node => {
 
-      MAP_DATA.nodes.forEach(node => {
-
-        const space =
-          document.createElement("div");
+          const space =
+            document.createElement("div");
 
 
-        space.className =
-          "space " +
-          (node.type || "normal");
+          space.className =
+            "space " +
+            (node.type || "normal");
 
 
-        space.id =
-          "space-" +
-          node.id;
+          space.id =
+            "space-" +
+            node.id;
 
 
-        space.style.left =
-          node.x + "%";
-
-        space.style.top =
-          node.y + "%";
+          space.style.left =
+            node.x + "%";
 
 
-        /*
-          マス表示
-        */
+          space.style.top =
+            node.y + "%";
 
-        if (node.type === "item") {
 
-          space.innerHTML =
-            "🎁";
+          if (
+            node.type === "item"
+          ) {
+
+            space.textContent =
+              "🎁";
+
+          }
+
+          else if (
+            node.type === "event"
+          ) {
+
+            space.textContent =
+              "🌠";
+
+          }
+
+          else if (
+            node.type === "rest"
+          ) {
+
+            space.textContent =
+              "💤";
+
+          }
+
+          else {
+
+            space.textContent =
+              node.label;
+
+          }
+
+
+          const pieces =
+            document.createElement(
+              "div"
+            );
+
+
+          pieces.className =
+            "pieces";
+
+
+          pieces.id =
+            "pieces-" +
+            node.id;
+
+
+          space.appendChild(
+            pieces
+          );
+
+
+          board.appendChild(
+            space
+          );
 
         }
-
-        else if (node.type === "event") {
-
-          space.innerHTML =
-            "🌠";
-
-        }
-
-        else if (node.type === "rest") {
-
-          space.innerHTML =
-            "💤";
-
-        }
-
-        else {
-
-          space.textContent =
-            node.label;
-
-        }
-
-
-        /*
-          コマ置き場
-        */
-
-        const pieces =
-          document.createElement("div");
-
-        pieces.className =
-          "pieces";
-
-        pieces.id =
-          "pieces-" +
-          node.id;
-
-
-        space.appendChild(pieces);
-
-        board.appendChild(space);
-
-      });
+      );
 
 
       drawConnections();
@@ -1916,116 +2040,142 @@
 
 
     /* =====================================================
-       道を描く
+       道
     ===================================================== */
 
     function drawConnections() {
 
-      linkLayer.innerHTML = "";
+      linkLayer.innerHTML =
+        "";
 
 
-      MAP_DATA.links.forEach(link => {
+      MAP_DATA.links.forEach(
+        link => {
 
-        const from =
-          getNode(link[0]);
-
-        const to =
-          getNode(link[1]);
-
-
-        if (!from || !to) {
-          return;
-        }
+          const from =
+            getNode(
+              link[0]
+            );
 
 
-        const line =
-          document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "line"
+          const to =
+            getNode(
+              link[1]
+            );
+
+
+          if (
+            !from ||
+            !to
+          ) {
+
+            return;
+
+          }
+
+
+          const line =
+            document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "line"
+            );
+
+
+          line.setAttribute(
+            "x1",
+            from.x
+          );
+
+          line.setAttribute(
+            "y1",
+            from.y
+          );
+
+          line.setAttribute(
+            "x2",
+            to.x
+          );
+
+          line.setAttribute(
+            "y2",
+            to.y
+          );
+
+          line.setAttribute(
+            "class",
+            "pathLine"
           );
 
 
-        line.setAttribute(
-          "x1",
-          from.x
-        );
+          linkLayer.appendChild(
+            line
+          );
 
-        line.setAttribute(
-          "y1",
-          from.y
-        );
-
-        line.setAttribute(
-          "x2",
-          to.x
-        );
-
-        line.setAttribute(
-          "y2",
-          to.y
-        );
-
-        line.setAttribute(
-          "class",
-          "pathLine"
-        );
-
-
-        linkLayer.appendChild(line);
-
-      });
+        }
+      );
 
     }
 
 
     /* =====================================================
-       コマ表示
+       コマ
     ===================================================== */
 
     function renderPieces() {
 
       document
         .querySelectorAll(".pieces")
-        .forEach(container => {
+        .forEach(
+          container => {
 
-          container.innerHTML = "";
+            container.innerHTML =
+              "";
 
-        });
+          }
+        );
 
 
-      players.forEach(player => {
+      players.forEach(
+        player => {
 
-        const container =
-          document.getElementById(
-            "pieces-" +
-            player.node
+          const container =
+            document.getElementById(
+              "pieces-" +
+              player.node
+            );
+
+
+          if (!container) {
+            return;
+          }
+
+
+          const piece =
+            document.createElement(
+              "span"
+            );
+
+
+          piece.className =
+            "piece";
+
+
+          piece.textContent =
+            player.icon;
+
+
+          container.appendChild(
+            piece
           );
 
-
-        if (!container) {
-          return;
         }
-
-
-        const piece =
-          document.createElement("span");
-
-        piece.className =
-          "piece";
-
-        piece.textContent =
-          player.icon;
-
-
-        container.appendChild(piece);
-
-      });
+      );
 
     }
 
 
     /* =====================================================
-       UI更新
+       UI
     ===================================================== */
 
     function updateUI() {
@@ -2047,7 +2197,9 @@
 
 
           const node =
-            getNode(player.node);
+            getNode(
+              player.node
+            );
 
 
           document.getElementById(
@@ -2079,12 +2231,44 @@
       renderInventory();
 
 
-      if (!moving && !gameEnded) {
+      if (
+        !moving &&
+        !gameEnded
+      ) {
 
         rollButton.disabled =
           false;
 
       }
+
+    }
+
+
+    function updatePositionsOnly() {
+
+      players.forEach(
+        (player, index) => {
+
+          const node =
+            getNode(
+              player.node
+            );
+
+
+          document.getElementById(
+            "playerPosition" +
+            index
+          ).textContent =
+            node
+              ? (
+                  node.id === "start"
+                    ? "START"
+                    : node.progress + "マス"
+                )
+              : "";
+
+        }
+      );
 
     }
 
@@ -2095,28 +2279,39 @@
 
     function renderInventory() {
 
-      inventory.innerHTML = "";
+      inventory.innerHTML =
+        "";
 
 
       const player =
         players[currentPlayer];
 
 
-      if (player.items.length === 0) {
+      if (
+        player.items.length === 0
+      ) {
 
         const empty =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
+
 
         empty.className =
           "inventoryEmpty";
+
 
         empty.textContent =
           "アイテムなし";
 
 
-        inventory.appendChild(empty);
+        inventory.appendChild(
+          empty
+        );
+
 
         return;
+
       }
 
 
@@ -2124,14 +2319,16 @@
         (item, index) => {
 
           const button =
-            document.createElement("button");
+            document.createElement(
+              "button"
+            );
 
 
           button.className =
             "itemButton";
 
 
-          button.innerHTML =
+          button.textContent =
             item.icon +
             " " +
             item.name;
@@ -2152,7 +2349,9 @@
           );
 
 
-          inventory.appendChild(button);
+          inventory.appendChild(
+            button
+          );
 
         }
       );
@@ -2187,22 +2386,31 @@
 
       return new Promise(
         resolve =>
-          setTimeout(resolve, ms)
+          setTimeout(
+            resolve,
+            ms
+          )
       );
 
     }
 
 
+    /*
+       普通のサイコロ
+       約1.2秒コロコロ
+    */
+
     async function animateOneDice() {
 
-      diceDisplay.innerHTML = `
-        <span
-          id="rollingDice1"
-          class="diceSingle diceRolling"
-        >
-          ⚀
-        </span>
-      `;
+      diceDisplay.innerHTML =
+        `
+          <span
+            id="rollingDice1"
+            class="diceSingle diceRolling"
+          >
+            ⚀
+          </span>
+        `;
 
 
       const dice =
@@ -2222,17 +2430,23 @@
 
 
             dice.textContent =
-              getDiceFace(temporary);
+              getDiceFace(
+                temporary
+              );
 
           },
           80
         );
 
 
-      await wait(1200);
+      await wait(
+        1200
+      );
 
 
-      clearInterval(interval);
+      clearInterval(
+        interval
+      );
 
 
       const result =
@@ -2247,10 +2461,18 @@
 
 
       dice.textContent =
-        getDiceFace(result);
+        getDiceFace(
+          result
+        );
 
 
-      await wait(500);
+      /*
+         結果を少し見せる
+      */
+
+      await wait(
+        500
+      );
 
 
       return result;
@@ -2258,29 +2480,35 @@
     }
 
 
+    /*
+       ダブルサイコロ
+    */
+
     async function animateTwoDice() {
 
-      diceDisplay.innerHTML = `
-        <span
-          id="rollingDice1"
-          class="diceSingle diceRolling"
-        >
-          ⚀
-        </span>
+      diceDisplay.innerHTML =
+        `
+          <span
+            id="rollingDice1"
+            class="diceSingle diceRolling"
+          >
+            ⚀
+          </span>
 
-        <span
-          id="rollingDice2"
-          class="diceSingle diceRolling"
-        >
-          ⚀
-        </span>
-      `;
+          <span
+            id="rollingDice2"
+            class="diceSingle diceRolling"
+          >
+            ⚀
+          </span>
+        `;
 
 
       const dice1 =
         document.getElementById(
           "rollingDice1"
         );
+
 
       const dice2 =
         document.getElementById(
@@ -2312,16 +2540,21 @@
         );
 
 
-      await wait(1400);
+      await wait(
+        1400
+      );
 
 
-      clearInterval(interval);
+      clearInterval(
+        interval
+      );
 
 
       const result1 =
         Math.floor(
           Math.random() * 6
         ) + 1;
+
 
       const result2 =
         Math.floor(
@@ -2333,19 +2566,27 @@
         "diceRolling"
       );
 
+
       dice2.classList.remove(
         "diceRolling"
       );
 
 
       dice1.textContent =
-        getDiceFace(result1);
+        getDiceFace(
+          result1
+        );
+
 
       dice2.textContent =
-        getDiceFace(result2);
+        getDiceFace(
+          result2
+        );
 
 
-      await wait(600);
+      await wait(
+        600
+      );
 
 
       return [
@@ -2368,14 +2609,18 @@
           moving ||
           gameEnded
         ) {
+
           return;
+
         }
 
 
         moving = true;
 
+
         rollButton.disabled =
           true;
+
 
         renderInventory();
 
@@ -2385,20 +2630,27 @@
 
 
         /*
-          ぴったりサイコロ
+           ぴったりサイコロ
         */
 
-        if (player.exact) {
+        if (
+          player.exact
+        ) {
 
           player.exact =
             false;
+
 
           const number =
             await chooseExactNumber();
 
 
           diceDisplay.innerHTML =
-            `<span class="diceSingle">${getDiceFace(number)}</span>`;
+            `
+              <span class="diceSingle">
+                ${getDiceFace(number)}
+              </span>
+            `;
 
 
           messageBox.textContent =
@@ -2407,7 +2659,10 @@
             "マスすすむ！";
 
 
-          await wait(500);
+          await wait(
+            500
+          );
+
 
           await moveForward(
             player,
@@ -2415,15 +2670,19 @@
             true
           );
 
+
           return;
+
         }
 
 
         /*
-          ダブル
+           ダブルサイコロ
         */
 
-        if (player.double) {
+        if (
+          player.double
+        ) {
 
           player.double =
             false;
@@ -2451,7 +2710,9 @@
             "！";
 
 
-          await wait(450);
+          await wait(
+            450
+          );
 
 
           await moveForward(
@@ -2460,12 +2721,14 @@
             true
           );
 
+
           return;
+
         }
 
 
         /*
-          普通のサイコロ
+           普通
         */
 
         messageBox.textContent =
@@ -2481,7 +2744,9 @@
           "がでた！";
 
 
-        await wait(450);
+        await wait(
+          450
+        );
 
 
         await moveForward(
@@ -2508,7 +2773,9 @@
 
 
       if (!link) {
+
         return null;
+
       }
 
 
@@ -2536,7 +2803,9 @@
 
 
         if (!next) {
+
           break;
+
         }
 
 
@@ -2554,12 +2823,23 @@
         updatePositionsOnly();
 
 
-        await wait(300);
+        /*
+           1マスずつ動く
+        */
+
+        await wait(
+          300
+        );
 
 
-        if (next === "goal") {
+        if (
+          next === "goal"
+        ) {
 
-          await goalReached(player);
+          await goalReached(
+            player
+          );
+
 
           return;
 
@@ -2568,46 +2848,25 @@
       }
 
 
-      if (doLanding) {
+      if (
+        doLanding
+      ) {
 
-        await landing(player);
+        await landing(
+          player
+        );
 
       }
 
       else {
 
-        moving = false;
+        moving =
+          false;
+
 
         updateUI();
 
       }
-
-    }
-
-
-    function updatePositionsOnly() {
-
-      players.forEach(
-        (player, index) => {
-
-          const node =
-            getNode(player.node);
-
-
-          document.getElementById(
-            "playerPosition" +
-            index
-          ).textContent =
-            node
-              ? (
-                  node.id === "start"
-                    ? "START"
-                    : node.progress + "マス"
-                )
-              : "";
-
-        }
-      );
 
     }
 
@@ -2630,7 +2889,9 @@
         if (
           player.history.length <= 1
         ) {
+
           break;
+
         }
 
 
@@ -2648,7 +2909,9 @@
         updatePositionsOnly();
 
 
-        await wait(300);
+        await wait(
+          300
+        );
 
       }
 
@@ -2662,18 +2925,24 @@
     async function landing(player) {
 
       const node =
-        getNode(player.node);
+        getNode(
+          player.node
+        );
 
 
       /*
-        どのマスでも発音
+         全マスで発音
       */
 
       await practice();
 
 
-      if (gameEnded) {
+      if (
+        gameEnded
+      ) {
+
         return;
+
       }
 
 
@@ -2682,36 +2951,31 @@
         finishTurn();
 
         return;
-      }
-
-
-      /*
-        アイテム
-      */
-
-      if (node.type === "item") {
-
-        await itemLanding(player);
 
       }
 
 
-      /*
-        宇宙イベント
-      */
+      if (
+        node.type === "item"
+      ) {
 
-      else if (node.type === "event") {
+        await itemLanding(
+          player
+        );
+
+      }
+
+      else if (
+        node.type === "event"
+      ) {
 
         await eventLanding();
 
       }
 
-
-      /*
-        1回休み
-      */
-
-      else if (node.type === "rest") {
+      else if (
+        node.type === "rest"
+      ) {
 
         player.skip =
           true;
@@ -2742,18 +3006,30 @@
       ) {
 
         return {
+
           word: item,
-          image: getWordPicture(item)
+
+          image:
+            getWordPicture(
+              item
+            )
+
         };
 
       }
 
 
       return {
-        word: item.word || "",
+
+        word:
+          item.word || "",
+
         image:
           item.image ||
-          getWordPicture(item.word)
+          getWordPicture(
+            item.word
+          )
+
       };
 
     }
@@ -2852,7 +3128,9 @@
 
 
           const item =
-            normalizeWord(raw);
+            normalizeWord(
+              raw
+            );
 
 
           practicePicture.textContent =
@@ -2905,16 +3183,20 @@
     async function itemLanding(player) {
 
       /*
-        8％で横どり
+         8%で横どり
       */
 
       if (
         Math.random() < 0.08
       ) {
 
-        await stealItem(player);
+        await stealItem(
+          player
+        );
+
 
         return;
+
       }
 
 
@@ -2931,7 +3213,9 @@
           "アイテムは3こまで！"
         );
 
+
         return;
+
       }
 
 
@@ -2973,7 +3257,9 @@
           item.weight;
 
 
-        if (random <= 0) {
+        if (
+          random <= 0
+        ) {
 
           return item;
 
@@ -3008,7 +3294,9 @@
         );
 
 
-      if (barrierIndex >= 0) {
+      if (
+        barrierIndex >= 0
+      ) {
 
         opponent.items.splice(
           barrierIndex,
@@ -3022,7 +3310,9 @@
           "のバリアが横どりを防いだ！"
         );
 
+
         return;
+
       }
 
 
@@ -3035,7 +3325,9 @@
           "でも相手はアイテムを持っていなかった！"
         );
 
+
         return;
+
       }
 
 
@@ -3048,7 +3340,9 @@
           "でもアイテムがいっぱい！"
         );
 
+
         return;
+
       }
 
 
@@ -3092,7 +3386,9 @@
         moving ||
         gameEnded
       ) {
+
         return;
+
       }
 
 
@@ -3105,12 +3401,14 @@
 
 
       if (!item) {
+
         return;
+
       }
 
 
       /*
-        バリアは自動使用なので押せない
+         バリアは自動
       */
 
       if (
@@ -3122,7 +3420,9 @@
           "攻撃されたとき自動で使います"
         );
 
+
         return;
+
       }
 
 
@@ -3132,16 +3432,19 @@
       );
 
 
-      moving = true;
+      moving =
+        true;
+
 
       rollButton.disabled =
         true;
+
 
       renderInventory();
 
 
       /*
-        +3
+         3マス進む
       */
 
       if (
@@ -3158,12 +3461,14 @@
           true
         );
 
+
         return;
+
       }
 
 
       /*
-        ダブル
+         ダブル
       */
 
       if (
@@ -3174,7 +3479,8 @@
           true;
 
 
-        moving = false;
+        moving =
+          false;
 
 
         messageBox.textContent =
@@ -3183,12 +3489,14 @@
 
         updateUI();
 
+
         return;
+
       }
 
 
       /*
-        ぴったり
+         ぴったり
       */
 
       if (
@@ -3199,7 +3507,8 @@
           true;
 
 
-        moving = false;
+        moving =
+          false;
 
 
         messageBox.textContent =
@@ -3208,12 +3517,14 @@
 
         updateUI();
 
+
         return;
+
       }
 
 
       /*
-        入れ替え
+         入れ替え
       */
 
       if (
@@ -3231,12 +3542,14 @@
 
         finishTurn();
 
+
         return;
+
       }
 
 
       /*
-        相手を3マス戻す
+         相手を3マス戻す
       */
 
       if (
@@ -3294,12 +3607,14 @@
 
         finishTurn();
 
+
         return;
+
       }
 
 
       /*
-        もう1回
+         もう1回
       */
 
       if (
@@ -3310,7 +3625,8 @@
           true;
 
 
-        moving = false;
+        moving =
+          false;
 
 
         messageBox.textContent =
@@ -3319,11 +3635,15 @@
 
         updateUI();
 
+
         return;
+
       }
 
 
-      moving = false;
+      moving =
+        false;
+
 
       updateUI();
 
@@ -3339,6 +3659,7 @@
       const aNode =
         players[0].node;
 
+
       const aHistory =
         [...players[0].history];
 
@@ -3346,12 +3667,14 @@
       players[0].node =
         players[1].node;
 
+
       players[0].history =
         [...players[1].history];
 
 
       players[1].node =
         aNode;
+
 
       players[1].history =
         aHistory;
@@ -3373,27 +3696,47 @@
       const events = [
 
         {
-          title: "🌀 ワームホール！",
-          text: "ふたりとも5マスすすむ！",
-          amount: 5
+          title:
+            "🌀 ワームホール！",
+
+          text:
+            "ふたりとも5マスすすむ！",
+
+          amount:
+            5
         },
 
         {
-          title: "☄️ いん石！",
-          text: "ふたりとも3マスもどる！",
-          amount: -3
+          title:
+            "☄️ いん石！",
+
+          text:
+            "ふたりとも3マスもどる！",
+
+          amount:
+            -3
         },
 
         {
-          title: "🌟 スーパースター！",
-          text: "ふたりとも2マスすすむ！",
-          amount: 2
+          title:
+            "🌟 スーパースター！",
+
+          text:
+            "ふたりとも2マスすすむ！",
+
+          amount:
+            2
         },
 
         {
-          title: "🌑 宇宙のゆらぎ！",
-          text: "ふたりとも1マスもどる！",
-          amount: -1
+          title:
+            "🌑 宇宙のゆらぎ！",
+
+          text:
+            "ふたりとも1マスもどる！",
+
+          amount:
+            -1
         }
 
       ];
@@ -3469,7 +3812,9 @@
 
 
         if (!next) {
+
           break;
+
         }
 
 
@@ -3487,7 +3832,9 @@
         updatePositionsOnly();
 
 
-        await wait(230);
+        await wait(
+          230
+        );
 
 
         if (
@@ -3497,6 +3844,7 @@
           await goalReached(
             player
           );
+
 
           return;
 
@@ -3513,15 +3861,22 @@
 
     function finishTurn() {
 
-      if (gameEnded) {
+      if (
+        gameEnded
+      ) {
+
         return;
+
       }
 
 
-      moving = false;
+      moving =
+        false;
 
 
-      if (extraTurn) {
+      if (
+        extraTurn
+      ) {
 
         extraTurn =
           false;
@@ -3534,7 +3889,9 @@
 
         updateUI();
 
+
         return;
+
       }
 
 
@@ -3548,11 +3905,9 @@
         players[currentPlayer];
 
 
-      /*
-        1回休み
-      */
-
-      if (player.skip) {
+      if (
+        player.skip
+      ) {
 
         player.skip =
           false;
@@ -3576,7 +3931,9 @@
 
         updateUI();
 
+
         return;
+
       }
 
 
@@ -3634,7 +3991,7 @@
 
 
     /* =====================================================
-       情報モーダル
+       情報
     ===================================================== */
 
     function showInfo(
@@ -3647,6 +4004,7 @@
 
           infoTitle.textContent =
             title;
+
 
           infoText.textContent =
             text;
@@ -3760,13 +4118,18 @@
       "click",
       () => {
 
-        if (moving) {
+        if (
+          moving
+        ) {
+
           return;
+
         }
 
 
         app.style.display =
           "none";
+
 
         soundScreen.style.display =
           "flex";
