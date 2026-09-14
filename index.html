@@ -2,1087 +2,1043 @@
 <html lang="ja">
 
 <head>
+  <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
->
+  <title>発音すごろく</title>
 
-<title>発音すごろく</title>
+  <style>
 
-<style>
+    /* =====================================================
+       基本
+    ===================================================== */
 
-/* =========================================================
-   基本
-========================================================= */
+    * {
+      box-sizing: border-box;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Hiragino Sans",
+        "Yu Gothic",
+        sans-serif;
 
-html,
-body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-}
+      background:
+        radial-gradient(circle at 30% 20%, #26336f 0%, #11183d 35%, #070b21 100%);
 
-body{
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Hiragino Kaku Gothic ProN",
-    "Yu Gothic",
-    sans-serif;
+      color: white;
+    }
 
-  color:white;
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
 
-  background:
-    radial-gradient(circle at 10% 20%,white 0 1px,transparent 2px),
-    radial-gradient(circle at 70% 30%,white 0 1px,transparent 2px),
-    radial-gradient(circle at 35% 80%,white 0 1px,transparent 2px),
-    linear-gradient(#102a61,#030818);
 
-  background-size:
-    100px 100px,
-    150px 150px,
-    190px 190px,
-    auto;
-}
+    /* =====================================================
+       星空
+    ===================================================== */
 
-button{
-  font:inherit;
-  touch-action:manipulation;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
 
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.95) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.65) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.45) 1px, transparent 1px);
 
-/* =========================================================
-   起動画面
-========================================================= */
+      background-size:
+        55px 55px,
+        85px 85px,
+        120px 120px;
 
-#soundScreen{
-  position:fixed;
-  inset:0;
-  z-index:1000;
+      background-position:
+        0 0,
+        25px 40px,
+        60px 10px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+      opacity: .55;
+    }
 
-  padding:20px;
 
-  background:
-    radial-gradient(
-      circle at 50% 30%,
-      #224995,
-      #07132e 50%,
-      #020713 100%
-    );
-}
+    /* =====================================================
+       縦画面
+    ===================================================== */
 
-.soundBox{
-  width:min(92vw,650px);
+    #rotateMessage {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
 
-  padding:24px;
+      display: none;
+      align-items: center;
+      justify-content: center;
 
-  border-radius:24px;
+      padding: 30px;
 
-  background:
-    rgba(255,255,255,.12);
+      background: #080d27;
 
-  border:
-    1px solid rgba(255,255,255,.22);
+      text-align: center;
+    }
 
-  backdrop-filter:blur(10px);
+    #rotateMessage .rotateBox {
+      background: rgba(255,255,255,.1);
 
-  text-align:center;
+      border: 2px solid rgba(255,255,255,.3);
+      border-radius: 24px;
 
-  box-shadow:
-    0 20px 80px rgba(0,0,0,.45);
-}
+      padding: 28px;
 
-.soundBox h1{
-  margin:0 0 5px;
-  font-size:30px;
-}
+      font-size: 22px;
+      font-weight: 900;
+    }
 
-.soundSub{
-  margin-bottom:20px;
-  color:#dbe7ff;
-  font-size:14px;
-}
+    @media (orientation: portrait) {
+      #rotateMessage {
+        display: flex;
+      }
+    }
 
-#soundButtons{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(90px,1fr));
 
-  gap:10px;
-}
+    /* =====================================================
+       音選択
+    ===================================================== */
 
-.soundButton{
-  min-height:76px;
+    #soundScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
 
-  border:0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  border-radius:17px;
+      padding: 20px;
+    }
 
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff,
-      #dfeaff
-    );
+    .soundPanel {
+      width: min(680px, 92vw);
 
-  color:#10244a;
+      padding: 28px;
 
-  font-size:30px;
-  font-weight:bold;
+      border-radius: 28px;
 
-  box-shadow:
-    0 5px 0 #97acd8;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(33,47,105,.97),
+          rgba(16,23,64,.97)
+        );
 
-  cursor:pointer;
-}
+      border: 2px solid rgba(255,255,255,.22);
 
-.soundButton:active{
-  transform:translateY(3px);
-  box-shadow:
-    0 2px 0 #97acd8;
-}
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.5);
 
-.soundButton small{
-  display:block;
-  margin-top:4px;
+      text-align: center;
+    }
 
-  font-size:10px;
-  font-weight:normal;
+    .soundTitle {
+      margin-bottom: 6px;
 
-  color:#60729a;
-}
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 1000;
+    }
 
-.soundButton:disabled{
-  opacity:.4;
-}
+    .soundSubtitle {
+      margin-bottom: 24px;
 
+      opacity: .8;
 
-/* =========================================================
-   アプリ
-========================================================= */
+      font-size: 15px;
+      font-weight: 700;
+    }
 
-#app{
-  display:none;
+    #soundButtons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
 
-  width:100vw;
-  height:100dvh;
+      gap: 14px;
+    }
 
-  flex-direction:column;
+    .soundButton {
+      min-width: 110px;
+      min-height: 80px;
 
-  padding:
-    max(3px,env(safe-area-inset-top))
-    max(4px,env(safe-area-inset-right))
-    max(3px,env(safe-area-inset-bottom))
-    max(4px,env(safe-area-inset-left));
-}
+      border: 0;
+      border-radius: 22px;
 
+      background:
+        linear-gradient(
+          180deg,
+          #fff,
+          #dce8ff
+        );
 
-/* =========================================================
-   上部
-========================================================= */
+      color: #17255f;
 
-.topBar{
-  height:30px;
-  flex:0 0 30px;
+      font-size: 34px;
+      font-weight: 1000;
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+      box-shadow:
+        0 7px 0 #9eb4e3,
+        0 14px 26px rgba(0,0,0,.28);
+    }
 
-  padding:0 5px;
-}
+    .soundButton:active {
+      transform: translateY(5px);
+      box-shadow:
+        0 2px 0 #9eb4e3;
+    }
 
-.titleArea{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
 
-.topBar h1{
-  margin:0;
-  font-size:15px;
-}
+    /* =====================================================
+       アプリ全体
+    ===================================================== */
 
-.targetBadge{
-  padding:3px 8px;
+    #app {
+      position: relative;
+      z-index: 2;
 
-  border-radius:20px;
+      display: none;
 
-  background:#ffd84d;
-  color:#172448;
+      width: 100vw;
+      height: 100vh;
 
-  font-size:11px;
-  font-weight:bold;
-}
+      padding: 6px;
+    }
 
-.changeSoundButton{
-  border:
-    1px solid rgba(255,255,255,.35);
 
-  border-radius:7px;
+    /* =====================================================
+       上部
+    ===================================================== */
 
-  padding:3px 7px;
+    .topBar {
+      height: 44px;
 
-  background:
-    rgba(255,255,255,.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-  color:white;
+      gap: 8px;
 
-  font-size:9px;
-}
+      padding: 0 8px;
 
+      background: rgba(8,14,47,.86);
 
-/* =========================================================
-   メイン
-========================================================= */
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
 
-.gameArea{
-  flex:1;
-  min-height:0;
+      box-shadow:
+        0 5px 16px rgba(0,0,0,.25);
+    }
 
-  display:grid;
+    .gameTitle {
+      font-size: clamp(16px, 2.2vw, 24px);
+      font-weight: 1000;
+      white-space: nowrap;
+    }
 
-  grid-template-columns:
-    minmax(0,1fr)
-    clamp(190px,24vw,250px);
+    .targetBadge {
+      padding: 6px 12px;
 
-  gap:5px;
-}
+      border-radius: 999px;
 
+      background: rgba(255,255,255,.16);
 
-/* =========================================================
-   マップ
-========================================================= */
+      font-size: 14px;
+      font-weight: 900;
+    }
 
-.mapPanel{
-  min-width:0;
-  min-height:0;
+    #changeSoundButton {
+      border: 0;
 
-  position:relative;
+      padding: 7px 12px;
 
-  overflow:hidden;
+      border-radius: 12px;
 
-  border-radius:14px;
+      background: rgba(255,255,255,.15);
 
-  background:
-    radial-gradient(
-      circle at 10% 85%,
-      rgba(40,150,255,.25),
-      transparent 18%
-    ),
-    radial-gradient(
-      circle at 82% 17%,
-      rgba(180,90,255,.20),
-      transparent 22%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(14,42,89,.95),
-      rgba(3,8,27,.98)
-    );
+      color: white;
 
-  border:
-    1px solid rgba(255,255,255,.16);
-}
+      font-size: 12px;
+      font-weight: 900;
+    }
 
 
-/* =========================================================
-   背景
-========================================================= */
+    /* =====================================================
+       盤面＋右UI
+    ===================================================== */
 
-.planetDecoration{
-  position:absolute;
-  pointer-events:none;
+    .gameArea {
+      height: calc(100vh - 56px);
 
-  opacity:.32;
+      display: grid;
 
-  z-index:0;
-}
+      grid-template-columns:
+        minmax(0, 1fr)
+        clamp(190px, 23vw, 255px);
 
-.earth{
-  left:2%;
-  bottom:1%;
-  font-size:38px;
-}
+      gap: 6px;
 
-.moon{
-  right:3%;
-  bottom:5%;
-  font-size:26px;
-}
+      margin-top: 6px;
+    }
 
-.planet{
-  right:4%;
-  top:7%;
-  font-size:31px;
-}
 
-.alienPlanet{
-  left:33%;
-  top:39%;
-  font-size:38px;
-}
+    /* =====================================================
+       盤面
+    ===================================================== */
 
+    #boardWrap {
+      position: relative;
 
-/* =========================================================
-   道
-========================================================= */
+      min-width: 0;
+      min-height: 0;
 
-#connections{
-  position:absolute;
-  inset:0;
+      overflow: hidden;
 
-  width:100%;
-  height:100%;
+      border-radius: 20px;
 
-  z-index:1;
+      border: 2px solid rgba(255,255,255,.18);
 
-  pointer-events:none;
-}
+      background:
+        radial-gradient(circle at 50% 50%, rgba(85,102,191,.18), transparent 45%),
+        linear-gradient(180deg, rgba(12,19,58,.96), rgba(5,9,31,.96));
 
-.pathLine{
-  stroke:
-    rgba(195,220,255,.52);
+      box-shadow:
+        inset 0 0 50px rgba(0,0,0,.35);
+    }
 
-  stroke-width:1.1;
+    #board {
+      position: absolute;
 
-  stroke-linecap:round;
-}
+      inset: 0;
 
-.pathLine.short{
-  stroke:#69caff;
-  stroke-width:1.5;
-}
+      width: 100%;
+      height: 100%;
+    }
 
-.pathLine.long{
-  stroke:#7fe39a;
-  stroke-width:1.5;
-}
 
+    /* =====================================================
+       背景オブジェクト
+    ===================================================== */
 
-/* =========================================================
-   マス
-========================================================= */
+    .spaceDecoration {
+      position: absolute;
 
-.space{
-  position:absolute;
+      pointer-events: none;
 
-  width:
-    clamp(
-      25px,
-      3.35vw,
-      40px
-    );
+      user-select: none;
 
-  height:
-    clamp(
-      25px,
-      3.35vw,
-      40px
-    );
+      opacity: .8;
 
-  transform:
-    translate(-50%,-50%);
+      filter:
+        drop-shadow(0 3px 4px rgba(0,0,0,.4));
+    }
 
-  z-index:2;
+    .earth {
+      left: 2%;
+      bottom: 1%;
 
-  border-radius:9px;
+      font-size: clamp(35px, 5vw, 68px);
+    }
 
-  border:
-    1.5px solid white;
+    .moon {
+      right: 3%;
+      bottom: 16%;
 
-  background:
-    linear-gradient(
-      #ffffff,
-      #e9eeff
-    );
+      font-size: clamp(26px, 4vw, 52px);
+    }
 
-  color:#10244a;
+    .planet1 {
+      right: 4%;
+      top: 4%;
 
-  box-shadow:
-    0 2px 5px rgba(0,0,0,.42);
+      font-size: clamp(30px, 4.5vw, 60px);
+    }
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+    .planet2 {
+      left: 25%;
+      top: 28%;
 
-  text-align:center;
+      font-size: clamp(26px, 4vw, 50px);
+    }
 
-  font-weight:bold;
-}
+    .goalPlanet {
+      left: 34%;
+      top: 36%;
 
-.spaceNumber{
-  font-size:
-    clamp(
-      8px,
-      .9vw,
-      11px
-    );
-}
+      font-size: clamp(34px, 5vw, 68px);
+    }
 
-.specialIcon{
-  position:absolute;
-  top:-8px;
-  right:-7px;
 
-  font-size:
-    clamp(
-      12px,
-      1.5vw,
-      18px
-    );
-}
+    /* =====================================================
+       線
+    ===================================================== */
 
-.space.item{
-  background:
-    linear-gradient(
-      #dbffe4,
-      #7ee398
-    );
+    #linkLayer {
+      position: absolute;
 
-  border-color:#baffc9;
-}
+      inset: 0;
 
-.space.event{
-  background:
-    linear-gradient(
-      #ffe1f3,
-      #ff9bcf
-    );
+      width: 100%;
+      height: 100%;
 
-  border-color:#ffc3e4;
-}
+      overflow: visible;
 
-.space.rest{
-  background:
-    linear-gradient(
-      #e0f3ff,
-      #79c9ff
-    );
+      pointer-events: none;
 
-  border-color:#bce7ff;
-}
+      z-index: 1;
+    }
 
-.space.branch{
-  background:
-    linear-gradient(
-      #fff2bb,
-      #ffc95e
-    );
+    .pathLine {
+      stroke: rgba(175,209,255,.65);
 
-  border-color:#ffe08a;
-}
+      stroke-width: .75;
 
-.space.start{
-  width:
-    clamp(
-      33px,
-      4.4vw,
-      50px
-    );
+      stroke-linecap: round;
+    }
 
-  height:
-    clamp(
-      33px,
-      4.4vw,
-      50px
-    );
 
-  background:
-    linear-gradient(
-      #dcfbff,
-      #69d7ff
-    );
-}
+    /* =====================================================
+       マス
+    ===================================================== */
 
-.space.goal{
-  width:
-    clamp(
-      34px,
-      4.5vw,
-      52px
-    );
+    .space {
+      position: absolute;
 
-  height:
-    clamp(
-      34px,
-      4.5vw,
-      52px
-    );
+      z-index: 3;
 
-  background:
-    linear-gradient(
-      #fffbb8,
-      #ffd22c
-    );
+      width: clamp(27px, 3.45vw, 43px);
+      height: clamp(27px, 3.45vw, 43px);
 
-  border-color:#fff075;
-}
+      transform: translate(-50%, -50%);
 
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-/* =========================================================
-   コマ
-========================================================= */
+      border-radius: 11px;
 
-.pieces{
-  position:absolute;
+      border: 2px solid rgba(255,255,255,.75);
 
-  left:-8px;
-  right:-8px;
-  bottom:-12px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.96),
+          rgba(201,221,255,.92)
+        );
 
-  display:flex;
-  justify-content:center;
+      color: #15245c;
 
-  white-space:nowrap;
+      font-size: clamp(8px, 1vw, 12px);
+      font-weight: 1000;
 
-  pointer-events:none;
+      box-shadow:
+        0 4px 8px rgba(0,0,0,.4);
 
-  font-size:
-    clamp(
-      16px,
-      2vw,
-      24px
-    );
-}
+      user-select: none;
+    }
 
-.pieceMoving{
-  animation:
-    jump .26s ease;
-}
+    .space.item {
+      background:
+        linear-gradient(
+          180deg,
+          #fff4b7,
+          #ffcf5a
+        );
 
-@keyframes jump{
+      border-color: #fff2a1;
+    }
 
-  0%{
-    transform:translateY(0);
-  }
+    .space.event {
+      background:
+        linear-gradient(
+          180deg,
+          #d7c4ff,
+          #8f7aff
+        );
 
-  50%{
-    transform:
-      translateY(-9px)
-      scale(1.13);
-  }
+      border-color: #efe8ff;
+    }
 
-  100%{
-    transform:translateY(0);
-  }
+    .space.rest {
+      background:
+        linear-gradient(
+          180deg,
+          #caf6ff,
+          #82d7ea
+        );
+    }
 
-}
+    .space.start {
+      background:
+        linear-gradient(
+          180deg,
+          #c6ffd7,
+          #65dc8a
+        );
 
+      color: #074b22;
 
-/* =========================================================
-   右UI
-========================================================= */
+      font-size: 8px;
+    }
 
-.sidePanel{
-  min-height:0;
+    .space.goal {
+      width: clamp(37px, 4.5vw, 56px);
+      height: clamp(37px, 4.5vw, 56px);
 
-  display:flex;
-  flex-direction:column;
+      border-radius: 50%;
 
-  gap:4px;
-}
+      background:
+        linear-gradient(
+          180deg,
+          #ffe596,
+          #ff9d3f
+        );
 
-.playerCard{
-  padding:5px 7px;
+      color: #612900;
 
-  border:
-    2px solid transparent;
+      font-size: 9px;
 
-  border-radius:11px;
+      box-shadow:
+        0 0 25px rgba(255,193,74,.8);
+    }
 
-  background:
-    rgba(255,255,255,.12);
-}
 
-.playerCard.active{
-  border-color:#ffd84d;
+    /* =====================================================
+       コマ
+    ===================================================== */
 
-  background:
-    rgba(255,255,255,.2);
-}
+    .pieces {
+      position: absolute;
 
-.playerHeader{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+      left: 50%;
+      top: 50%;
 
-.playerName{
-  font-size:
-    clamp(
-      10px,
-      1.2vw,
-      13px
-    );
+      transform: translate(-50%, -50%);
 
-  font-weight:bold;
-}
+      z-index: 6;
 
-.playerPosition{
-  font-size:
-    clamp(
-      8px,
-      .95vw,
-      10px
-    );
+      display: flex;
 
-  color:#dbe6ff;
-}
+      pointer-events: none;
+    }
 
-.inventory{
-  display:flex;
-  flex-wrap:wrap;
+    .piece {
+      font-size: clamp(16px, 2.3vw, 28px);
 
-  gap:3px;
+      filter:
+        drop-shadow(0 3px 2px rgba(0,0,0,.55));
 
-  min-height:19px;
+      line-height: 1;
+    }
 
-  margin-top:3px;
-}
+    .piece + .piece {
+      margin-left: -7px;
+    }
 
-.itemButton{
-  padding:2px 4px;
 
-  border:0;
-  border-radius:6px;
+    /* =====================================================
+       右UI
+    ===================================================== */
 
-  background:white;
-  color:#10244a;
+    .sidePanel {
+      min-height: 0;
 
-  font-size:
-    clamp(
-      7px,
-      .8vw,
-      9px
-    );
+      display: flex;
+      flex-direction: column;
 
-  font-weight:bold;
-}
+      gap: 5px;
+    }
 
-.itemButton:disabled{
-  opacity:.45;
-}
+    .panelBox {
+      border-radius: 16px;
 
-.emptyItem{
-  color:#cbd7ef;
-  font-size:8px;
-}
+      border: 1px solid rgba(255,255,255,.16);
 
+      background: rgba(15,23,65,.92);
 
-/* =========================================================
-   操作
-========================================================= */
+      box-shadow:
+        0 5px 16px rgba(0,0,0,.25);
 
-.controlBox{
-  flex:1;
-  min-height:0;
+      padding: 7px;
+    }
 
-  display:flex;
-  flex-direction:column;
 
-  padding:6px;
+    /* =====================================================
+       プレイヤー
+    ===================================================== */
 
-  border-radius:12px;
+    .playersBox {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
 
-  background:
-    rgba(255,255,255,.12);
-}
+      gap: 5px;
+    }
 
-#turnText{
-  text-align:center;
+    .playerCard {
+      min-width: 0;
 
-  font-size:
-    clamp(
-      11px,
-      1.25vw,
-      14px
-    );
+      padding: 6px;
 
-  font-weight:bold;
-}
+      border-radius: 13px;
 
-#dice{
-  flex:1;
+      background: rgba(255,255,255,.08);
 
-  min-height:38px;
+      border: 2px solid transparent;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+      text-align: center;
+    }
 
-  font-size:
-    clamp(
-      30px,
-      5vw,
-      48px
-    );
+    .playerCard.active {
+      border-color: #ffe566;
 
-  line-height:1;
-}
+      background: rgba(255,229,102,.13);
 
-#rollButton{
-  width:100%;
+      box-shadow:
+        0 0 14px rgba(255,229,102,.25);
+    }
 
-  padding:
-    clamp(
-      6px,
-      1vh,
-      9px
-    );
+    .playerIcon {
+      font-size: 24px;
+    }
 
-  border:0;
-  border-radius:10px;
+    .playerName {
+      font-size: 11px;
+      font-weight: 1000;
+    }
 
-  background:#ffd84d;
-  color:#14203e;
+    .playerPosition {
+      margin-top: 2px;
 
-  font-size:
-    clamp(
-      10px,
-      1.25vw,
-      14px
-    );
+      font-size: 9px;
+      opacity: .8;
+    }
 
-  font-weight:bold;
-}
 
-#rollButton:disabled{
-  opacity:.4;
-}
+    /* =====================================================
+       メッセージ
+    ===================================================== */
 
-#message{
-  min-height:23px;
+    #messageBox {
+      min-height: 48px;
 
-  margin-top:3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  text-align:center;
+      padding: 7px;
 
-  font-size:
-    clamp(
-      8px,
-      .9vw,
-      10px
-    );
+      border-radius: 14px;
 
-  line-height:1.25;
-}
+      background: rgba(255,255,255,.08);
 
-.legend{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+      text-align: center;
 
-  gap:3px 6px;
+      font-size: clamp(11px, 1.35vw, 15px);
+      font-weight: 900;
+    }
 
-  margin-top:4px;
 
-  color:#dce6ff;
+    /* =====================================================
+       サイコロ
+    ===================================================== */
 
-  font-size:
-    clamp(
-      6px,
-      .75vw,
-      8px
-    );
-}
+    .dicePanel {
+      text-align: center;
+    }
 
+    #diceDisplay {
+      min-height: 58px;
 
-/* =========================================================
-   モーダル
-========================================================= */
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-.overlay{
-  position:fixed;
-  inset:0;
+      gap: 8px;
 
-  z-index:500;
+      font-size: clamp(42px, 6vw, 66px);
 
-  display:none;
+      line-height: 1;
+    }
 
-  align-items:center;
-  justify-content:center;
+    .diceSingle {
+      display: inline-block;
 
-  padding:10px;
+      filter:
+        drop-shadow(0 5px 5px rgba(0,0,0,.45));
+    }
 
-  background:
-    rgba(0,0,0,.82);
-}
+    .diceRolling {
+      animation:
+        diceRoll .16s linear infinite;
+    }
 
-.modal{
-  width:
-    min(
-      90vw,
-      430px
-    );
+    @keyframes diceRoll {
 
-  max-height:90dvh;
-  overflow:auto;
+      0% {
+        transform:
+          rotate(0deg)
+          scale(1);
+      }
 
-  padding:16px;
+      25% {
+        transform:
+          rotate(90deg)
+          scale(1.12);
+      }
 
-  border-radius:20px;
+      50% {
+        transform:
+          rotate(180deg)
+          scale(.94);
+      }
 
-  background:white;
-  color:#13244a;
+      75% {
+        transform:
+          rotate(270deg)
+          scale(1.12);
+      }
 
-  text-align:center;
+      100% {
+        transform:
+          rotate(360deg)
+          scale(1);
+      }
 
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.6);
-}
+    }
 
-.modal h2{
-  margin:
-    3px 0 8px;
-}
+    #rollButton {
+      width: 100%;
 
-.bigPicture{
-  font-size:
-    clamp(
-      45px,
-      10vh,
-      70px
-    );
-}
+      border: 0;
+      border-radius: 15px;
 
-.bigWord{
-  margin:4px 0 5px;
+      padding: 10px 6px;
 
-  font-size:
-    clamp(
-      32px,
-      7vh,
-      48px
-    );
+      background:
+        linear-gradient(
+          180deg,
+          #ffe476,
+          #ffb633
+        );
 
-  font-weight:bold;
-}
+      color: #4c2a00;
 
-.practiceInstruction{
-  font-size:
-    clamp(
-      14px,
-      3vh,
-      18px
-    );
+      font-size: clamp(15px, 2vw, 20px);
+      font-weight: 1000;
 
-  font-weight:bold;
-}
+      box-shadow:
+        0 5px 0 #c67815;
+    }
 
-.modalButton{
-  margin-top:10px;
+    #rollButton:active:not(:disabled) {
+      transform: translateY(4px);
 
-  border:0;
+      box-shadow:
+        0 1px 0 #c67815;
+    }
 
-  border-radius:12px;
+    #rollButton:disabled {
+      opacity: .45;
 
-  padding:
-    10px 20px;
+      cursor: default;
 
-  background:#ffd84d;
-  color:#14203e;
+      box-shadow: none;
+    }
 
-  font-size:16px;
-  font-weight:bold;
-}
 
+    /* =====================================================
+       アイテム
+    ===================================================== */
 
-/* =========================================================
-   ルート選択
-========================================================= */
+    .inventoryTitle {
+      margin-bottom: 5px;
 
-.routeButtons{
-  display:grid;
+      font-size: 11px;
+      font-weight: 1000;
+    }
 
-  grid-template-columns:
-    1fr 1fr;
+    #inventory {
+      display: grid;
+      grid-template-columns: 1fr;
 
-  gap:8px;
+      gap: 4px;
+    }
 
-  margin-top:10px;
-}
+    .itemButton {
+      width: 100%;
 
-.routeButton{
-  border:0;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
 
-  border-radius:14px;
+      padding: 5px 6px;
 
-  padding:12px 6px;
+      background: rgba(255,255,255,.1);
 
-  color:#10244a;
+      color: white;
 
-  font-weight:bold;
-}
+      text-align: left;
 
-.routeButton small{
-  display:block;
+      font-size: 10px;
+      font-weight: 900;
+    }
 
-  margin-top:5px;
+    .itemButton:disabled {
+      opacity: .4;
+    }
 
-  font-size:11px;
+    .inventoryEmpty {
+      padding: 6px;
 
-  line-height:1.3;
-}
+      opacity: .55;
 
-.routeShort{
-  background:#bce5ff;
-}
+      font-size: 10px;
 
-.routeLong{
-  background:#c7f6cd;
-}
+      text-align: center;
+    }
 
 
-/* =========================================================
-   ぴったりサイコロ
-========================================================= */
+    /* =====================================================
+       モーダル
+    ===================================================== */
 
-.numberButtons{
-  display:grid;
+    .modal {
+      position: fixed;
+      inset: 0;
 
-  grid-template-columns:
-    repeat(3,1fr);
+      z-index: 5000;
 
-  gap:7px;
+      display: none;
+      align-items: center;
+      justify-content: center;
 
-  margin-top:10px;
-}
+      padding: 16px;
 
-.numberButton{
-  border:0;
-  border-radius:12px;
+      background: rgba(2,5,20,.74);
+    }
 
-  padding:11px;
+    .modal.show {
+      display: flex;
+    }
 
-  background:#dcecff;
-  color:#10244a;
+    .modalCard {
+      width: min(500px, 90vw);
 
-  font-size:21px;
-  font-weight:bold;
-}
+      border: 2px solid rgba(255,255,255,.2);
+      border-radius: 26px;
 
+      padding: 22px;
 
-/* =========================================================
-   縦画面
-========================================================= */
+      background:
+        linear-gradient(
+          180deg,
+          #263474,
+          #111944
+        );
 
-#rotateMessage{
-  display:none;
-}
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.6);
 
-@media
-(orientation:portrait){
+      text-align: center;
+    }
 
-  #app.gameStarted #rotateMessage{
-    position:fixed;
-    inset:0;
+    .modalTitle {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 1000;
+    }
 
-    z-index:900;
+    .practicePicture {
+      margin: 10px 0 2px;
 
-    display:flex;
+      font-size: clamp(52px, 9vw, 86px);
+      line-height: 1.1;
+    }
 
-    align-items:center;
-    justify-content:center;
+    .practiceWord {
+      margin-top: 6px;
 
-    padding:30px;
+      font-size: clamp(30px, 6vw, 54px);
+      font-weight: 1000;
+    }
 
-    background:#07142f;
+    .practiceInstruction {
+      margin: 8px 0 16px;
 
-    text-align:center;
+      font-size: 18px;
+      font-weight: 900;
+    }
 
-    font-size:20px;
-    font-weight:bold;
-  }
+    .bigOKButton {
+      width: 100%;
 
-}
+      border: 0;
+      border-radius: 18px;
 
+      padding: 14px;
 
-/* =========================================================
-   小さい横画面
-========================================================= */
+      background:
+        linear-gradient(
+          180deg,
+          #8ff5ad,
+          #45c66d
+        );
 
-@media
-(orientation:landscape)
-and
-(max-height:500px){
+      color: #063d19;
 
-  .gameArea{
-    grid-template-columns:
-      minmax(0,1fr)
-      220px;
-  }
+      font-size: 24px;
+      font-weight: 1000;
+    }
 
-  .topBar{
-    height:25px;
-    flex-basis:25px;
-  }
+    .infoText {
+      margin: 18px 0;
 
-  .topBar h1{
-    font-size:12px;
-  }
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 900;
+    }
 
-  .space{
-    width:
-      clamp(
-        24px,
-        3vw,
-        36px
-      );
+    .modalButton {
+      border: 0;
+      border-radius: 14px;
 
-    height:
-      clamp(
-        24px,
-        3vw,
-        36px
-      );
+      padding: 11px 18px;
 
-    border-radius:8px;
-  }
+      background: white;
 
-  .space.start,
-  .space.goal{
-    width:
-      clamp(
-        29px,
-        3.7vw,
-        43px
-      );
+      color: #17245a;
 
-    height:
-      clamp(
-        29px,
-        3.7vw,
-        43px
-      );
-  }
+      font-size: 16px;
+      font-weight: 1000;
+    }
 
-}
 
+    /* =====================================================
+       ぴったりサイコロ
+    ===================================================== */
 
-/* =========================================================
-   ロードエラー
-========================================================= */
+    .exactButtons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
 
-.errorText{
-  color:#ffd2d2;
-  margin-top:15px;
-  font-size:12px;
-}
+      gap: 9px;
 
-</style>
+      margin-top: 18px;
+    }
+
+    .exactButton {
+      border: 0;
+      border-radius: 15px;
+
+      padding: 13px 0;
+
+      background: white;
+
+      color: #182861;
+
+      font-size: 25px;
+      font-weight: 1000;
+    }
+
+
+    /* =====================================================
+       小さい横画面
+    ===================================================== */
+
+    @media (orientation: landscape) and (max-height: 520px) {
+
+      #app {
+        padding: 4px;
+      }
+
+      .topBar {
+        height: 36px;
+      }
+
+      .gameArea {
+        height: calc(100vh - 44px);
+
+        margin-top: 4px;
+
+        grid-template-columns:
+          minmax(0, 1fr)
+          215px;
+
+        gap: 4px;
+      }
+
+      .sidePanel {
+        gap: 3px;
+      }
+
+      .panelBox {
+        padding: 5px;
+
+        border-radius: 12px;
+      }
+
+      .space {
+        width: clamp(24px, 3vw, 36px);
+        height: clamp(24px, 3vw, 36px);
+
+        border-radius: 9px;
+      }
+
+      .space.goal {
+        width: clamp(32px, 4vw, 45px);
+        height: clamp(32px, 4vw, 45px);
+      }
+
+      #diceDisplay {
+        min-height: 45px;
+
+        font-size: 45px;
+      }
+
+      #rollButton {
+        padding: 7px 5px;
+
+        font-size: 15px;
+      }
+
+      #messageBox {
+        min-height: 37px;
+
+        padding: 4px;
+
+        font-size: 11px;
+      }
+
+      .playerIcon {
+        font-size: 19px;
+      }
+
+      .itemButton {
+        padding: 3px 5px;
+
+        font-size: 9px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
@@ -1090,54 +1046,58 @@ and
 <body>
 
 
-<!-- =======================================================
-     音選択画面
-======================================================= -->
-
-<div id="soundScreen">
-
-  <div class="soundBox">
-
-    <h1>🚀 発音すごろく</h1>
-
-    <div class="soundSub">
-      れんしゅうする音をえらんでね
-    </div>
-
-    <div id="soundButtons"></div>
-
-    <div
-      id="soundError"
-      class="errorText"
-    ></div>
-
-  </div>
-
-</div>
-
-
-
-<!-- =======================================================
-     ゲーム
-======================================================= -->
-
-<div id="app">
+  <!-- =====================================================
+       縦画面メッセージ
+  ====================================================== -->
 
   <div id="rotateMessage">
-    📱↔️<br><br>
-    横向きにして遊んでね
+
+    <div class="rotateBox">
+
+      📱 ↻<br><br>
+
+      よこむきにして<br>
+      あそんでね！
+
+    </div>
+
   </div>
 
 
-  <!-- 上 -->
+  <!-- =====================================================
+       音選択画面
+  ====================================================== -->
 
-  <header class="topBar">
+  <div id="soundScreen">
 
-    <div class="titleArea">
+    <div class="soundPanel">
 
-      <h1>
+      <div class="soundTitle">
         🚀 発音すごろく
-      </h1>
+      </div>
+
+      <div class="soundSubtitle">
+        どの音であそぶ？
+      </div>
+
+      <div id="soundButtons"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ゲーム本体
+  ====================================================== -->
+
+  <div id="app">
+
+    <div class="topBar">
+
+      <div class="gameTitle">
+        🚀 発音すごろく
+      </div>
 
       <div
         id="targetBadge"
@@ -1146,2706 +1106,2675 @@ and
         ターゲット：-
       </div>
 
+      <button id="changeSoundButton">
+        音をかえる
+      </button>
+
     </div>
 
-    <button
-      class="changeSoundButton"
-      onclick="backToSoundSelection()"
-    >
-      音をかえる
-    </button>
 
-  </header>
+    <div class="gameArea">
 
 
+      <!-- =================================================
+           マップ
+      ================================================== -->
 
-  <!-- メイン -->
+      <div id="boardWrap">
 
-  <main class="gameArea">
+        <div class="spaceDecoration earth">
+          🌍
+        </div>
+
+        <div class="spaceDecoration moon">
+          🌕
+        </div>
+
+        <div class="spaceDecoration planet1">
+          🪐
+        </div>
+
+        <div class="spaceDecoration planet2">
+          🔴
+        </div>
+
+        <div class="spaceDecoration goalPlanet">
+          🌌
+        </div>
 
 
-    <!-- =============================
-         マップ
-    ============================== -->
+        <div id="board">
 
-    <section
-      id="mapPanel"
-      class="mapPanel"
-    >
+          <svg
+            id="linkLayer"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          ></svg>
 
-      <div class="planetDecoration earth">
-        🌍
+        </div>
+
       </div>
 
-      <div class="planetDecoration moon">
-        🌕
-      </div>
 
-      <div class="planetDecoration planet">
-        🪐
-      </div>
+      <!-- =================================================
+           右UI
+      ================================================== -->
 
-      <div class="planetDecoration alienPlanet">
-        🌌
-      </div>
+      <div class="sidePanel">
 
 
-      <svg
-        id="connections"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      ></svg>
+        <!-- プレイヤー -->
 
-      <div id="spaces"></div>
-
-    </section>
-
-
-
-    <!-- =============================
-         右UI
-    ============================== -->
-
-    <aside class="sidePanel">
-
-
-      <!-- 子ども -->
-
-      <div
-        id="playerCard0"
-        class="playerCard active"
-      >
-
-        <div class="playerHeader">
-
-          <div class="playerName">
-            🚀 チャレンジャー
-          </div>
+        <div class="panelBox playersBox">
 
           <div
-            id="position0"
-            class="playerPosition"
+            id="playerCard0"
+            class="playerCard active"
           >
-            START
+
+            <div class="playerIcon">
+              🚀
+            </div>
+
+            <div class="playerName">
+              チャレンジャー
+            </div>
+
+            <div
+              id="playerPosition0"
+              class="playerPosition"
+            >
+              START
+            </div>
+
           </div>
 
-        </div>
-
-        <div
-          id="inventory0"
-          class="inventory"
-        ></div>
-
-      </div>
-
-
-      <!-- 先生 -->
-
-      <div
-        id="playerCard1"
-        class="playerCard"
-      >
-
-        <div class="playerHeader">
-
-          <div class="playerName">
-            🛸 先生
-          </div>
 
           <div
-            id="position1"
-            class="playerPosition"
+            id="playerCard1"
+            class="playerCard"
           >
-            START
+
+            <div class="playerIcon">
+              🛸
+            </div>
+
+            <div class="playerName">
+              先生
+            </div>
+
+            <div
+              id="playerPosition1"
+              class="playerPosition"
+            >
+              START
+            </div>
+
           </div>
 
         </div>
 
+
+        <!-- メッセージ -->
+
         <div
-          id="inventory1"
-          class="inventory"
-        ></div>
-
-      </div>
-
-
-
-      <!-- 操作 -->
-
-      <div class="controlBox">
-
-        <div id="turnText">
-          🚀 チャレンジャーのばん
-        </div>
-
-        <div id="dice">
-          🎲
-        </div>
-
-        <button
-          id="rollButton"
-          onclick="rollDice()"
+          id="messageBox"
+          class="panelBox"
         >
-          サイコロをふる
-        </button>
-
-        <div id="message">
-          サイコロをふってね
+          🚀 チャレンジャーのばん！
         </div>
 
-        <div class="legend">
 
-          <span>
-            🎁 アイテム
-          </span>
+        <!-- サイコロ -->
 
-          <span>
-            🌠 宇宙イベント
-          </span>
+        <div class="panelBox dicePanel">
 
-          <span>
-            🔀 分かれ道
-          </span>
+          <div id="diceDisplay">
 
-          <span>
-            💤 1回休み
-          </span>
+            <span
+              id="dice1"
+              class="diceSingle"
+            >
+              ⚄
+            </span>
+
+          </div>
+
+          <button id="rollButton">
+            🎲 サイコロをふる
+          </button>
 
         </div>
+
+
+        <!-- アイテム -->
+
+        <div class="panelBox">
+
+          <div
+            id="inventoryTitle"
+            class="inventoryTitle"
+          >
+            🎒 チャレンジャーのアイテム
+          </div>
+
+          <div id="inventory"></div>
+
+        </div>
+
 
       </div>
 
-    </aside>
-
-  </main>
-
-</div>
-
-
-
-<!-- =======================================================
-     発音モーダル
-======================================================= -->
-
-<div
-  id="practiceOverlay"
-  class="overlay"
->
-
-  <div class="modal">
-
-    <div
-      id="practicePicture"
-      class="bigPicture"
-    >
-      🗣️
     </div>
-
-    <div
-      id="practiceWord"
-      class="bigWord"
-    ></div>
-
-    <div class="practiceInstruction">
-      3かいいってみよう！
-    </div>
-
-    <button
-      class="modalButton"
-      onclick="finishPractice()"
-    >
-      OK！
-    </button>
 
   </div>
 
-</div>
 
+  <!-- =====================================================
+       発音モーダル
+  ====================================================== -->
 
+  <div
+    id="practiceModal"
+    class="modal"
+  >
 
-<!-- =======================================================
-     情報モーダル
-======================================================= -->
+    <div class="modalCard">
 
-<div
-  id="infoOverlay"
-  class="overlay"
->
+      <div class="modalTitle">
+        🗣️ 発音チャレンジ！
+      </div>
 
-  <div class="modal">
+      <div
+        id="practicePicture"
+        class="practicePicture"
+      >
+        🗣️
+      </div>
 
-    <h2 id="infoTitle"></h2>
+      <div
+        id="practiceWord"
+        class="practiceWord"
+      >
+        すいか
+      </div>
 
-    <div id="infoText"></div>
-
-    <button
-      class="modalButton"
-      onclick="closeInfo()"
-    >
-      OK
-    </button>
-
-  </div>
-
-</div>
-
-
-
-<!-- =======================================================
-     ルート選択
-======================================================= -->
-
-<div
-  id="routeOverlay"
-  class="overlay"
->
-
-  <div class="modal">
-
-    <h2>
-      🔀 どっちにいく？
-    </h2>
-
-    <div class="routeButtons">
+      <div class="practiceInstruction">
+        3かいいってみよう！
+      </div>
 
       <button
-        class="routeButton routeShort"
-        onclick="selectRoute('short')"
+        id="practiceOK"
+        class="bigOKButton"
       >
-        ⚡ ちかみち
-
-        <small>
-          マスは少ない<br>
-          💤 1回休みがある
-        </small>
-      </button>
-
-      <button
-        class="routeButton routeLong"
-        onclick="selectRoute('long')"
-      >
-        🎁 ながいみち
-
-        <small>
-          マスは多い<br>
-          アイテムが多い
-        </small>
+        OK！
       </button>
 
     </div>
 
   </div>
 
-</div>
 
+  <!-- =====================================================
+       情報モーダル
+  ====================================================== -->
 
+  <div
+    id="infoModal"
+    class="modal"
+  >
 
-<!-- =======================================================
-     ぴったりサイコロ
-======================================================= -->
+    <div class="modalCard">
 
-<div
-  id="exactOverlay"
-  class="overlay"
->
+      <div
+        id="infoTitle"
+        class="modalTitle"
+      >
+        お知らせ
+      </div>
 
-  <div class="modal">
+      <div
+        id="infoText"
+        class="infoText"
+      ></div>
 
-    <h2>
-      🎯 ぴったりサイコロ
-    </h2>
-
-    <div>
-      すきな数字をえらんでね
-    </div>
-
-    <div class="numberButtons">
-
-      <button class="numberButton" onclick="chooseExact(1)">1</button>
-      <button class="numberButton" onclick="chooseExact(2)">2</button>
-      <button class="numberButton" onclick="chooseExact(3)">3</button>
-      <button class="numberButton" onclick="chooseExact(4)">4</button>
-      <button class="numberButton" onclick="chooseExact(5)">5</button>
-      <button class="numberButton" onclick="chooseExact(6)">6</button>
+      <button
+        id="infoOK"
+        class="modalButton"
+      >
+        OK
+      </button>
 
     </div>
 
   </div>
 
-</div>
 
+  <!-- =====================================================
+       ぴったりサイコロ
+  ====================================================== -->
 
+  <div
+    id="exactModal"
+    class="modal"
+  >
 
-<!-- =======================================================
-     sounds.js
-     map.js
-======================================================= -->
+    <div class="modalCard">
 
-<script src="./sounds.js"></script>
-<script src="./map.js"></script>
+      <div class="modalTitle">
+        🎯 いくつ進む？
+      </div>
 
+      <div class="exactButtons">
 
-<script>
+        <button class="exactButton" data-value="1">1</button>
+        <button class="exactButton" data-value="2">2</button>
+        <button class="exactButton" data-value="3">3</button>
+        <button class="exactButton" data-value="4">4</button>
+        <button class="exactButton" data-value="5">5</button>
+        <button class="exactButton" data-value="6">6</button>
 
-/* =========================================================
-   グローバル
-========================================================= */
+      </div>
 
-let selectedSound = null;
-let ALL_WORDS = [];
+    </div>
 
-let currentPlayer = 0;
+  </div>
 
-let busy = false;
-let gameEnded = false;
-let extraTurn = false;
 
-let practiceCallback = null;
-let infoCallback = null;
+  <!-- =====================================================
+       外部データ
+  ====================================================== -->
 
-let pendingMovement = null;
-let pendingRouteResolve = null;
+  <script src="./sounds.js"></script>
+  <script src="./map.js"></script>
 
 
-/* =========================================================
-   プレイヤー
-========================================================= */
+  <script>
 
-const players = [
+    /* =====================================================
+       基本データ
+    ===================================================== */
 
-  {
-    name:"チャレンジャー",
-    icon:"🚀",
+    let ALL_WORDS = [];
 
-    node:"start",
+    let currentSound = null;
 
-    history:[
-      "start"
-    ],
+    let currentPlayer = 0;
 
-    items:[],
+    let moving = false;
 
-    skip:false,
+    let gameEnded = false;
 
-    double:false,
+    let extraTurn = false;
 
-    exact:false,
 
-    routes:{}
-  },
+    const players = [
 
-  {
-    name:"先生",
-    icon:"🛸",
+      {
+        name: "チャレンジャー",
+        icon: "🚀",
 
-    node:"start",
+        node: "start",
+        history: ["start"],
 
-    history:[
-      "start"
-    ],
+        items: [],
 
-    items:[],
+        skip: false,
+        double: false,
+        exact: false
+      },
 
-    skip:false,
+      {
+        name: "先生",
+        icon: "🛸",
 
-    double:false,
+        node: "start",
+        history: ["start"],
 
-    exact:false,
+        items: [],
 
-    routes:{}
-  }
-
-];
-
-
-/* =========================================================
-   起動
-========================================================= */
-
-window.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    createSoundButtons();
-
-  }
-);
-
-
-/* =========================================================
-   音選択
-========================================================= */
-
-function createSoundButtons(){
-
-  const container =
-    document.getElementById(
-      "soundButtons"
-    );
-
-  container.innerHTML = "";
-
-  if(
-    typeof SOUND_LIST === "undefined"
-  ){
-
-    document.getElementById(
-      "soundError"
-    ).textContent =
-      "sounds.js が読み込めません。";
-
-    return;
-
-  }
-
-  SOUND_LIST.forEach(sound => {
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-    button.className =
-      "soundButton";
-
-    button.innerHTML =
-      `${sound.label}<small>${sound.id}</small>`;
-
-    button.onclick =
-      () => loadSound(sound);
-
-    container.appendChild(
-      button
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   Wordファイル読込
-========================================================= */
-
-function loadSound(sound){
-
-  document.getElementById(
-    "soundError"
-  ).textContent =
-    "よみこみ中…";
-
-  /*
-    前のデータを消す
-  */
-
-  window.WORD_DATA = null;
-
-
-  /*
-    古いWordスクリプトを消す
-  */
-
-  const oldScript =
-    document.getElementById(
-      "wordDataScript"
-    );
-
-  if(oldScript){
-    oldScript.remove();
-  }
-
-
-  /*
-    新しいファイル
-  */
-
-  const script =
-    document.createElement(
-      "script"
-    );
-
-  script.id =
-    "wordDataScript";
-
-  script.src =
-    sound.file +
-    "?v=" +
-    Date.now();
-
-
-  script.onload =
-    () => {
-
-      if(
-        !window.WORD_DATA
-      ){
-
-        document.getElementById(
-          "soundError"
-        ).textContent =
-          sound.label +
-          " の単語データがありません。";
-
-        return;
-
+        skip: false,
+        double: false,
+        exact: false
       }
 
-      selectedSound = sound;
-
-      startGame();
-
-    };
+    ];
 
 
-  script.onerror =
-    () => {
+    /* =====================================================
+       アイテム
+    ===================================================== */
 
-      document.getElementById(
-        "soundError"
-      ).textContent =
+    const ITEM_POOL = [
+
+      {
+        id: "plus3",
+        icon: "🚀",
+        name: "3マスすすむ",
+        short: "+3",
+        weight: 28
+      },
+
+      {
+        id: "double",
+        icon: "🎲🎲",
+        name: "ダブルサイコロ",
+        short: "ダブル",
+        weight: 22
+      },
+
+      {
+        id: "barrier",
+        icon: "🛡️",
+        name: "バリア",
+        short: "バリア",
+        weight: 18
+      },
+
+      {
+        id: "exact",
+        icon: "🎯",
+        name: "ぴったりサイコロ",
+        short: "ぴったり",
+        weight: 14
+      },
+
+      {
+        id: "swap",
+        icon: "🔄",
+        name: "いれかえ",
+        short: "交換",
+        weight: 8
+      },
+
+      {
+        id: "back3",
+        icon: "🌀",
+        name: "相手を3マスもどす",
+        short: "戻す",
+        weight: 6
+      },
+
+      {
+        id: "again",
+        icon: "🎲",
+        name: "もう1回",
+        short: "もう1回",
+        weight: 4
+      }
+
+    ];
+
+
+    /* =====================================================
+       DOM
+    ===================================================== */
+
+    const soundScreen =
+      document.getElementById("soundScreen");
+
+    const soundButtons =
+      document.getElementById("soundButtons");
+
+    const app =
+      document.getElementById("app");
+
+    const board =
+      document.getElementById("board");
+
+    const linkLayer =
+      document.getElementById("linkLayer");
+
+    const targetBadge =
+      document.getElementById("targetBadge");
+
+    const changeSoundButton =
+      document.getElementById("changeSoundButton");
+
+    const messageBox =
+      document.getElementById("messageBox");
+
+    const rollButton =
+      document.getElementById("rollButton");
+
+    const diceDisplay =
+      document.getElementById("diceDisplay");
+
+    const inventory =
+      document.getElementById("inventory");
+
+    const inventoryTitle =
+      document.getElementById("inventoryTitle");
+
+    const practiceModal =
+      document.getElementById("practiceModal");
+
+    const practicePicture =
+      document.getElementById("practicePicture");
+
+    const practiceWord =
+      document.getElementById("practiceWord");
+
+    const practiceOK =
+      document.getElementById("practiceOK");
+
+    const infoModal =
+      document.getElementById("infoModal");
+
+    const infoTitle =
+      document.getElementById("infoTitle");
+
+    const infoText =
+      document.getElementById("infoText");
+
+    const infoOK =
+      document.getElementById("infoOK");
+
+    const exactModal =
+      document.getElementById("exactModal");
+
+
+    /* =====================================================
+       起動
+    ===================================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        createSoundButtons();
+
+      }
+    );
+
+
+    /* =====================================================
+       音選択
+    ===================================================== */
+
+    function createSoundButtons() {
+
+      soundButtons.innerHTML = "";
+
+      if (
+        typeof SOUND_LIST === "undefined" ||
+        !Array.isArray(SOUND_LIST) ||
+        SOUND_LIST.length === 0
+      ) {
+
+        soundButtons.innerHTML =
+          "sounds.js が読み込めません";
+
+        return;
+      }
+
+
+      SOUND_LIST.forEach(sound => {
+
+        const button =
+          document.createElement("button");
+
+        button.className =
+          "soundButton";
+
+        button.textContent =
+          sound.label;
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            loadSound(sound);
+
+          }
+        );
+
+        soundButtons.appendChild(button);
+
+      });
+
+    }
+
+
+    async function loadSound(sound) {
+
+      currentSound = sound;
+
+      window.WORD_DATA = null;
+
+
+      const oldScript =
+        document.getElementById("wordDataScript");
+
+      if (oldScript) {
+        oldScript.remove();
+      }
+
+
+      const script =
+        document.createElement("script");
+
+      script.id =
+        "wordDataScript";
+
+      script.src =
         sound.file +
-        " を読み込めませんでした。";
+        "?v=" +
+        Date.now();
 
-    };
 
+      script.onload =
+        () => {
 
-  document.body.appendChild(
-    script
-  );
+          if (!window.WORD_DATA) {
 
-}
+            alert(
+              sound.label +
+              " のWordデータが見つかりません"
+            );
 
+            return;
 
-/* =========================================================
-   ゲーム開始
-========================================================= */
+          }
 
-function startGame(){
+          const data =
+            window.WORD_DATA;
 
-  const data =
-    window.WORD_DATA;
 
-  ALL_WORDS = [
+          ALL_WORDS = [
 
-    ...(data.start || []),
+            ...(data.start || []),
+            ...(data.end || []),
+            ...(data.middle || [])
 
-    ...(data.end || []),
+          ];
 
-    ...(data.middle || [])
 
-  ];
+          if (ALL_WORDS.length === 0) {
 
+            alert(
+              "Wordが入っていません"
+            );
 
-  if(
-    ALL_WORDS.length === 0
-  ){
+            return;
+          }
 
-    document.getElementById(
-      "soundError"
-    ).textContent =
-      "この音には、まだ単語が登録されていません。";
 
-    return;
+          startGame();
 
-  }
+        };
 
 
-  document.getElementById(
-    "soundError"
-  ).textContent = "";
+      script.onerror =
+        () => {
 
+          alert(
+            sound.file +
+            " を読み込めません"
+          );
 
-  resetPlayers();
+        };
 
 
-  document.getElementById(
-    "targetBadge"
-  ).textContent =
-    "ターゲット：" +
-    data.target;
-
-
-  document.getElementById(
-    "soundScreen"
-  ).style.display =
-    "none";
-
-
-  const app =
-    document.getElementById(
-      "app"
-    );
-
-  app.style.display =
-    "flex";
-
-  app.classList.add(
-    "gameStarted"
-  );
-
-
-  createBoard();
-
-  updateUI();
-
-}
-
-
-/* =========================================================
-   音選択へ戻る
-========================================================= */
-
-function backToSoundSelection(){
-
-  if(busy){
-    return;
-  }
-
-  gameEnded = false;
-
-  document.getElementById(
-    "app"
-  ).style.display =
-    "none";
-
-  document.getElementById(
-    "soundScreen"
-  ).style.display =
-    "flex";
-
-}
-
-
-/* =========================================================
-   プレイヤー初期化
-========================================================= */
-
-function resetPlayers(){
-
-  players.forEach(player => {
-
-    player.node =
-      "start";
-
-    player.history = [
-      "start"
-    ];
-
-    player.items = [];
-
-    player.skip = false;
-
-    player.double = false;
-
-    player.exact = false;
-
-    player.routes = {};
-
-  });
-
-  currentPlayer = 0;
-
-  busy = false;
-
-  extraTurn = false;
-
-  gameEnded = false;
-
-}
-
-
-/* =========================================================
-   MAPノード取得
-========================================================= */
-
-function getNode(id){
-
-  return MAP_DATA.nodes.find(
-    node =>
-      node.id === id
-  );
-
-}
-
-
-/* =========================================================
-   Board作成
-========================================================= */
-
-function createBoard(){
-
-  const spaces =
-    document.getElementById(
-      "spaces"
-    );
-
-  spaces.innerHTML = "";
-
-
-  MAP_DATA.nodes.forEach(node => {
-
-    const el =
-      document.createElement(
-        "div"
-      );
-
-    el.id =
-      "node-" +
-      node.id;
-
-    el.className =
-      "space " +
-      (
-        node.type ||
-        "normal"
-      );
-
-    el.style.left =
-      node.x + "%";
-
-    el.style.top =
-      node.y + "%";
-
-
-    let content = "";
-
-
-    if(
-      node.type === "start"
-    ){
-
-      content =
-        `<span class="spaceNumber">START</span>`;
-
-    }
-
-    else if(
-      node.type === "goal"
-    ){
-
-      content =
-        `<span class="spaceNumber">GOAL</span>`;
-
-    }
-
-    else{
-
-      content =
-        `<span class="spaceNumber">${node.label}</span>`;
+      document.body.appendChild(script);
 
     }
 
 
-    if(
-      node.type === "item"
-    ){
+    /* =====================================================
+       ゲーム開始
+    ===================================================== */
 
-      content +=
-        `<span class="specialIcon">🎁</span>`;
+    function startGame() {
 
-    }
+      if (
+        typeof MAP_DATA === "undefined" ||
+        !MAP_DATA.nodes ||
+        !MAP_DATA.links
+      ) {
 
-    if(
-      node.type === "event"
-    ){
-
-      content +=
-        `<span class="specialIcon">🌠</span>`;
-
-    }
-
-    if(
-      node.type === "rest"
-    ){
-
-      content +=
-        `<span class="specialIcon">💤</span>`;
-
-    }
-
-    if(
-      node.type === "branch"
-    ){
-
-      content +=
-        `<span class="specialIcon">🔀</span>`;
-
-    }
-
-
-    content +=
-      `<div class="pieces" id="pieces-${node.id}"></div>`;
-
-
-    el.innerHTML =
-      content;
-
-
-    spaces.appendChild(
-      el
-    );
-
-  });
-
-
-  drawConnections();
-
-  renderPieces();
-
-}
-
-
-/* =========================================================
-   道を描画
-========================================================= */
-
-function drawConnections(){
-
-  const svg =
-    document.getElementById(
-      "connections"
-    );
-
-  svg.innerHTML = "";
-
-
-  MAP_DATA.links.forEach(link => {
-
-    const start =
-      getNode(
-        link[0]
-      );
-
-    const end =
-      getNode(
-        link[1]
-      );
-
-
-    if(
-      !start ||
-      !end
-    ){
-      return;
-    }
-
-
-    const line =
-      document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
-      );
-
-
-    line.setAttribute(
-      "x1",
-      start.x
-    );
-
-    line.setAttribute(
-      "y1",
-      start.y
-    );
-
-    line.setAttribute(
-      "x2",
-      end.x
-    );
-
-    line.setAttribute(
-      "y2",
-      end.y
-    );
-
-
-    let lineClass =
-      "pathLine";
-
-
-    if(link[2] === "short"){
-      lineClass +=
-        " short";
-    }
-
-    if(link[2] === "long"){
-      lineClass +=
-        " long";
-    }
-
-
-    line.setAttribute(
-      "class",
-      lineClass
-    );
-
-
-    svg.appendChild(
-      line
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   コマ
-========================================================= */
-
-function renderPieces(
-  movingPlayer = null
-){
-
-  document.querySelectorAll(
-    ".pieces"
-  ).forEach(el => {
-
-    el.innerHTML = "";
-
-  });
-
-
-  players.forEach(
-    (player,index) => {
-
-      const container =
-        document.getElementById(
-          "pieces-" +
-          player.node
+        alert(
+          "map.js が読み込めません"
         );
 
-      if(!container){
         return;
       }
 
 
-      const piece =
-        document.createElement(
-          "span"
-        );
-
-      piece.textContent =
-        player.icon;
+      resetPlayers();
 
 
-      if(
-        movingPlayer === index
-      ){
+      currentPlayer = 0;
 
-        piece.classList.add(
-          "pieceMoving"
-        );
+      moving = false;
 
-      }
+      gameEnded = false;
+
+      extraTurn = false;
 
 
-      container.appendChild(
-        piece
+      targetBadge.textContent =
+        "ターゲット：" +
+        window.WORD_DATA.target;
+
+
+      soundScreen.style.display =
+        "none";
+
+      app.style.display =
+        "block";
+
+
+      createBoard();
+
+      updateUI();
+
+    }
+
+
+    function resetPlayers() {
+
+      players.forEach(player => {
+
+        player.node =
+          "start";
+
+        player.history =
+          ["start"];
+
+        player.items =
+          [];
+
+        player.skip =
+          false;
+
+        player.double =
+          false;
+
+        player.exact =
+          false;
+
+      });
+
+    }
+
+
+    /* =====================================================
+       マップ作成
+    ===================================================== */
+
+    function getNode(id) {
+
+      return MAP_DATA.nodes.find(
+        node => node.id === id
       );
 
     }
-  );
-
-}
 
 
-/* =========================================================
-   UI更新
-========================================================= */
+    function createBoard() {
 
-function updateUI(){
+      /*
+        linkLayer以外の古いマスを消す
+      */
 
-  players.forEach(
-    (player,index) => {
-
-      const card =
-        document.getElementById(
-          "playerCard" +
-          index
-        );
+      board
+        .querySelectorAll(".space")
+        .forEach(element => element.remove());
 
 
-      card.classList.toggle(
-        "active",
-        index === currentPlayer
-      );
+      linkLayer.innerHTML = "";
 
 
-      const node =
-        getNode(
-          player.node
-        );
+      /*
+        50マスを作る
+      */
+
+      MAP_DATA.nodes.forEach(node => {
+
+        const space =
+          document.createElement("div");
 
 
-      document.getElementById(
-        "position" +
-        index
-      ).textContent =
-        node
-          ? (
-              node.type === "start"
-                ? "START"
-                : node.type === "goal"
-                  ? "GOAL"
-                  : node.label + "マス"
-            )
-          : "";
+        space.className =
+          "space " +
+          (node.type || "normal");
 
 
-      renderInventory(
-        index
-      );
+        space.id =
+          "space-" +
+          node.id;
+
+
+        space.style.left =
+          node.x + "%";
+
+        space.style.top =
+          node.y + "%";
+
+
+        /*
+          マス表示
+        */
+
+        if (node.type === "item") {
+
+          space.innerHTML =
+            "🎁";
+
+        }
+
+        else if (node.type === "event") {
+
+          space.innerHTML =
+            "🌠";
+
+        }
+
+        else if (node.type === "rest") {
+
+          space.innerHTML =
+            "💤";
+
+        }
+
+        else {
+
+          space.textContent =
+            node.label;
+
+        }
+
+
+        /*
+          コマ置き場
+        */
+
+        const pieces =
+          document.createElement("div");
+
+        pieces.className =
+          "pieces";
+
+        pieces.id =
+          "pieces-" +
+          node.id;
+
+
+        space.appendChild(pieces);
+
+        board.appendChild(space);
+
+      });
+
+
+      drawConnections();
+
+      renderPieces();
 
     }
-  );
 
 
-  const player =
-    players[
-      currentPlayer
-    ];
+    /* =====================================================
+       道を描く
+    ===================================================== */
+
+    function drawConnections() {
+
+      linkLayer.innerHTML = "";
 
 
-  document.getElementById(
-    "turnText"
-  ).textContent =
-    player.icon +
-    " " +
-    player.name +
-    "のばん";
+      MAP_DATA.links.forEach(link => {
+
+        const from =
+          getNode(link[0]);
+
+        const to =
+          getNode(link[1]);
 
 
-  document.getElementById(
-    "rollButton"
-  ).disabled =
-    busy ||
-    gameEnded;
-
-}
+        if (!from || !to) {
+          return;
+        }
 
 
-/* =========================================================
-   アイテム表示
-========================================================= */
-
-function renderInventory(
-  playerIndex
-){
-
-  const container =
-    document.getElementById(
-      "inventory" +
-      playerIndex
-    );
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-
-  container.innerHTML = "";
-
-
-  if(
-    player.items.length === 0
-  ){
-
-    container.innerHTML =
-      `<span class="emptyItem">アイテムなし</span>`;
-
-    return;
-
-  }
-
-
-  player.items.forEach(
-    (item,index) => {
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-      button.className =
-        "itemButton";
-
-      button.textContent =
-        item.icon +
-        " " +
-        item.short;
-
-
-      button.disabled =
-        busy ||
-        playerIndex !== currentPlayer;
-
-
-      button.onclick =
-        () =>
-          useItem(
-            playerIndex,
-            index
+        const line =
+          document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
           );
 
 
-      container.appendChild(
-        button
+        line.setAttribute(
+          "x1",
+          from.x
+        );
+
+        line.setAttribute(
+          "y1",
+          from.y
+        );
+
+        line.setAttribute(
+          "x2",
+          to.x
+        );
+
+        line.setAttribute(
+          "y2",
+          to.y
+        );
+
+        line.setAttribute(
+          "class",
+          "pathLine"
+        );
+
+
+        linkLayer.appendChild(line);
+
+      });
+
+    }
+
+
+    /* =====================================================
+       コマ表示
+    ===================================================== */
+
+    function renderPieces() {
+
+      document
+        .querySelectorAll(".pieces")
+        .forEach(container => {
+
+          container.innerHTML = "";
+
+        });
+
+
+      players.forEach(player => {
+
+        const container =
+          document.getElementById(
+            "pieces-" +
+            player.node
+          );
+
+
+        if (!container) {
+          return;
+        }
+
+
+        const piece =
+          document.createElement("span");
+
+        piece.className =
+          "piece";
+
+        piece.textContent =
+          player.icon;
+
+
+        container.appendChild(piece);
+
+      });
+
+    }
+
+
+    /* =====================================================
+       UI更新
+    ===================================================== */
+
+    function updateUI() {
+
+      players.forEach(
+        (player, index) => {
+
+          const card =
+            document.getElementById(
+              "playerCard" +
+              index
+            );
+
+
+          card.classList.toggle(
+            "active",
+            index === currentPlayer
+          );
+
+
+          const node =
+            getNode(player.node);
+
+
+          document.getElementById(
+            "playerPosition" +
+            index
+          ).textContent =
+            node
+              ? (
+                  node.id === "start"
+                    ? "START"
+                    : node.progress + "マス"
+                )
+              : "";
+
+        }
+      );
+
+
+      const player =
+        players[currentPlayer];
+
+
+      inventoryTitle.textContent =
+        "🎒 " +
+        player.name +
+        "のアイテム";
+
+
+      renderInventory();
+
+
+      if (!moving && !gameEnded) {
+
+        rollButton.disabled =
+          false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       アイテム表示
+    ===================================================== */
+
+    function renderInventory() {
+
+      inventory.innerHTML = "";
+
+
+      const player =
+        players[currentPlayer];
+
+
+      if (player.items.length === 0) {
+
+        const empty =
+          document.createElement("div");
+
+        empty.className =
+          "inventoryEmpty";
+
+        empty.textContent =
+          "アイテムなし";
+
+
+        inventory.appendChild(empty);
+
+        return;
+      }
+
+
+      player.items.forEach(
+        (item, index) => {
+
+          const button =
+            document.createElement("button");
+
+
+          button.className =
+            "itemButton";
+
+
+          button.innerHTML =
+            item.icon +
+            " " +
+            item.name;
+
+
+          button.disabled =
+            moving ||
+            gameEnded;
+
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              useItem(index);
+
+            }
+          );
+
+
+          inventory.appendChild(button);
+
+        }
       );
 
     }
-  );
-
-}
 
 
-/* =========================================================
-   サイコロ
-========================================================= */
+    /* =====================================================
+       サイコロ
+    ===================================================== */
 
-async function rollDice(){
+    function getDiceFace(number) {
 
-  if(
-    busy ||
-    gameEnded
-  ){
-    return;
-  }
+      const faces = {
 
+        1: "⚀",
+        2: "⚁",
+        3: "⚂",
+        4: "⚃",
+        5: "⚄",
+        6: "⚅"
 
-  const player =
-    players[
-      currentPlayer
-    ];
+      };
 
 
-  /*
-    一回休み
-  */
+      return faces[number];
 
-  if(
-    player.skip
-  ){
+    }
 
-    player.skip = false;
 
-    showInfo(
-      "💤 1回休み",
-      player.name +
-      "は今回はお休み！",
-      () => {
-        nextTurn();
+    function wait(ms) {
+
+      return new Promise(
+        resolve =>
+          setTimeout(resolve, ms)
+      );
+
+    }
+
+
+    async function animateOneDice() {
+
+      diceDisplay.innerHTML = `
+        <span
+          id="rollingDice1"
+          class="diceSingle diceRolling"
+        >
+          ⚀
+        </span>
+      `;
+
+
+      const dice =
+        document.getElementById(
+          "rollingDice1"
+        );
+
+
+      const interval =
+        setInterval(
+          () => {
+
+            const temporary =
+              Math.floor(
+                Math.random() * 6
+              ) + 1;
+
+
+            dice.textContent =
+              getDiceFace(temporary);
+
+          },
+          80
+        );
+
+
+      await wait(1200);
+
+
+      clearInterval(interval);
+
+
+      const result =
+        Math.floor(
+          Math.random() * 6
+        ) + 1;
+
+
+      dice.classList.remove(
+        "diceRolling"
+      );
+
+
+      dice.textContent =
+        getDiceFace(result);
+
+
+      await wait(500);
+
+
+      return result;
+
+    }
+
+
+    async function animateTwoDice() {
+
+      diceDisplay.innerHTML = `
+        <span
+          id="rollingDice1"
+          class="diceSingle diceRolling"
+        >
+          ⚀
+        </span>
+
+        <span
+          id="rollingDice2"
+          class="diceSingle diceRolling"
+        >
+          ⚀
+        </span>
+      `;
+
+
+      const dice1 =
+        document.getElementById(
+          "rollingDice1"
+        );
+
+      const dice2 =
+        document.getElementById(
+          "rollingDice2"
+        );
+
+
+      const interval =
+        setInterval(
+          () => {
+
+            dice1.textContent =
+              getDiceFace(
+                Math.floor(
+                  Math.random() * 6
+                ) + 1
+              );
+
+
+            dice2.textContent =
+              getDiceFace(
+                Math.floor(
+                  Math.random() * 6
+                ) + 1
+              );
+
+          },
+          80
+        );
+
+
+      await wait(1400);
+
+
+      clearInterval(interval);
+
+
+      const result1 =
+        Math.floor(
+          Math.random() * 6
+        ) + 1;
+
+      const result2 =
+        Math.floor(
+          Math.random() * 6
+        ) + 1;
+
+
+      dice1.classList.remove(
+        "diceRolling"
+      );
+
+      dice2.classList.remove(
+        "diceRolling"
+      );
+
+
+      dice1.textContent =
+        getDiceFace(result1);
+
+      dice2.textContent =
+        getDiceFace(result2);
+
+
+      await wait(600);
+
+
+      return [
+        result1,
+        result2
+      ];
+
+    }
+
+
+    /* =====================================================
+       サイコロボタン
+    ===================================================== */
+
+    rollButton.addEventListener(
+      "click",
+      async () => {
+
+        if (
+          moving ||
+          gameEnded
+        ) {
+          return;
+        }
+
+
+        moving = true;
+
+        rollButton.disabled =
+          true;
+
+        renderInventory();
+
+
+        const player =
+          players[currentPlayer];
+
+
+        /*
+          ぴったりサイコロ
+        */
+
+        if (player.exact) {
+
+          player.exact =
+            false;
+
+          const number =
+            await chooseExactNumber();
+
+
+          diceDisplay.innerHTML =
+            `<span class="diceSingle">${getDiceFace(number)}</span>`;
+
+
+          messageBox.textContent =
+            "🎯 " +
+            number +
+            "マスすすむ！";
+
+
+          await wait(500);
+
+          await moveForward(
+            player,
+            number,
+            true
+          );
+
+          return;
+        }
+
+
+        /*
+          ダブル
+        */
+
+        if (player.double) {
+
+          player.double =
+            false;
+
+
+          messageBox.textContent =
+            "🎲🎲 ダブルサイコロ！";
+
+
+          const results =
+            await animateTwoDice();
+
+
+          const total =
+            results[0] +
+            results[1];
+
+
+          messageBox.textContent =
+            results[0] +
+            " ＋ " +
+            results[1] +
+            " ＝ " +
+            total +
+            "！";
+
+
+          await wait(450);
+
+
+          await moveForward(
+            player,
+            total,
+            true
+          );
+
+          return;
+        }
+
+
+        /*
+          普通のサイコロ
+        */
+
+        messageBox.textContent =
+          "🎲 なにがでるかな？";
+
+
+        const roll =
+          await animateOneDice();
+
+
+        messageBox.textContent =
+          roll +
+          "がでた！";
+
+
+        await wait(450);
+
+
+        await moveForward(
+          player,
+          roll,
+          true
+        );
+
       }
     );
 
-    return;
 
-  }
+    /* =====================================================
+       前進
+    ===================================================== */
 
+    function getNextNode(nodeId) {
 
-  /*
-    ぴったりサイコロ
-  */
+      const link =
+        MAP_DATA.links.find(
+          item =>
+            item[0] === nodeId
+        );
 
-  if(
-    player.exact
-  ){
 
-    document.getElementById(
-      "exactOverlay"
-    ).style.display =
-      "flex";
+      if (!link) {
+        return null;
+      }
 
-    return;
 
-  }
+      return link[1];
 
-
-  busy = true;
-
-  updateUI();
-
-
-  let total = 0;
-
-
-  if(
-    player.double
-  ){
-
-    const d1 =
-      randomDice();
-
-    const d2 =
-      randomDice();
-
-    total =
-      d1 + d2;
-
-    player.double = false;
-
-
-    document.getElementById(
-      "dice"
-    ).textContent =
-      diceFace(d1) +
-      diceFace(d2);
-
-  }
-
-  else{
-
-    total =
-      randomDice();
-
-    document.getElementById(
-      "dice"
-    ).textContent =
-      diceFace(total);
-
-  }
-
-
-  document.getElementById(
-    "message"
-  ).textContent =
-    total +
-    "マスすすむ！";
-
-
-  await sleep(
-    350
-  );
-
-
-  await moveForward(
-    currentPlayer,
-    total
-  );
-
-}
-
-
-/* =========================================================
-   サイコロ数字
-========================================================= */
-
-function randomDice(){
-
-  return (
-    Math.floor(
-      Math.random() * 6
-    ) + 1
-  );
-
-}
-
-
-function diceFace(number){
-
-  const faces = [
-    "",
-    "⚀",
-    "⚁",
-    "⚂",
-    "⚃",
-    "⚄",
-    "⚅"
-  ];
-
-  return faces[number];
-
-}
-
-
-/* =========================================================
-   次のノード
-========================================================= */
-
-async function getNextNode(
-  playerIndex
-){
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-  const current =
-    player.node;
-
-
-  const links =
-    MAP_DATA.links.filter(
-      link =>
-        link[0] === current
-    );
-
-
-  if(
-    links.length === 0
-  ){
-
-    return null;
-
-  }
-
-
-  if(
-    links.length === 1
-  ){
-
-    return links[0][1];
-
-  }
-
-
-  /*
-    分岐
-  */
-
-  const saved =
-    player.routes[
-      current
-    ];
-
-
-  if(saved){
-
-    const matched =
-      links.find(
-        link =>
-          link[2] === saved
-      );
-
-    if(matched){
-      return matched[1];
-    }
-
-  }
-
-
-  const route =
-    await askRoute();
-
-
-  player.routes[
-    current
-  ] = route;
-
-
-  const matched =
-    links.find(
-      link =>
-        link[2] === route
-    );
-
-
-  return matched
-    ? matched[1]
-    : links[0][1];
-
-}
-
-
-/* =========================================================
-   前進
-========================================================= */
-
-async function moveForward(
-  playerIndex,
-  steps
-){
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-
-  for(
-    let i = 0;
-    i < steps;
-    i++
-  ){
-
-    const next =
-      await getNextNode(
-        playerIndex
-      );
-
-
-    if(!next){
-      break;
     }
 
 
-    player.node =
-      next;
+    async function moveForward(
+      player,
+      steps,
+      doLanding
+    ) {
 
-    player.history.push(
-      next
-    );
+      for (
+        let i = 0;
+        i < steps;
+        i++
+      ) {
 
-
-    renderPieces(
-      playerIndex
-    );
-
-    updateUI();
-
-
-    await sleep(
-      270
-    );
+        const next =
+          getNextNode(
+            player.node
+          );
 
 
-    const node =
-      getNode(
-        next
-      );
+        if (!next) {
+          break;
+        }
 
 
-    if(
-      node &&
-      node.type === "goal"
-    ){
+        player.node =
+          next;
 
-      await goal(
-        playerIndex
-      );
 
-      return;
+        player.history.push(
+          next
+        );
+
+
+        renderPieces();
+
+        updatePositionsOnly();
+
+
+        await wait(300);
+
+
+        if (next === "goal") {
+
+          await goalReached(player);
+
+          return;
+
+        }
+
+      }
+
+
+      if (doLanding) {
+
+        await landing(player);
+
+      }
+
+      else {
+
+        moving = false;
+
+        updateUI();
+
+      }
 
     }
 
-  }
+
+    function updatePositionsOnly() {
+
+      players.forEach(
+        (player, index) => {
+
+          const node =
+            getNode(player.node);
 
 
-  await landing(
-    playerIndex
-  );
+          document.getElementById(
+            "playerPosition" +
+            index
+          ).textContent =
+            node
+              ? (
+                  node.id === "start"
+                    ? "START"
+                    : node.progress + "マス"
+                )
+              : "";
 
-}
+        }
+      );
 
-
-/* =========================================================
-   後退
-========================================================= */
-
-async function moveBackward(
-  playerIndex,
-  steps
-){
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-
-  for(
-    let i = 0;
-    i < steps;
-    i++
-  ){
-
-    if(
-      player.history.length <= 1
-    ){
-      break;
     }
 
 
-    player.history.pop();
+    /* =====================================================
+       後退
+    ===================================================== */
+
+    async function moveBackward(
+      player,
+      steps
+    ) {
+
+      for (
+        let i = 0;
+        i < steps;
+        i++
+      ) {
+
+        if (
+          player.history.length <= 1
+        ) {
+          break;
+        }
 
 
-    player.node =
-      player.history[
-        player.history.length - 1
+        player.history.pop();
+
+
+        player.node =
+          player.history[
+            player.history.length - 1
+          ];
+
+
+        renderPieces();
+
+        updatePositionsOnly();
+
+
+        await wait(300);
+
+      }
+
+    }
+
+
+    /* =====================================================
+       着地
+    ===================================================== */
+
+    async function landing(player) {
+
+      const node =
+        getNode(player.node);
+
+
+      /*
+        どのマスでも発音
+      */
+
+      await practice();
+
+
+      if (gameEnded) {
+        return;
+      }
+
+
+      if (!node) {
+
+        finishTurn();
+
+        return;
+      }
+
+
+      /*
+        アイテム
+      */
+
+      if (node.type === "item") {
+
+        await itemLanding(player);
+
+      }
+
+
+      /*
+        宇宙イベント
+      */
+
+      else if (node.type === "event") {
+
+        await eventLanding();
+
+      }
+
+
+      /*
+        1回休み
+      */
+
+      else if (node.type === "rest") {
+
+        player.skip =
+          true;
+
+
+        await showInfo(
+          "💤 1回休み",
+          player.name +
+          "は次のばんを1回休み！"
+        );
+
+      }
+
+
+      finishTurn();
+
+    }
+
+
+    /* =====================================================
+       発音
+    ===================================================== */
+
+    function normalizeWord(item) {
+
+      if (
+        typeof item === "string"
+      ) {
+
+        return {
+          word: item,
+          image: getWordPicture(item)
+        };
+
+      }
+
+
+      return {
+        word: item.word || "",
+        image:
+          item.image ||
+          getWordPicture(item.word)
+      };
+
+    }
+
+
+    function getWordPicture(word) {
+
+      const pictureMap = {
+
+        "すいか": "🍉",
+        "すいとう": "🧴",
+        "すず": "🔔",
+        "すずめ": "🐦",
+        "すな": "🏖️",
+        "すなば": "🏖️",
+        "すもう": "🤼",
+        "すみれ": "🌸",
+        "すごろく": "🎲",
+        "すべりだい": "🛝",
+
+        "いす": "🪑",
+        "ナス": "🍆",
+        "バス": "🚌",
+        "リス": "🐿️",
+        "カラス": "🐦‍⬛",
+        "アイス": "🍨",
+        "ジュース": "🧃",
+        "ソース": "🫙",
+        "ホース": "🪴",
+        "ハウス": "🏠",
+        "マウス": "🐭",
+        "グラス": "🥛",
+        "ダンス": "💃",
+        "タンス": "🗄️",
+        "テニス": "🎾",
+
+        "くすり": "💊",
+        "やすみ": "😴",
+        "ねずみ": "🐭",
+        "こすもす": "🌸",
+        "ますく": "😷",
+        "れすとらん": "🍽️",
+
+        "じかん": "🕒",
+        "じしゃく": "🧲",
+        "じてんしゃ": "🚲",
+        "じどうしゃ": "🚗",
+        "じしょ": "📖",
+        "じゅうたん": "🧶",
+        "じゅうでん": "🔋",
+        "じゅうしょ": "🏠",
+        "じゅぎょう": "🏫",
+        "じょうぎ": "📏",
+        "じょうろ": "🚿",
+        "じんじゃ": "⛩️",
+        "ジェットコースター": "🎢",
+
+        "もみじ": "🍁",
+        "ひつじ": "🐑",
+        "そうじ": "🧹",
+        "かんじ": "🈶",
+        "にじ": "🌈",
+        "くじ": "🎟️",
+        "ねじ": "🔩",
+        "おうじ": "🤴",
+
+        "くじら": "🐋",
+        "にんじん": "🥕",
+        "パジャマ": "🛌",
+        "ラジオ": "📻",
+        "デジカメ": "📷"
+
+      };
+
+
+      return (
+        pictureMap[word] ||
+        "🗣️"
+      );
+
+    }
+
+
+    function practice() {
+
+      return new Promise(
+        resolve => {
+
+          const raw =
+            ALL_WORDS[
+              Math.floor(
+                Math.random() *
+                ALL_WORDS.length
+              )
+            ];
+
+
+          const item =
+            normalizeWord(raw);
+
+
+          practicePicture.textContent =
+            item.image;
+
+
+          practiceWord.textContent =
+            item.word;
+
+
+          practiceModal.classList.add(
+            "show"
+          );
+
+
+          const handler =
+            () => {
+
+              practiceOK.removeEventListener(
+                "click",
+                handler
+              );
+
+
+              practiceModal.classList.remove(
+                "show"
+              );
+
+
+              resolve();
+
+            };
+
+
+          practiceOK.addEventListener(
+            "click",
+            handler
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       アイテム入手
+    ===================================================== */
+
+    async function itemLanding(player) {
+
+      /*
+        8％で横どり
+      */
+
+      if (
+        Math.random() < 0.08
+      ) {
+
+        await stealItem(player);
+
+        return;
+      }
+
+
+      const item =
+        chooseWeightedItem();
+
+
+      if (
+        player.items.length >= 3
+      ) {
+
+        await showInfo(
+          "🎒 アイテムいっぱい",
+          "アイテムは3こまで！"
+        );
+
+        return;
+      }
+
+
+      player.items.push(
+        { ...item }
+      );
+
+
+      await showInfo(
+        "🎁 アイテムゲット！",
+        item.icon +
+        " " +
+        item.name
+      );
+
+    }
+
+
+    function chooseWeightedItem() {
+
+      const total =
+        ITEM_POOL.reduce(
+          (sum, item) =>
+            sum + item.weight,
+          0
+        );
+
+
+      let random =
+        Math.random() *
+        total;
+
+
+      for (
+        const item of ITEM_POOL
+      ) {
+
+        random -=
+          item.weight;
+
+
+        if (random <= 0) {
+
+          return item;
+
+        }
+
+      }
+
+
+      return ITEM_POOL[0];
+
+    }
+
+
+    /* =====================================================
+       横どり
+    ===================================================== */
+
+    async function stealItem(player) {
+
+      const opponent =
+        players[
+          currentPlayer === 0
+            ? 1
+            : 0
+        ];
+
+
+      const barrierIndex =
+        opponent.items.findIndex(
+          item =>
+            item.id === "barrier"
+        );
+
+
+      if (barrierIndex >= 0) {
+
+        opponent.items.splice(
+          barrierIndex,
+          1
+        );
+
+
+        await showInfo(
+          "🛡️ バリア！",
+          opponent.name +
+          "のバリアが横どりを防いだ！"
+        );
+
+        return;
+      }
+
+
+      if (
+        opponent.items.length === 0
+      ) {
+
+        await showInfo(
+          "🎁 よこどり！",
+          "でも相手はアイテムを持っていなかった！"
+        );
+
+        return;
+      }
+
+
+      if (
+        player.items.length >= 3
+      ) {
+
+        await showInfo(
+          "🎁 よこどり！",
+          "でもアイテムがいっぱい！"
+        );
+
+        return;
+      }
+
+
+      const index =
+        Math.floor(
+          Math.random() *
+          opponent.items.length
+        );
+
+
+      const stolen =
+        opponent.items.splice(
+          index,
+          1
+        )[0];
+
+
+      player.items.push(
+        stolen
+      );
+
+
+      await showInfo(
+        "🎁 よこどり！",
+        stolen.icon +
+        " " +
+        stolen.name +
+        " をゲット！"
+      );
+
+    }
+
+
+    /* =====================================================
+       アイテム使用
+    ===================================================== */
+
+    async function useItem(index) {
+
+      if (
+        moving ||
+        gameEnded
+      ) {
+        return;
+      }
+
+
+      const player =
+        players[currentPlayer];
+
+
+      const item =
+        player.items[index];
+
+
+      if (!item) {
+        return;
+      }
+
+
+      /*
+        バリアは自動使用なので押せない
+      */
+
+      if (
+        item.id === "barrier"
+      ) {
+
+        await showInfo(
+          "🛡️ バリア",
+          "攻撃されたとき自動で使います"
+        );
+
+        return;
+      }
+
+
+      player.items.splice(
+        index,
+        1
+      );
+
+
+      moving = true;
+
+      rollButton.disabled =
+        true;
+
+      renderInventory();
+
+
+      /*
+        +3
+      */
+
+      if (
+        item.id === "plus3"
+      ) {
+
+        messageBox.textContent =
+          "🚀 3マスすすむ！";
+
+
+        await moveForward(
+          player,
+          3,
+          true
+        );
+
+        return;
+      }
+
+
+      /*
+        ダブル
+      */
+
+      if (
+        item.id === "double"
+      ) {
+
+        player.double =
+          true;
+
+
+        moving = false;
+
+
+        messageBox.textContent =
+          "🎲🎲 次はダブルサイコロ！";
+
+
+        updateUI();
+
+        return;
+      }
+
+
+      /*
+        ぴったり
+      */
+
+      if (
+        item.id === "exact"
+      ) {
+
+        player.exact =
+          true;
+
+
+        moving = false;
+
+
+        messageBox.textContent =
+          "🎯 次は好きな目をえらべる！";
+
+
+        updateUI();
+
+        return;
+      }
+
+
+      /*
+        入れ替え
+      */
+
+      if (
+        item.id === "swap"
+      ) {
+
+        swapPlayers();
+
+
+        await showInfo(
+          "🔄 いれかえ！",
+          "ふたりの場所が入れ替わった！"
+        );
+
+
+        finishTurn();
+
+        return;
+      }
+
+
+      /*
+        相手を3マス戻す
+      */
+
+      if (
+        item.id === "back3"
+      ) {
+
+        const opponent =
+          players[
+            currentPlayer === 0
+              ? 1
+              : 0
+          ];
+
+
+        const barrierIndex =
+          opponent.items.findIndex(
+            item =>
+              item.id === "barrier"
+          );
+
+
+        if (
+          barrierIndex >= 0
+        ) {
+
+          opponent.items.splice(
+            barrierIndex,
+            1
+          );
+
+
+          await showInfo(
+            "🛡️ バリア！",
+            opponent.name +
+            "のバリアが攻撃を防いだ！"
+          );
+
+        }
+
+        else {
+
+          messageBox.textContent =
+            "🌀 " +
+            opponent.name +
+            "が3マスもどる！";
+
+
+          await moveBackward(
+            opponent,
+            3
+          );
+
+        }
+
+
+        finishTurn();
+
+        return;
+      }
+
+
+      /*
+        もう1回
+      */
+
+      if (
+        item.id === "again"
+      ) {
+
+        extraTurn =
+          true;
+
+
+        moving = false;
+
+
+        messageBox.textContent =
+          "🎲 もう1回サイコロをふれる！";
+
+
+        updateUI();
+
+        return;
+      }
+
+
+      moving = false;
+
+      updateUI();
+
+    }
+
+
+    /* =====================================================
+       入れ替え
+    ===================================================== */
+
+    function swapPlayers() {
+
+      const aNode =
+        players[0].node;
+
+      const aHistory =
+        [...players[0].history];
+
+
+      players[0].node =
+        players[1].node;
+
+      players[0].history =
+        [...players[1].history];
+
+
+      players[1].node =
+        aNode;
+
+      players[1].history =
+        aHistory;
+
+
+      renderPieces();
+
+      updatePositionsOnly();
+
+    }
+
+
+    /* =====================================================
+       宇宙イベント
+    ===================================================== */
+
+    async function eventLanding() {
+
+      const events = [
+
+        {
+          title: "🌀 ワームホール！",
+          text: "ふたりとも5マスすすむ！",
+          amount: 5
+        },
+
+        {
+          title: "☄️ いん石！",
+          text: "ふたりとも3マスもどる！",
+          amount: -3
+        },
+
+        {
+          title: "🌟 スーパースター！",
+          text: "ふたりとも2マスすすむ！",
+          amount: 2
+        },
+
+        {
+          title: "🌑 宇宙のゆらぎ！",
+          text: "ふたりとも1マスもどる！",
+          amount: -1
+        }
+
       ];
 
 
-    renderPieces(
-      playerIndex
-    );
-
-    updateUI();
-
-
-    await sleep(
-      270
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   止まったマス
-========================================================= */
-
-async function landing(
-  playerIndex
-){
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-  const node =
-    getNode(
-      player.node
-    );
-
-
-  /*
-    発音は毎回行う
-  */
-
-  await practice();
-
-
-  if(
-    gameEnded
-  ){
-    return;
-  }
-
-
-  /*
-    アイテム
-  */
-
-  if(
-    node &&
-    node.type === "item"
-  ){
-
-    await itemLanding(
-      playerIndex
-    );
-
-  }
-
-
-  /*
-    イベント
-  */
-
-  else if(
-    node &&
-    node.type === "event"
-  ){
-
-    await spaceEvent();
-
-  }
-
-
-  /*
-    1回休み
-  */
-
-  else if(
-    node &&
-    node.type === "rest"
-  ){
-
-    player.skip = true;
-
-    await showInfoPromise(
-      "💤 1回休み",
-      "次のばんは1回お休み！"
-    );
-
-  }
-
-
-  finishTurn();
-
-}
-
-
-/* =========================================================
-   発音練習
-========================================================= */
-
-function practice(){
-
-  return new Promise(
-    resolve => {
-
-      const word =
-        ALL_WORDS[
+      const event =
+        events[
           Math.floor(
             Math.random() *
-            ALL_WORDS.length
+            events.length
           )
         ];
 
 
-      document.getElementById(
-        "practiceWord"
-      ).textContent =
-        word;
+      await showInfo(
+        event.title,
+        event.text
+      );
+
+
+      if (
+        event.amount > 0
+      ) {
+
+        for (
+          const player of players
+        ) {
+
+          await moveWithoutLanding(
+            player,
+            event.amount
+          );
+
+        }
+
+      }
+
+      else {
+
+        for (
+          const player of players
+        ) {
+
+          await moveBackward(
+            player,
+            Math.abs(
+              event.amount
+            )
+          );
+
+        }
+
+      }
+
+    }
+
+
+    async function moveWithoutLanding(
+      player,
+      steps
+    ) {
+
+      for (
+        let i = 0;
+        i < steps;
+        i++
+      ) {
+
+        const next =
+          getNextNode(
+            player.node
+          );
+
+
+        if (!next) {
+          break;
+        }
+
+
+        player.node =
+          next;
+
+
+        player.history.push(
+          next
+        );
+
+
+        renderPieces();
+
+        updatePositionsOnly();
+
+
+        await wait(230);
+
+
+        if (
+          player.node === "goal"
+        ) {
+
+          await goalReached(
+            player
+          );
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    /* =====================================================
+       ターン終了
+    ===================================================== */
+
+    function finishTurn() {
+
+      if (gameEnded) {
+        return;
+      }
+
+
+      moving = false;
+
+
+      if (extraTurn) {
+
+        extraTurn =
+          false;
+
+
+        messageBox.textContent =
+          players[currentPlayer].name +
+          "はもう1回！";
+
+
+        updateUI();
+
+        return;
+      }
+
+
+      currentPlayer =
+        currentPlayer === 0
+          ? 1
+          : 0;
+
+
+      const player =
+        players[currentPlayer];
 
 
       /*
-        今は汎用イラスト。
-        後で単語データに画像を追加可能。
+        1回休み
       */
 
-      document.getElementById(
-        "practicePicture"
-      ).textContent =
-        "🗣️";
+      if (player.skip) {
+
+        player.skip =
+          false;
 
 
-      practiceCallback =
-        resolve;
+        const skippedName =
+          player.name;
 
 
-      document.getElementById(
-        "practiceOverlay"
-      ).style.display =
-        "flex";
-
-    }
-  );
-
-}
+        currentPlayer =
+          currentPlayer === 0
+            ? 1
+            : 0;
 
 
-function finishPractice(){
-
-  document.getElementById(
-    "practiceOverlay"
-  ).style.display =
-    "none";
+        messageBox.textContent =
+          "💤 " +
+          skippedName +
+          "は1回休み！";
 
 
-  if(
-    practiceCallback
-  ){
+        updateUI();
 
-    const callback =
-      practiceCallback;
-
-    practiceCallback = null;
-
-    callback();
-
-  }
-
-}
+        return;
+      }
 
 
-/* =========================================================
-   アイテム
-========================================================= */
-
-const ITEM_POOL = [
-
-  {
-    id:"plus3",
-    icon:"🚀",
-    name:"3マスすすむ",
-    short:"+3",
-    weight:28
-  },
-
-  {
-    id:"double",
-    icon:"🎲🎲",
-    name:"ダブルサイコロ",
-    short:"×2",
-    weight:22
-  },
-
-  {
-    id:"barrier",
-    icon:"🛡️",
-    name:"バリア",
-    short:"バリア",
-    weight:18
-  },
-
-  {
-    id:"exact",
-    icon:"🎯",
-    name:"ぴったりサイコロ",
-    short:"ぴったり",
-    weight:14
-  },
-
-  {
-    id:"swap",
-    icon:"🔄",
-    name:"いれかえ",
-    short:"交換",
-    weight:8
-  },
-
-  {
-    id:"back3",
-    icon:"🌀",
-    name:"相手を3マスもどす",
-    short:"戻す",
-    weight:6
-  },
-
-  {
-    id:"again",
-    icon:"🎲",
-    name:"もう1回",
-    short:"もう1回",
-    weight:4
-  }
-
-];
+      messageBox.textContent =
+        player.icon +
+        " " +
+        player.name +
+        "のばん！";
 
 
-/* =========================================================
-   アイテムマス
-========================================================= */
-
-async function itemLanding(
-  playerIndex
-){
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-
-  /*
-    横どり 8%
-  */
-
-  if(
-    Math.random() < .08
-  ){
-
-    await autoSteal(
-      playerIndex
-    );
-
-    return;
-
-  }
-
-
-  const item =
-    weightedItem();
-
-
-  if(
-    player.items.length >= 3
-  ){
-
-    await showInfoPromise(
-      "🎁 アイテム",
-      item.icon +
-      " " +
-      item.name +
-      "！<br><br>でも持てるアイテムは3個まで！"
-    );
-
-    return;
-
-  }
-
-
-  player.items.push(
-    {
-      ...item
-    }
-  );
-
-
-  updateUI();
-
-
-  await showInfoPromise(
-    "🎁 アイテムGET！",
-    item.icon +
-    " <b>" +
-    item.name +
-    "</b>"
-  );
-
-}
-
-
-/* =========================================================
-   重み付き抽選
-========================================================= */
-
-function weightedItem(){
-
-  const total =
-    ITEM_POOL.reduce(
-      (sum,item) =>
-        sum + item.weight,
-      0
-    );
-
-
-  let random =
-    Math.random() *
-    total;
-
-
-  for(
-    const item of ITEM_POOL
-  ){
-
-    random -=
-      item.weight;
-
-    if(
-      random <= 0
-    ){
-
-      return item;
+      updateUI();
 
     }
 
-  }
 
+    /* =====================================================
+       ゴール
+    ===================================================== */
 
-  return ITEM_POOL[0];
+    async function goalReached(player) {
 
-}
+      gameEnded =
+        true;
 
 
-/* =========================================================
-   横どり
-========================================================= */
+      renderPieces();
 
-async function autoSteal(
-  playerIndex
-){
 
-  const opponentIndex =
-    playerIndex === 0
-      ? 1
-      : 0;
+      await practice();
 
-  const player =
-    players[
-      playerIndex
-    ];
 
-  const opponent =
-    players[
-      opponentIndex
-    ];
+      await showInfo(
+        "🌌 GOAL！",
+        player.icon +
+        " " +
+        player.name +
+        "の勝ち！"
+      );
 
 
-  const barrierIndex =
-    opponent.items.findIndex(
-      item =>
-        item.id === "barrier"
-    );
+      moving =
+        false;
 
 
-  if(
-    barrierIndex >= 0
-  ){
+      rollButton.disabled =
+        true;
 
-    opponent.items.splice(
-      barrierIndex,
-      1
-    );
 
-    updateUI();
+      messageBox.textContent =
+        "🎉 " +
+        player.name +
+        "が未知の惑星に到着！";
 
-
-    await showInfoPromise(
-      "🛡️ バリア！",
-      opponent.name +
-      "のバリアが横どりを防いだ！"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    opponent.items.length === 0
-  ){
-
-    await showInfoPromise(
-      "🎁 よこどり",
-      "でも相手はアイテムを持っていなかった！"
-    );
-
-    return;
-
-  }
-
-
-  const index =
-    Math.floor(
-      Math.random() *
-      opponent.items.length
-    );
-
-
-  const stolen =
-    opponent.items.splice(
-      index,
-      1
-    )[0];
-
-
-  if(
-    player.items.length < 3
-  ){
-
-    player.items.push(
-      stolen
-    );
-
-  }
-
-
-  updateUI();
-
-
-  await showInfoPromise(
-    "🎁 よこどり！",
-    stolen.icon +
-    " " +
-    stolen.name +
-    "をゲット！"
-  );
-
-}
-
-
-/* =========================================================
-   アイテム使用
-========================================================= */
-
-async function useItem(
-  playerIndex,
-  itemIndex
-){
-
-  if(
-    busy ||
-    gameEnded ||
-    playerIndex !== currentPlayer
-  ){
-    return;
-  }
-
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-  const item =
-    player.items[
-      itemIndex
-    ];
-
-
-  if(!item){
-    return;
-  }
-
-
-  /*
-    バリアは自動使用なので
-    手動では使わない
-  */
-
-  if(
-    item.id === "barrier"
-  ){
-
-    showInfo(
-      "🛡️ バリア",
-      "バリアは攻撃されたときに自動で使います。"
-    );
-
-    return;
-
-  }
-
-
-  player.items.splice(
-    itemIndex,
-    1
-  );
-
-  updateUI();
-
-
-  if(
-    item.id === "plus3"
-  ){
-
-    busy = true;
-
-    await moveForward(
-      playerIndex,
-      3
-    );
-
-    return;
-
-  }
-
-
-  if(
-    item.id === "double"
-  ){
-
-    player.double = true;
-
-    document.getElementById(
-      "message"
-    ).textContent =
-      "次のサイコロが2個になります！";
-
-  }
-
-
-  else if(
-    item.id === "exact"
-  ){
-
-    player.exact = true;
-
-    document.getElementById(
-      "message"
-    ).textContent =
-      "次のサイコロの数字を選べます！";
-
-  }
-
-
-  else if(
-    item.id === "swap"
-  ){
-
-    swapPlayers();
-
-    await showInfoPromise(
-      "🔄 いれかえ",
-      "2人の場所が入れかわった！"
-    );
-
-  }
-
-
-  else if(
-    item.id === "back3"
-  ){
-
-    await attackBack3(
-      playerIndex
-    );
-
-  }
-
-
-  else if(
-    item.id === "again"
-  ){
-
-    extraTurn = true;
-
-    document.getElementById(
-      "message"
-    ).textContent =
-      "このばんのあと、もう1回！";
-
-  }
-
-
-  updateUI();
-
-}
-
-
-/* =========================================================
-   3マス戻す
-========================================================= */
-
-async function attackBack3(
-  playerIndex
-){
-
-  const opponentIndex =
-    playerIndex === 0
-      ? 1
-      : 0;
-
-  const opponent =
-    players[
-      opponentIndex
-    ];
-
-
-  const barrierIndex =
-    opponent.items.findIndex(
-      item =>
-        item.id === "barrier"
-    );
-
-
-  if(
-    barrierIndex >= 0
-  ){
-
-    opponent.items.splice(
-      barrierIndex,
-      1
-    );
-
-    updateUI();
-
-
-    await showInfoPromise(
-      "🛡️ バリア！",
-      opponent.name +
-      "のバリアが守った！"
-    );
-
-    return;
-
-  }
-
-
-  await showInfoPromise(
-    "🌀 3マスもどる！",
-    opponent.name +
-    "が3マスもどります。"
-  );
-
-
-  await moveBackward(
-    opponentIndex,
-    3
-  );
-
-}
-
-
-/* =========================================================
-   入れ替え
-========================================================= */
-
-function swapPlayers(){
-
-  const node0 =
-    players[0].node;
-
-  const history0 =
-    [
-      ...players[0].history
-    ];
-
-
-  players[0].node =
-    players[1].node;
-
-  players[0].history =
-    [
-      ...players[1].history
-    ];
-
-
-  players[1].node =
-    node0;
-
-  players[1].history =
-    history0;
-
-
-  renderPieces();
-
-  updateUI();
-
-}
-
-
-/* =========================================================
-   ぴったりサイコロ
-========================================================= */
-
-async function chooseExact(
-  number
-){
-
-  const player =
-    players[
-      currentPlayer
-    ];
-
-
-  player.exact = false;
-
-
-  document.getElementById(
-    "exactOverlay"
-  ).style.display =
-    "none";
-
-
-  busy = true;
-
-  updateUI();
-
-
-  document.getElementById(
-    "dice"
-  ).textContent =
-    diceFace(number);
-
-
-  document.getElementById(
-    "message"
-  ).textContent =
-    number +
-    "マスすすむ！";
-
-
-  await moveForward(
-    currentPlayer,
-    number
-  );
-
-}
-
-
-/* =========================================================
-   宇宙イベント
-========================================================= */
-
-async function spaceEvent(){
-
-  const events = [
-
-    {
-      title:"🌀 ワームホール！",
-      text:"2人とも5マスすすむ！",
-      amount:5
-    },
-
-    {
-      title:"☄️ いん石！",
-      text:"2人とも3マスもどる！",
-      amount:-3
-    },
-
-    {
-      title:"🌟 スピードアップ！",
-      text:"2人とも2マスすすむ！",
-      amount:2
-    },
-
-    {
-      title:"🌌 宇宙の風！",
-      text:"2人とも1マスもどる！",
-      amount:-1
     }
 
-  ];
+
+    /* =====================================================
+       情報モーダル
+    ===================================================== */
+
+    function showInfo(
+      title,
+      text
+    ) {
+
+      return new Promise(
+        resolve => {
+
+          infoTitle.textContent =
+            title;
+
+          infoText.textContent =
+            text;
 
 
-  const event =
-    events[
-      Math.floor(
-        Math.random() *
-        events.length
-      )
-    ];
+          infoModal.classList.add(
+            "show"
+          );
 
 
-  await showInfoPromise(
-    event.title,
-    event.text
-  );
+          const handler =
+            () => {
+
+              infoOK.removeEventListener(
+                "click",
+                handler
+              );
 
 
-  for(
-    let i = 0;
-    i < players.length;
-    i++
-  ){
+              infoModal.classList.remove(
+                "show"
+              );
 
-    if(
-      event.amount > 0
-    ){
 
-      await moveWithoutLanding(
-        i,
-        event.amount
+              resolve();
+
+            };
+
+
+          infoOK.addEventListener(
+            "click",
+            handler
+          );
+
+        }
       );
 
     }
 
-    else{
 
-      await moveBackward(
-        i,
-        Math.abs(
-          event.amount
-        )
+    /* =====================================================
+       ぴったりサイコロ
+    ===================================================== */
+
+    function chooseExactNumber() {
+
+      return new Promise(
+        resolve => {
+
+          exactModal.classList.add(
+            "show"
+          );
+
+
+          const buttons =
+            exactModal.querySelectorAll(
+              ".exactButton"
+            );
+
+
+          function choose(event) {
+
+            buttons.forEach(
+              button => {
+
+                button.removeEventListener(
+                  "click",
+                  choose
+                );
+
+              }
+            );
+
+
+            exactModal.classList.remove(
+              "show"
+            );
+
+
+            resolve(
+              Number(
+                event.currentTarget.dataset.value
+              )
+            );
+
+          }
+
+
+          buttons.forEach(
+            button => {
+
+              button.addEventListener(
+                "click",
+                choose
+              );
+
+            }
+          );
+
+        }
       );
 
     }
 
-  }
 
-}
+    /* =====================================================
+       音を変更
+    ===================================================== */
 
+    changeSoundButton.addEventListener(
+      "click",
+      () => {
 
-/* =========================================================
-   イベント用前進
-   発音・特殊マス効果は発動しない
-========================================================= */
-
-async function moveWithoutLanding(
-  playerIndex,
-  steps
-){
-
-  const player =
-    players[
-      playerIndex
-    ];
+        if (moving) {
+          return;
+        }
 
 
-  for(
-    let i = 0;
-    i < steps;
-    i++
-  ){
+        app.style.display =
+          "none";
 
-    const next =
-      await getNextNode(
-        playerIndex
-      );
+        soundScreen.style.display =
+          "flex";
 
-
-    if(!next){
-      break;
-    }
-
-
-    player.node =
-      next;
-
-    player.history.push(
-      next
+      }
     );
 
-
-    renderPieces(
-      playerIndex
-    );
-
-    updateUI();
-
-
-    await sleep(
-      220
-    );
-
-
-    const node =
-      getNode(
-        next
-      );
-
-
-    if(
-      node &&
-      node.type === "goal"
-    ){
-
-      await goal(
-        playerIndex
-      );
-
-      return;
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   GOAL
-========================================================= */
-
-async function goal(
-  playerIndex
-){
-
-  gameEnded = true;
-
-  busy = true;
-
-
-  const player =
-    players[
-      playerIndex
-    ];
-
-
-  await practice();
-
-
-  showInfo(
-    "🎉 GOAL！",
-    player.icon +
-    " " +
-    player.name +
-    "のゴール！<br><br>" +
-    "宇宙の旅クリア！"
-  );
-
-
-  updateUI();
-
-}
-
-
-/* =========================================================
-   ターン終了
-========================================================= */
-
-function finishTurn(){
-
-  if(
-    gameEnded
-  ){
-    return;
-  }
-
-
-  if(
-    extraTurn
-  ){
-
-    extraTurn = false;
-
-    busy = false;
-
-    document.getElementById(
-      "message"
-    ).textContent =
-      "もう1回サイコロをふれるよ！";
-
-    updateUI();
-
-    return;
-
-  }
-
-
-  nextTurn();
-
-}
-
-
-/* =========================================================
-   次のターン
-========================================================= */
-
-function nextTurn(){
-
-  currentPlayer =
-    currentPlayer === 0
-      ? 1
-      : 0;
-
-
-  busy = false;
-
-
-  document.getElementById(
-    "dice"
-  ).textContent =
-    "🎲";
-
-
-  document.getElementById(
-    "message"
-  ).textContent =
-    "サイコロをふってね";
-
-
-  updateUI();
-
-}
-
-
-/* =========================================================
-   分岐
-========================================================= */
-
-function askRoute(){
-
-  return new Promise(
-    resolve => {
-
-      pendingRouteResolve =
-        resolve;
-
-
-      document.getElementById(
-        "routeOverlay"
-      ).style.display =
-        "flex";
-
-    }
-  );
-
-}
-
-
-function selectRoute(
-  route
-){
-
-  document.getElementById(
-    "routeOverlay"
-  ).style.display =
-    "none";
-
-
-  if(
-    pendingRouteResolve
-  ){
-
-    const resolve =
-      pendingRouteResolve;
-
-    pendingRouteResolve =
-      null;
-
-    resolve(
-      route
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   情報
-========================================================= */
-
-function showInfo(
-  title,
-  text,
-  callback = null
-){
-
-  document.getElementById(
-    "infoTitle"
-  ).innerHTML =
-    title;
-
-
-  document.getElementById(
-    "infoText"
-  ).innerHTML =
-    text;
-
-
-  infoCallback =
-    callback;
-
-
-  document.getElementById(
-    "infoOverlay"
-  ).style.display =
-    "flex";
-
-}
-
-
-function closeInfo(){
-
-  document.getElementById(
-    "infoOverlay"
-  ).style.display =
-    "none";
-
-
-  if(
-    infoCallback
-  ){
-
-    const callback =
-      infoCallback;
-
-    infoCallback =
-      null;
-
-    callback();
-
-  }
-
-}
-
-
-function showInfoPromise(
-  title,
-  text
-){
-
-  return new Promise(
-    resolve => {
-
-      showInfo(
-        title,
-        text,
-        resolve
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   待機
-========================================================= */
-
-function sleep(ms){
-
-  return new Promise(
-    resolve =>
-      setTimeout(
-        resolve,
-        ms
-      )
-  );
-
-}
-
-</script>
+  </script>
 
 </body>
 
