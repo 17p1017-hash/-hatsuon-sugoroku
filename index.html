@@ -1,213 +1,521 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>発音すごろく 宇宙版</title>
+<meta charset="UTF-8">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont,
-                   "Hiragino Kaku Gothic ProN", sans-serif;
-      background:
-        radial-gradient(circle at 50% 20%, #183b76, #07142f 55%, #020611);
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
+<title>発音すごろく 宇宙版</title>
 
-    h1 {
-      margin-top: 15px;
-      font-size: 30px;
-    }
+<style>
 
-    #turn {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 20px 0;
-    }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    #board {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      margin: 35px auto;
-      max-width: 600px;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
 
-    .space {
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background: white;
-      color: #10234a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      position: relative;
-    }
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
 
-    .goal {
-      background: #ffd84d;
-    }
+  color: white;
+  text-align: center;
 
-    .piece {
-      position: absolute;
-      font-size: 25px;
-      top: -25px;
-    }
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      #1d4b91,
+      #081a3b 48%,
+      #020712 100%
+    );
 
-    #dice {
-      font-size: 90px;
-      margin: 20px;
-      min-height: 110px;
-    }
+  padding:
+    max(15px, env(safe-area-inset-top))
+    12px
+    max(20px, env(safe-area-inset-bottom));
+}
 
-    button {
-      border: none;
-      border-radius: 18px;
-      padding: 18px 28px;
-      font-size: 22px;
-      font-weight: bold;
-      background: #ffd84d;
-      color: #17213b;
-      margin: 8px;
-      cursor: pointer;
-    }
 
-    #wordScreen {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.88);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
+/* タイトル */
 
-    .wordBox {
-      background: white;
-      color: #17213b;
-      width: 90%;
-      max-width: 450px;
-      padding: 35px 20px;
-      border-radius: 25px;
-    }
+h1 {
+  margin: 5px 0;
+  font-size: 30px;
+}
 
-    #wordEmoji {
-      font-size: 80px;
-    }
+#target {
+  color: #c9dcff;
+  margin-bottom: 12px;
+}
 
-    #word {
-      font-size: 55px;
-      font-weight: bold;
-      margin: 15px 0;
-    }
 
-    .instruction {
-      color: #53627e;
-      font-size: 18px;
-    }
+/* 手番 */
 
-    #message {
-      min-height: 35px;
-      font-size: 18px;
-    }
-  </style>
+#turn {
+  display: inline-block;
+
+  padding: 10px 18px;
+  margin: 8px 0 15px;
+
+  border-radius: 30px;
+
+  background: rgba(255,255,255,.12);
+
+  font-size: 21px;
+  font-weight: bold;
+}
+
+
+/* 盤面 */
+
+#board {
+  width: min(94vw, 620px);
+
+  margin: 0 auto 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 7px;
+}
+
+
+/* マス */
+
+.space {
+
+  aspect-ratio: 1 / 1;
+
+  min-width: 0;
+
+  border-radius: 15px;
+
+  background: white;
+
+  color: #142a52;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: relative;
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+  box-shadow:
+    0 4px 8px rgba(0,0,0,.25);
+}
+
+
+.start {
+  background: #aeeaff;
+}
+
+.goal {
+  background: #ffe36e;
+}
+
+
+/* コマ */
+
+.pieces {
+
+  position: absolute;
+
+  left: 2px;
+  right: 2px;
+  bottom: 1px;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 1px;
+
+  font-size: 23px;
+}
+
+
+/* サイコロ */
+
+#dice {
+
+  height: 80px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 72px;
+}
+
+
+/* ボタン */
+
+button {
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: #ffd84f;
+
+  color: #182442;
+
+  padding: 17px 25px;
+
+  font-size: 21px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  touch-action: manipulation;
+
+  box-shadow:
+    0 5px 0 #c89c16;
+}
+
+
+button:active {
+
+  transform: translateY(3px);
+
+  box-shadow:
+    0 2px 0 #c89c16;
+}
+
+
+button:disabled {
+
+  opacity: .45;
+
+  transform: none;
+}
+
+
+/* メッセージ */
+
+#message {
+
+  min-height: 30px;
+
+  margin-top: 13px;
+
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+
+/* 発音画面 */
+
+#wordScreen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 100;
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(1,6,20,.92);
+}
+
+
+.wordBox {
+
+  width: min(92vw, 480px);
+
+  padding: 30px 20px;
+
+  border-radius: 28px;
+
+  background: white;
+
+  color: #17264a;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.5);
+}
+
+
+#wordEmoji {
+
+  font-size: 80px;
+
+  line-height: 1.2;
+}
+
+
+#word {
+
+  margin: 10px 0;
+
+  font-size:
+    clamp(42px, 13vw, 65px);
+
+  font-weight: 900;
+}
+
+
+.instruction {
+
+  margin: 10px 0 18px;
+
+  color: #5a6884;
+
+  font-size: 19px;
+}
+
+
+/* ゴール画面 */
+
+#goalScreen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 200;
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    radial-gradient(
+      circle,
+      #234d91,
+      #020713
+    );
+}
+
+
+.goalBox {
+
+  font-size: 28px;
+
+  font-weight: bold;
+}
+
+
+.goalEmoji {
+
+  font-size: 100px;
+}
+
+
+/* 小さいiPhone */
+
+@media (max-width: 380px) {
+
+  .space {
+    font-size: 13px;
+  }
+
+  .pieces {
+    font-size: 19px;
+  }
+
+  button {
+    font-size: 19px;
+  }
+}
+
+</style>
 </head>
+
 
 <body>
 
-  <h1>🚀 発音すごろく</h1>
-  <p>宇宙版・動作確認</p>
 
-  <div id="turn">🚀 チャレンジャーのばん</div>
-
-  <div id="board"></div>
-
-  <div id="dice">🎲</div>
-
-  <button id="rollButton">
-    🎲 サイコロをふる
-  </button>
-
-  <div id="message">
-    ボタンを押してスタート！
-  </div>
+<h1>
+  🚀 発音すごろく
+</h1>
 
 
-  <div id="wordScreen">
+<div id="target">
+  単語を読み込み中...
+</div>
 
-    <div class="wordBox">
 
-      <div id="wordEmoji">
-        🍉
-      </div>
+<div id="turn">
+  ゲーム準備中...
+</div>
 
-      <div id="word">
-        すいか
-      </div>
 
-      <div class="instruction">
-        3回 発音しよう
-      </div>
+<div id="board">
+</div>
 
-      <button id="okButton">
-        OK
-      </button>
 
+<div id="dice">
+  🎲
+</div>
+
+
+<button id="rollButton">
+  🎲 サイコロをふる
+</button>
+
+
+<div id="message">
+  サイコロをふってスタート！
+</div>
+
+
+
+<!-- 発音画面 -->
+
+<div id="wordScreen">
+
+  <div class="wordBox">
+
+    <div id="wordEmoji">
+      🌟
     </div>
 
+    <div id="word">
+      ことば
+    </div>
+
+    <div class="instruction">
+      3回 発音しよう
+    </div>
+
+    <button id="okButton">
+      OK
+    </button>
+
   </div>
+
+</div>
+
+
+
+<!-- ゴール -->
+
+<div id="goalScreen">
+
+  <div class="goalBox">
+
+    <div class="goalEmoji">
+      🪐✨
+    </div>
+
+    <div id="winner">
+      ゴール！
+    </div>
+
+    <br>
+
+    <button
+      onclick="location.reload()"
+    >
+      もう一度あそぶ
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!--
+  単語データを先に読み込む
+-->
+
+<script src="./words.js"></script>
 
 
 <script>
 
-const words = [
-  ["すいか","🍉"],
-  ["すず","🔔"],
-  ["すな","🏖️"],
-  ["すずめ","🐦"],
-  ["すもう","🤼"],
-  ["いす","🪑"],
-  ["ナス","🍆"],
-  ["バス","🚌"],
-  ["リス","🐿️"],
-  ["アイス","🍨"]
+/* =========================
+   単語データ
+========================= */
+
+const ALL_WORDS = [
+
+  ...WORD_DATA.start,
+
+  ...WORD_DATA.end,
+
+  ...WORD_DATA.middle
+
 ];
+
+
+/* =========================
+   プレイヤー
+========================= */
 
 const players = [
+
   {
-    name:"チャレンジャー",
-    piece:"🚀",
-    position:0
+    name: "チャレンジャー",
+    piece: "🚀",
+    position: 0
   },
+
   {
-    name:"先生",
-    piece:"🛸",
-    position:0
+    name: "先生",
+    piece: "🛸",
+    position: 0
   }
+
 ];
 
+
 let currentPlayer = 0;
+
+let gameRunning = true;
+
+
+/* =========================
+   HTML取得
+========================= */
 
 const board =
   document.getElementById("board");
 
+const dice =
+  document.getElementById("dice");
+
 const turn =
   document.getElementById("turn");
 
-const dice =
-  document.getElementById("dice");
+const target =
+  document.getElementById("target");
 
 const message =
   document.getElementById("message");
@@ -227,53 +535,143 @@ const wordEmoji =
 const okButton =
   document.getElementById("okButton");
 
+const goalScreen =
+  document.getElementById("goalScreen");
 
-function drawBoard(){
+const winner =
+  document.getElementById("winner");
+
+
+/* =========================
+   初期表示
+========================= */
+
+target.textContent =
+  "練習する音：" +
+  WORD_DATA.target;
+
+
+/* =========================
+   盤面を描く
+========================= */
+
+function drawBoard() {
 
   board.innerHTML = "";
 
-  for(let i=0;i<=10;i++){
+
+  for (
+    let number = 0;
+    number <= 10;
+    number++
+  ) {
 
     const space =
       document.createElement("div");
 
+
     space.className =
-      "space" + (i===10 ? " goal" : "");
+      "space";
 
-    space.textContent =
-      i===0 ? "START" :
-      i===10 ? "GOAL" :
-      i;
 
-    players.forEach(player=>{
+    if (number === 0) {
 
-      if(player.position===i){
+      space.classList.add(
+        "start"
+      );
 
-        const piece =
-          document.createElement("div");
+    }
 
-        piece.className="piece";
 
-        piece.textContent=
-          player.piece;
+    if (number === 10) {
 
-        space.appendChild(piece);
+      space.classList.add(
+        "goal"
+      );
+
+    }
+
+
+    if (number === 0) {
+
+      space.textContent =
+        "START";
+
+    }
+
+    else if (number === 10) {
+
+      space.textContent =
+        "GOAL";
+
+    }
+
+    else {
+
+      space.textContent =
+        number;
+
+    }
+
+
+    const pieceArea =
+      document.createElement("div");
+
+
+    pieceArea.className =
+      "pieces";
+
+
+    players.forEach(
+      function(player) {
+
+        if (
+          player.position === number
+        ) {
+
+          const piece =
+            document.createElement(
+              "span"
+            );
+
+
+          piece.textContent =
+            player.piece;
+
+
+          pieceArea.appendChild(
+            piece
+          );
+
+        }
 
       }
+    );
 
-    });
 
-    board.appendChild(space);
+    space.appendChild(
+      pieceArea
+    );
+
+
+    board.appendChild(
+      space
+    );
 
   }
 
 }
 
 
-function updateTurn(){
+/* =========================
+   手番表示
+========================= */
+
+function updateTurn() {
 
   const player =
     players[currentPlayer];
+
 
   turn.textContent =
     player.piece +
@@ -284,60 +682,122 @@ function updateTurn(){
 }
 
 
-function rollDice(){
+/* =========================
+   サイコロ
+========================= */
 
-  rollButton.disabled = true;
+function rollDice() {
+
+  if (!gameRunning) {
+    return;
+  }
+
+
+  rollButton.disabled =
+    true;
+
 
   const number =
-    Math.floor(Math.random()*6)+1;
+    Math.floor(
+      Math.random() * 6
+    ) + 1;
+
+
+  const diceFaces = [
+
+    "⚀",
+    "⚁",
+    "⚂",
+    "⚃",
+    "⚄",
+    "⚅"
+
+  ];
+
 
   dice.textContent =
-    ["⚀","⚁","⚂","⚃","⚄","⚅"][number-1];
+    diceFaces[number - 1];
+
 
   const player =
     players[currentPlayer];
 
-  player.position += number;
 
-  if(player.position >= 10){
+  player.position +=
+    number;
+
+
+  if (
+    player.position >= 10
+  ) {
 
     player.position = 10;
 
-    drawBoard();
-
-    message.textContent =
-      player.name + " ゴール！ 🎉";
-
-    rollButton.style.display =
-      "none";
-
-    return;
-
   }
+
 
   drawBoard();
 
-  message.textContent =
-    number + "マスすすんだ！";
 
-  setTimeout(showWord,400);
+  message.textContent =
+    number +
+    "マスすすんだ！";
+
+
+  /*
+    ゴールでも発音してから
+    終了する
+  */
+
+  setTimeout(
+    function() {
+
+      showWord();
+
+    },
+    350
+  );
 
 }
 
 
-function showWord(){
+/* =========================
+   発音する単語
+========================= */
+
+function showWord() {
 
   const player =
     players[currentPlayer];
 
+
+  /*
+    今は動作確認版なので
+    止まったマスに応じて
+    単語ファイルから取得
+  */
+
   const index =
-    Math.max(0,player.position-1);
+
+    Math.max(
+      0,
+      player.position - 1
+    )
+
+    % ALL_WORDS.length;
+
+
+  const item =
+    ALL_WORDS[index];
+
 
   word.textContent =
-    words[index][0];
+    item.word;
+
 
   wordEmoji.textContent =
-    words[index][1];
+    item.emoji || "🌟";
+
 
   wordScreen.style.display =
     "flex";
@@ -345,28 +805,101 @@ function showWord(){
 }
 
 
-function finishPronunciation(){
+/* =========================
+   発音確認 OK
+========================= */
+
+function finishPronunciation() {
 
   wordScreen.style.display =
     "none";
 
-  currentPlayer =
-    currentPlayer===0 ? 1 : 0;
+
+  const player =
+    players[currentPlayer];
+
+
+  /*
+    ゴールしていたら終了
+  */
+
+  if (
+    player.position >= 10
+  ) {
+
+    finishGame(
+      player
+    );
+
+    return;
+
+  }
+
+
+  /*
+    相手の番へ
+  */
+
+  if (
+    currentPlayer === 0
+  ) {
+
+    currentPlayer = 1;
+
+  }
+
+  else {
+
+    currentPlayer = 0;
+
+  }
+
 
   updateTurn();
 
-  rollButton.disabled = false;
 
   message.textContent =
     "次の人のばん！";
 
+
+  rollButton.disabled =
+    false;
+
 }
 
+
+/* =========================
+   ゴール
+========================= */
+
+function finishGame(player) {
+
+  gameRunning =
+    false;
+
+
+  winner.textContent =
+    player.piece +
+    " " +
+    player.name +
+    " ゴール！";
+
+
+  goalScreen.style.display =
+    "flex";
+
+}
+
+
+/* =========================
+   ボタン
+========================= */
 
 rollButton.addEventListener(
   "click",
   rollDice
 );
+
 
 okButton.addEventListener(
   "click",
@@ -374,11 +907,16 @@ okButton.addEventListener(
 );
 
 
+/* =========================
+   ゲーム開始
+========================= */
+
 drawBoard();
 
 updateTurn();
 
 </script>
+
 
 </body>
 </html>
