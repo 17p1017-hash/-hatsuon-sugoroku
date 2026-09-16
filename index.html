@@ -78,8 +78,7 @@
       background-position:
         0 0,
         25px 40px,
-        60px 10px,
-        0 0;
+        60px 10px;
 
       opacity: .55;
     }
@@ -92,7 +91,6 @@
     #rotateMessage {
       position: fixed;
       inset: 0;
-
       z-index: 9999;
 
       display: none;
@@ -100,9 +98,7 @@
       justify-content: center;
 
       padding: 30px;
-
       background: #080d27;
-
       text-align: center;
     }
 
@@ -119,11 +115,9 @@
     }
 
     @media (orientation: portrait) {
-
       #rotateMessage {
         display: flex;
       }
-
     }
 
 
@@ -134,7 +128,6 @@
     #soundScreen {
       position: fixed;
       inset: 0;
-
       z-index: 1000;
 
       display: flex;
@@ -146,9 +139,7 @@
 
     .soundPanel {
       width: min(680px, 92vw);
-
       padding: 28px;
-
       border-radius: 28px;
 
       background:
@@ -168,16 +159,13 @@
 
     .soundTitle {
       margin-bottom: 6px;
-
       font-size: clamp(26px, 4vw, 42px);
       font-weight: 1000;
     }
 
     .soundSubtitle {
       margin-bottom: 24px;
-
       opacity: .8;
-
       font-size: 15px;
       font-weight: 700;
     }
@@ -186,7 +174,6 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-
       gap: 14px;
     }
 
@@ -216,20 +203,17 @@
 
     .soundButton:active {
       transform: translateY(5px);
-
-      box-shadow:
-        0 2px 0 #9eb4e3;
+      box-shadow: 0 2px 0 #9eb4e3;
     }
 
 
     /* =====================================================
-       プレイヤー名設定
+       プレイヤー名
     ===================================================== */
 
     #nameScreen {
       position: fixed;
       inset: 0;
-
       z-index: 1100;
 
       display: none;
@@ -241,9 +225,7 @@
 
     .namePanel {
       width: min(600px, 92vw);
-
       padding: 26px;
-
       border-radius: 28px;
 
       background:
@@ -263,38 +245,29 @@
 
     .nameTitle {
       margin-bottom: 6px;
-
       font-size: clamp(24px, 3.5vw, 36px);
       font-weight: 1000;
     }
 
     .nameSubtitle {
       margin-bottom: 18px;
-
       opacity: .8;
-
       font-size: 14px;
       font-weight: 700;
     }
 
     .nameInputs {
       display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
-
       margin-bottom: 20px;
     }
 
     .nameBox {
       padding: 14px;
-
       border-radius: 18px;
 
-      background:
-        rgba(255,255,255,.1);
+      background: rgba(255,255,255,.1);
 
       border:
         1px solid rgba(255,255,255,.14);
@@ -302,13 +275,11 @@
 
     .nameIcon {
       margin-bottom: 5px;
-
       font-size: 38px;
     }
 
     .nameLabel {
       margin-bottom: 7px;
-
       font-size: 13px;
       font-weight: 900;
     }
@@ -320,16 +291,13 @@
         2px solid rgba(255,255,255,.3);
 
       border-radius: 12px;
-
       padding: 10px;
 
       background: white;
-
       color: #17255f;
 
       font-size: 18px;
       font-weight: 900;
-
       text-align: center;
 
       outline: none;
@@ -359,15 +327,12 @@
       font-size: 20px;
       font-weight: 1000;
 
-      box-shadow:
-        0 5px 0 #c67815;
+      box-shadow: 0 5px 0 #c67815;
     }
 
     #startGameButton:active {
       transform: translateY(4px);
-
-      box-shadow:
-        0 1px 0 #c67815;
+      box-shadow: 0 1px 0 #c67815;
     }
 
     #backToSoundButton {
@@ -378,9 +343,7 @@
 
       padding: 8px 14px;
 
-      background:
-        rgba(255,255,255,.12);
-
+      background: rgba(255,255,255,.12);
       color: white;
 
       font-size: 12px;
@@ -389,12 +352,11 @@
 
 
     /* =====================================================
-       アプリ全体
+       アプリ
     ===================================================== */
 
     #app {
       position: relative;
-
       z-index: 2;
 
       display: none;
@@ -405,11 +367,6 @@
       padding: 6px;
     }
 
-
-    /* =====================================================
-       上部
-    ===================================================== */
-
     .topBar {
       height: 44px;
 
@@ -418,7 +375,6 @@
       justify-content: space-between;
 
       gap: 8px;
-
       padding: 0 8px;
 
       background: rgba(8,14,47,.86);
@@ -433,13 +389,11 @@
     .gameTitle {
       font-size: clamp(16px, 2.2vw, 24px);
       font-weight: 1000;
-
       white-space: nowrap;
     }
 
     .targetBadge {
       padding: 6px 12px;
-
       border-radius: 999px;
 
       background: rgba(255,255,255,.16);
@@ -452,21 +406,14 @@
       border: 0;
 
       padding: 7px 12px;
-
       border-radius: 12px;
 
       background: rgba(255,255,255,.15);
-
       color: white;
 
       font-size: 12px;
       font-weight: 900;
     }
-
-
-    /* =====================================================
-       盤面＋右UI
-    ===================================================== */
 
     .gameArea {
       height: calc(100vh - 56px);
@@ -478,7 +425,6 @@
         clamp(190px, 23vw, 255px);
 
       gap: 6px;
-
       margin-top: 6px;
     }
 
@@ -517,7 +463,6 @@
 
     #board {
       position: absolute;
-
       inset: 0;
 
       width: 100%;
@@ -525,11 +470,6 @@
 
       transform: translateY(-4%);
     }
-
-
-    /* =====================================================
-       背景オブジェクト
-    ===================================================== */
 
     .spaceDecoration {
       position: absolute;
@@ -548,46 +488,35 @@
     .earth {
       left: 2%;
       bottom: 1%;
-
       font-size: clamp(35px, 5vw, 68px);
     }
 
     .moon {
       right: 3%;
       bottom: 16%;
-
       font-size: clamp(26px, 4vw, 52px);
     }
 
     .planet1 {
       right: 4%;
       top: 4%;
-
       font-size: clamp(30px, 4.5vw, 60px);
     }
 
     .planet2 {
       left: 25%;
       top: 28%;
-
       font-size: clamp(26px, 4vw, 50px);
     }
 
     .goalPlanet {
       left: 34%;
       top: 36%;
-
       font-size: clamp(34px, 5vw, 68px);
     }
 
-
-    /* =====================================================
-       道
-    ===================================================== */
-
     #linkLayer {
       position: absolute;
-
       inset: 0;
 
       width: 100%;
@@ -602,20 +531,12 @@
 
     .pathLine {
       stroke: rgba(175,209,255,.65);
-
       stroke-width: .75;
-
       stroke-linecap: round;
     }
 
-
-    /* =====================================================
-       マス
-    ===================================================== */
-
     .space {
       position: absolute;
-
       z-index: 3;
 
       width: clamp(27px, 3.45vw, 43px);
@@ -689,7 +610,6 @@
         );
 
       color: #074b22;
-
       font-size: 8px;
     }
 
@@ -776,17 +696,9 @@
       padding: 7px;
     }
 
-
-    /* =====================================================
-       プレイヤー
-    ===================================================== */
-
     .playersBox {
       display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
+      grid-template-columns: 1fr 1fr;
       gap: 5px;
     }
 
@@ -836,11 +748,6 @@
 
       opacity: .8;
     }
-
-
-    /* =====================================================
-       メッセージ
-    ===================================================== */
 
     #messageBox {
       min-height: 48px;
@@ -903,7 +810,6 @@
     }
 
     @keyframes diceRoll {
-
       0% {
         transform:
           rotate(0deg)
@@ -933,7 +839,6 @@
           rotate(360deg)
           scale(1);
       }
-
     }
 
     #rollButton {
@@ -972,9 +877,7 @@
 
     #rollButton:disabled {
       opacity: .45;
-
       cursor: default;
-
       box-shadow: none;
     }
 
@@ -992,9 +895,7 @@
 
     #inventory {
       display: grid;
-
       grid-template-columns: 1fr;
-
       gap: 4px;
     }
 
@@ -1035,7 +936,7 @@
 
 
     /* =====================================================
-       モーダル
+       通常モーダル
     ===================================================== */
 
     .modal {
@@ -1164,11 +1065,6 @@
       font-weight: 1000;
     }
 
-
-    /* =====================================================
-       ぴったりサイコロ
-    ===================================================== */
-
     .exactButtons {
       display: grid;
 
@@ -1193,6 +1089,538 @@
 
       font-size: 25px;
       font-weight: 1000;
+    }
+
+
+    /* =====================================================
+       ★ 新しい全画面演出
+    ===================================================== */
+
+    #effectLayer {
+      position: fixed;
+      inset: 0;
+
+      z-index: 8000;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      background:
+        rgba(1,3,18,.78);
+
+      pointer-events: none;
+    }
+
+    #effectLayer.show {
+      display: flex;
+    }
+
+    .effectCenter {
+      position: relative;
+
+      z-index: 5;
+
+      width: min(760px, 92vw);
+
+      text-align: center;
+    }
+
+    #effectBadge {
+      margin-bottom: 8px;
+
+      font-size:
+        clamp(16px, 2.5vw, 28px);
+
+      font-weight: 1000;
+
+      letter-spacing: .08em;
+
+      text-shadow:
+        0 3px 10px rgba(0,0,0,.8);
+    }
+
+    #effectIcon {
+      display: block;
+
+      font-size:
+        clamp(80px, 16vw, 180px);
+
+      line-height: 1;
+
+      filter:
+        drop-shadow(
+          0 10px 16px rgba(0,0,0,.6)
+        );
+    }
+
+    #effectTitle {
+      margin-top: 12px;
+
+      font-size:
+        clamp(28px, 5vw, 58px);
+
+      font-weight: 1000;
+
+      text-shadow:
+        0 5px 15px rgba(0,0,0,.8);
+    }
+
+    #effectText {
+      margin-top: 8px;
+
+      font-size:
+        clamp(16px, 2.8vw, 30px);
+
+      font-weight: 1000;
+
+      text-shadow:
+        0 3px 10px rgba(0,0,0,.8);
+    }
+
+    .effectPop {
+      animation:
+        effectPop .55s
+        cubic-bezier(.17,.89,.32,1.35)
+        both;
+    }
+
+    @keyframes effectPop {
+      0% {
+        opacity: 0;
+        transform:
+          scale(.15)
+          rotate(-12deg);
+      }
+
+      70% {
+        opacity: 1;
+        transform:
+          scale(1.18)
+          rotate(4deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          scale(1)
+          rotate(0deg);
+      }
+    }
+
+
+    /* 宝箱 */
+
+    .treasureShake {
+      animation:
+        treasureShake .12s
+        linear
+        7;
+    }
+
+    @keyframes treasureShake {
+      0% {
+        transform:
+          translateX(-8px)
+          rotate(-6deg);
+      }
+
+      50% {
+        transform:
+          translateX(8px)
+          rotate(6deg);
+      }
+
+      100% {
+        transform:
+          translateX(-8px)
+          rotate(-6deg);
+      }
+    }
+
+    .treasureOpen {
+      animation:
+        treasureOpen .6s
+        cubic-bezier(.2,.9,.3,1.4)
+        both;
+    }
+
+    @keyframes treasureOpen {
+      0% {
+        transform: scale(.7);
+        filter:
+          brightness(1)
+          drop-shadow(0 0 0 white);
+      }
+
+      50% {
+        transform: scale(1.45);
+        filter:
+          brightness(2.3)
+          drop-shadow(0 0 35px #fff7a8);
+      }
+
+      100% {
+        transform: scale(1);
+        filter:
+          brightness(1.2)
+          drop-shadow(0 0 22px #ffe46b);
+      }
+    }
+
+
+    /* ワームホール */
+
+    .wormhole {
+      animation:
+        wormholeSpin 1.4s
+        cubic-bezier(.3,.8,.3,1)
+        both;
+    }
+
+    @keyframes wormholeSpin {
+      0% {
+        opacity: 0;
+        transform:
+          scale(.15)
+          rotate(0deg);
+      }
+
+      60% {
+        opacity: 1;
+        transform:
+          scale(1.5)
+          rotate(540deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          scale(1)
+          rotate(720deg);
+      }
+    }
+
+
+    /* 隕石 */
+
+    .meteorFall {
+      animation:
+        meteorFall .9s
+        cubic-bezier(.4,0,1,1)
+        both;
+    }
+
+    @keyframes meteorFall {
+      0% {
+        opacity: 0;
+        transform:
+          translate(220px,-220px)
+          rotate(-30deg)
+          scale(.4);
+      }
+
+      65% {
+        opacity: 1;
+        transform:
+          translate(0,0)
+          rotate(20deg)
+          scale(1.35);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          translate(0,0)
+          scale(1);
+      }
+    }
+
+    .screenShake {
+      animation:
+        screenShake .08s
+        linear
+        8;
+    }
+
+    @keyframes screenShake {
+      0% {
+        transform:
+          translate(-6px,3px);
+      }
+
+      25% {
+        transform:
+          translate(7px,-5px);
+      }
+
+      50% {
+        transform:
+          translate(-5px,-3px);
+      }
+
+      75% {
+        transform:
+          translate(6px,5px);
+      }
+
+      100% {
+        transform:
+          translate(0,0);
+      }
+    }
+
+
+    /* スーパースター */
+
+    .superStar {
+      animation:
+        superStar 1s
+        ease-out
+        both;
+    }
+
+    @keyframes superStar {
+      0% {
+        opacity: 0;
+        transform:
+          scale(.1)
+          rotate(-180deg);
+      }
+
+      55% {
+        opacity: 1;
+        transform:
+          scale(1.6)
+          rotate(25deg);
+      }
+
+      100% {
+        transform:
+          scale(1)
+          rotate(0);
+      }
+    }
+
+
+    /* 宇宙のゆらぎ */
+
+    .spaceWobble {
+      animation:
+        spaceWobble 1.2s
+        ease-in-out
+        both;
+    }
+
+    @keyframes spaceWobble {
+      0% {
+        transform:
+          skew(0deg)
+          scale(1);
+      }
+
+      20% {
+        transform:
+          skew(8deg)
+          scale(1.06);
+      }
+
+      40% {
+        transform:
+          skew(-8deg)
+          scale(.97);
+      }
+
+      60% {
+        transform:
+          skew(6deg)
+          scale(1.05);
+      }
+
+      80% {
+        transform:
+          skew(-4deg)
+          scale(.99);
+      }
+
+      100% {
+        transform:
+          skew(0)
+          scale(1);
+      }
+    }
+
+
+    /* バリア */
+
+    .barrierEffect {
+      animation:
+        barrierPulse .9s
+        ease-out
+        both;
+    }
+
+    @keyframes barrierPulse {
+      0% {
+        opacity: 0;
+        transform: scale(.2);
+      }
+
+      45% {
+        opacity: 1;
+        transform: scale(1.5);
+        filter:
+          drop-shadow(
+            0 0 35px #74eaff
+          );
+      }
+
+      100% {
+        transform: scale(1);
+        filter:
+          drop-shadow(
+            0 0 18px #74eaff
+          );
+      }
+    }
+
+
+    /* 入れ替え */
+
+    .swapEffect {
+      animation:
+        swapSpin .9s
+        ease-in-out
+        both;
+    }
+
+    @keyframes swapSpin {
+      0% {
+        transform:
+          rotate(0)
+          scale(.3);
+      }
+
+      60% {
+        transform:
+          rotate(540deg)
+          scale(1.4);
+      }
+
+      100% {
+        transform:
+          rotate(720deg)
+          scale(1);
+      }
+    }
+
+
+    /* ロケット */
+
+    .rocketEffect {
+      animation:
+        rocketLaunch 1s
+        ease-in
+        both;
+    }
+
+    @keyframes rocketLaunch {
+      0% {
+        opacity: 0;
+        transform:
+          translateY(150px)
+          scale(.4);
+      }
+
+      45% {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1.25);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          translateY(-20px)
+          scale(1);
+      }
+    }
+
+
+    /* 攻撃 */
+
+    .attackEffect {
+      animation:
+        attackSpin .8s
+        ease-out
+        both;
+    }
+
+    @keyframes attackSpin {
+      0% {
+        opacity: 0;
+        transform:
+          translateX(-200px)
+          rotate(0)
+          scale(.3);
+      }
+
+      70% {
+        opacity: 1;
+        transform:
+          translateX(20px)
+          rotate(500deg)
+          scale(1.4);
+      }
+
+      100% {
+        transform:
+          translateX(0)
+          rotate(720deg)
+          scale(1);
+      }
+    }
+
+
+    /* キラキラ */
+
+    .sparkle {
+      position: absolute;
+
+      z-index: 3;
+
+      font-size:
+        clamp(20px, 4vw, 46px);
+
+      pointer-events: none;
+
+      animation:
+        sparkleFly 1.1s
+        ease-out
+        both;
+    }
+
+    @keyframes sparkleFly {
+      0% {
+        opacity: 0;
+        transform:
+          scale(.2)
+          rotate(0);
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          scale(1.7)
+          rotate(180deg);
+      }
     }
 
 
@@ -1231,7 +1659,6 @@
 
       .panelBox {
         padding: 5px;
-
         border-radius: 12px;
       }
 
@@ -1255,22 +1682,17 @@
 
       #diceDisplay {
         min-height: 45px;
-
         font-size: 45px;
       }
 
       #rollButton {
-        padding:
-          7px 5px;
-
+        padding: 7px 5px;
         font-size: 15px;
       }
 
       #messageBox {
         min-height: 37px;
-
         padding: 4px;
-
         font-size: 11px;
       }
 
@@ -1279,9 +1701,7 @@
       }
 
       .itemButton {
-        padding:
-          3px 5px;
-
+        padding: 3px 5px;
         font-size: 9px;
       }
 
@@ -1311,52 +1731,48 @@
 
       .nameInput {
         padding: 7px;
-
         font-size: 16px;
       }
 
       #startGameButton {
         padding: 9px;
+        font-size: 17px;
+      }
 
+      #effectIcon {
+        font-size: 82px;
+      }
+
+      #effectTitle {
+        margin-top: 5px;
+        font-size: 30px;
+      }
+
+      #effectText {
+        margin-top: 4px;
         font-size: 17px;
       }
 
     }
 
   </style>
-
 </head>
 
 
 <body>
 
-
-  <!-- =====================================================
-       縦画面メッセージ
-  ====================================================== -->
-
   <div id="rotateMessage">
-
     <div class="rotateBox">
-
       📱 ↻
       <br><br>
-
       よこむきにして
       <br>
       あそんでね！
-
     </div>
-
   </div>
 
 
-  <!-- =====================================================
-       音選択
-  ====================================================== -->
-
   <div id="soundScreen">
-
     <div class="soundPanel">
 
       <div class="soundTitle">
@@ -1370,16 +1786,10 @@
       <div id="soundButtons"></div>
 
     </div>
-
   </div>
 
 
-  <!-- =====================================================
-       プレイヤー名設定
-  ====================================================== -->
-
   <div id="nameScreen">
-
     <div class="namePanel">
 
       <div class="nameTitle">
@@ -1391,7 +1801,6 @@
       </div>
 
       <div class="nameInputs">
-
 
         <div class="nameBox">
 
@@ -1436,9 +1845,7 @@
 
         </div>
 
-
       </div>
-
 
       <button id="startGameButton">
         🚀 ゲームスタート！
@@ -1451,13 +1858,8 @@
       </button>
 
     </div>
-
   </div>
 
-
-  <!-- =====================================================
-       ゲーム
-  ====================================================== -->
 
   <div id="app">
 
@@ -1483,9 +1885,6 @@
 
     <div class="gameArea">
 
-
-      <!-- マップ -->
-
       <div id="boardWrap">
 
         <div class="spaceDecoration earth">
@@ -1508,7 +1907,6 @@
           🌌
         </div>
 
-
         <div id="board">
 
           <svg
@@ -1522,10 +1920,7 @@
       </div>
 
 
-      <!-- 右UI -->
-
       <div class="sidePanel">
-
 
         <div class="panelBox playersBox">
 
@@ -1594,14 +1989,12 @@
         <div class="panelBox dicePanel">
 
           <div id="diceDisplay">
-
             <span
               id="dice1"
               class="diceSingle"
             >
               ⚄
             </span>
-
           </div>
 
           <button id="rollButton">
@@ -1624,7 +2017,6 @@
 
         </div>
 
-
       </div>
 
     </div>
@@ -1632,9 +2024,7 @@
   </div>
 
 
-  <!-- =====================================================
-       発音モーダル
-  ====================================================== -->
+  <!-- 発音 -->
 
   <div
     id="practiceModal"
@@ -1677,9 +2067,7 @@
   </div>
 
 
-  <!-- =====================================================
-       情報モーダル
-  ====================================================== -->
+  <!-- 情報 -->
 
   <div
     id="infoModal"
@@ -1712,9 +2100,7 @@
   </div>
 
 
-  <!-- =====================================================
-       ぴったりサイコロ
-  ====================================================== -->
+  <!-- ぴったり -->
 
   <div
     id="exactModal"
@@ -1729,29 +2115,12 @@
 
       <div class="exactButtons">
 
-        <button class="exactButton" data-value="1">
-          1
-        </button>
-
-        <button class="exactButton" data-value="2">
-          2
-        </button>
-
-        <button class="exactButton" data-value="3">
-          3
-        </button>
-
-        <button class="exactButton" data-value="4">
-          4
-        </button>
-
-        <button class="exactButton" data-value="5">
-          5
-        </button>
-
-        <button class="exactButton" data-value="6">
-          6
-        </button>
+        <button class="exactButton" data-value="1">1</button>
+        <button class="exactButton" data-value="2">2</button>
+        <button class="exactButton" data-value="3">3</button>
+        <button class="exactButton" data-value="4">4</button>
+        <button class="exactButton" data-value="5">5</button>
+        <button class="exactButton" data-value="6">6</button>
 
       </div>
 
@@ -1761,8 +2130,28 @@
 
 
   <!-- =====================================================
-       データ
+       ★ 演出レイヤー
   ====================================================== -->
+
+  <div id="effectLayer">
+
+    <div
+      id="effectCenter"
+      class="effectCenter"
+    >
+
+      <div id="effectBadge"></div>
+
+      <div id="effectIcon"></div>
+
+      <div id="effectTitle"></div>
+
+      <div id="effectText"></div>
+
+    </div>
+
+  </div>
+
 
   <script src="./sounds.js"></script>
   <script src="./map.js"></script>
@@ -1888,7 +2277,6 @@
     const soundButtons =
       document.getElementById("soundButtons");
 
-
     const nameScreen =
       document.getElementById("nameScreen");
 
@@ -1909,7 +2297,6 @@
 
     const playerNameDisplay1 =
       document.getElementById("playerNameDisplay1");
-
 
     const app =
       document.getElementById("app");
@@ -1969,6 +2356,27 @@
       document.getElementById("exactModal");
 
 
+    /* 演出 */
+
+    const effectLayer =
+      document.getElementById("effectLayer");
+
+    const effectCenter =
+      document.getElementById("effectCenter");
+
+    const effectBadge =
+      document.getElementById("effectBadge");
+
+    const effectIcon =
+      document.getElementById("effectIcon");
+
+    const effectTitle =
+      document.getElementById("effectTitle");
+
+    const effectText =
+      document.getElementById("effectText");
+
+
     /* =====================================================
        起動
     ===================================================== */
@@ -1976,9 +2384,7 @@
     document.addEventListener(
       "DOMContentLoaded",
       () => {
-
         createSoundButtons();
-
       }
     );
 
@@ -1990,7 +2396,6 @@
     function createSoundButtons() {
 
       soundButtons.innerHTML = "";
-
 
       if (
         typeof SOUND_LIST === "undefined" ||
@@ -2011,24 +2416,18 @@
           const button =
             document.createElement("button");
 
-
           button.className =
             "soundButton";
-
 
           button.textContent =
             sound.label;
 
-
           button.addEventListener(
             "click",
             () => {
-
               loadSound(sound);
-
             }
           );
-
 
           soundButtons.appendChild(
             button
@@ -2045,37 +2444,28 @@
       currentSound =
         sound;
 
-
       window.WORD_DATA =
         null;
-
 
       const oldScript =
         document.getElementById(
           "wordDataScript"
         );
 
-
       if (oldScript) {
-
         oldScript.remove();
-
       }
-
 
       const script =
         document.createElement("script");
 
-
       script.id =
         "wordDataScript";
-
 
       script.src =
         sound.file +
         "?v=" +
         Date.now();
-
 
       script.onload =
         () => {
@@ -2088,13 +2478,10 @@
             );
 
             return;
-
           }
-
 
           const data =
             window.WORD_DATA;
-
 
           ALL_WORDS = [
 
@@ -2106,7 +2493,6 @@
 
           ];
 
-
           if (
             ALL_WORDS.length === 0
           ) {
@@ -2116,14 +2502,11 @@
             );
 
             return;
-
           }
-
 
           showNameScreen();
 
         };
-
 
       script.onerror =
         () => {
@@ -2135,7 +2518,6 @@
 
         };
 
-
       document.body.appendChild(
         script
       );
@@ -2144,7 +2526,7 @@
 
 
     /* =====================================================
-       プレイヤー名設定
+       名前
     ===================================================== */
 
     function showNameScreen() {
@@ -2171,36 +2553,28 @@
         const name1 =
           playerNameInput1.value.trim();
 
-
         players[0].name =
           name0 ||
           "チャレンジャー";
-
 
         players[1].name =
           name1 ||
           "先生";
 
-
         playerNameInput0.value =
           players[0].name;
-
 
         playerNameInput1.value =
           players[1].name;
 
-
         playerNameDisplay0.textContent =
           players[0].name;
-
 
         playerNameDisplay1.textContent =
           players[1].name;
 
-
         nameScreen.style.display =
           "none";
-
 
         startGame();
 
@@ -2214,7 +2588,6 @@
 
         nameScreen.style.display =
           "none";
-
 
         soundScreen.style.display =
           "flex";
@@ -2240,43 +2613,31 @@
         );
 
         return;
-
       }
-
 
       resetPlayers();
 
-
       currentPlayer = 0;
-
       moving = false;
-
       gameEnded = false;
-
       extraTurn = false;
-
 
       targetBadge.textContent =
         "ターゲット：" +
         window.WORD_DATA.target;
 
-
       soundScreen.style.display =
         "none";
-
 
       nameScreen.style.display =
         "none";
 
-
       app.style.display =
         "block";
-
 
       createBoard();
 
       updateUI();
-
 
       messageBox.textContent =
         players[0].icon +
@@ -2317,7 +2678,7 @@
 
 
     /* =====================================================
-       マップ作成
+       マップ
     ===================================================== */
 
     function getNode(id) {
@@ -2339,10 +2700,8 @@
             element.remove()
         );
 
-
       linkLayer.innerHTML =
         "";
-
 
       MAP_DATA.nodes.forEach(
         node => {
@@ -2350,24 +2709,19 @@
           const space =
             document.createElement("div");
 
-
           space.className =
             "space " +
             (node.type || "normal");
-
 
           space.id =
             "space-" +
             node.id;
 
-
           space.style.left =
             node.x + "%";
 
-
           space.style.top =
             node.y + "%";
-
 
           if (
             node.type === "item"
@@ -2403,26 +2757,21 @@
 
           }
 
-
           const pieces =
             document.createElement(
               "div"
             );
 
-
           pieces.className =
             "pieces";
-
 
           pieces.id =
             "pieces-" +
             node.id;
 
-
           space.appendChild(
             pieces
           );
-
 
           board.appendChild(
             space
@@ -2431,7 +2780,6 @@
         }
       );
 
-
       drawConnections();
 
       renderPieces();
@@ -2439,15 +2787,10 @@
     }
 
 
-    /* =====================================================
-       道
-    ===================================================== */
-
     function drawConnections() {
 
       linkLayer.innerHTML =
         "";
-
 
       MAP_DATA.links.forEach(
         link => {
@@ -2457,29 +2800,23 @@
               link[0]
             );
 
-
           const to =
             getNode(
               link[1]
             );
 
-
           if (
             !from ||
             !to
           ) {
-
             return;
-
           }
-
 
           const line =
             document.createElementNS(
               "http://www.w3.org/2000/svg",
               "line"
             );
-
 
           line.setAttribute(
             "x1",
@@ -2505,7 +2842,6 @@
             "class",
             "pathLine"
           );
-
 
           linkLayer.appendChild(
             line
@@ -2534,7 +2870,6 @@
           }
         );
 
-
       players.forEach(
         player => {
 
@@ -2544,25 +2879,20 @@
               player.node
             );
 
-
           if (!container) {
             return;
           }
-
 
           const piece =
             document.createElement(
               "span"
             );
 
-
           piece.className =
             "piece";
 
-
           piece.textContent =
             player.icon;
-
 
           container.appendChild(
             piece
@@ -2589,12 +2919,10 @@
               index
             );
 
-
           card.classList.toggle(
             "active",
             index === currentPlayer
           );
-
 
           document.getElementById(
             "playerNameDisplay" +
@@ -2602,12 +2930,10 @@
           ).textContent =
             player.name;
 
-
           const node =
             getNode(
               player.node
             );
-
 
           document.getElementById(
             "playerPosition" +
@@ -2624,19 +2950,15 @@
         }
       );
 
-
       const player =
         players[currentPlayer];
-
 
       inventoryTitle.textContent =
         "🎒 " +
         player.name +
         "のアイテム";
 
-
       renderInventory();
-
 
       if (
         !moving &&
@@ -2660,7 +2982,6 @@
             getNode(
               player.node
             );
-
 
           document.getElementById(
             "playerPosition" +
@@ -2689,10 +3010,8 @@
       inventory.innerHTML =
         "";
 
-
       const player =
         players[currentPlayer];
-
 
       if (
         player.items.length === 0
@@ -2703,24 +3022,18 @@
             "div"
           );
 
-
         empty.className =
           "inventoryEmpty";
 
-
         empty.textContent =
           "アイテムなし";
-
 
         inventory.appendChild(
           empty
         );
 
-
         return;
-
       }
-
 
       player.items.forEach(
         (item, index) => {
@@ -2730,21 +3043,17 @@
               "button"
             );
 
-
           button.className =
             "itemButton";
-
 
           button.textContent =
             item.icon +
             " " +
             item.name;
 
-
           button.disabled =
             moving ||
             gameEnded;
-
 
           button.addEventListener(
             "click",
@@ -2754,7 +3063,6 @@
 
             }
           );
-
 
           inventory.appendChild(
             button
@@ -2767,27 +3075,8 @@
 
 
     /* =====================================================
-       サイコロ
+       待機
     ===================================================== */
-
-    function getDiceFace(number) {
-
-      const faces = {
-
-        1: "⚀",
-        2: "⚁",
-        3: "⚂",
-        4: "⚃",
-        5: "⚄",
-        6: "⚅"
-
-      };
-
-
-      return faces[number];
-
-    }
-
 
     function wait(ms) {
 
@@ -2798,6 +3087,505 @@
             ms
           )
       );
+
+    }
+
+
+    /* =====================================================
+       ★ 演出システム
+    ===================================================== */
+
+    function clearEffectClasses() {
+
+      effectCenter.className =
+        "effectCenter";
+
+      effectIcon.className =
+        "";
+
+      effectLayer.classList.remove(
+        "screenShake"
+      );
+
+      effectLayer.classList.remove(
+        "spaceWobble"
+      );
+
+      document
+        .querySelectorAll(".sparkle")
+        .forEach(
+          element =>
+            element.remove()
+        );
+
+    }
+
+
+    function setEffect(
+      badge,
+      icon,
+      title,
+      text
+    ) {
+
+      effectBadge.textContent =
+        badge || "";
+
+      effectIcon.textContent =
+        icon || "";
+
+      effectTitle.textContent =
+        title || "";
+
+      effectText.textContent =
+        text || "";
+
+    }
+
+
+    function openEffect() {
+
+      clearEffectClasses();
+
+      effectLayer.classList.add(
+        "show"
+      );
+
+    }
+
+
+    function closeEffect() {
+
+      effectLayer.classList.remove(
+        "show"
+      );
+
+      clearEffectClasses();
+
+    }
+
+
+    function addSparkles(
+      count = 16
+    ) {
+
+      const symbols =
+        [
+          "✨",
+          "⭐",
+          "💫"
+        ];
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+
+        const sparkle =
+          document.createElement(
+            "div"
+          );
+
+        sparkle.className =
+          "sparkle";
+
+        sparkle.textContent =
+          symbols[
+            Math.floor(
+              Math.random() *
+              symbols.length
+            )
+          ];
+
+        sparkle.style.left =
+          (8 + Math.random() * 84) +
+          "%";
+
+        sparkle.style.top =
+          (8 + Math.random() * 84) +
+          "%";
+
+        sparkle.style.animationDelay =
+          (Math.random() * .35) +
+          "s";
+
+        effectLayer.appendChild(
+          sparkle
+        );
+
+      }
+
+    }
+
+
+    async function playSimpleEffect(
+      badge,
+      icon,
+      title,
+      text,
+      className,
+      duration = 1300,
+      sparkles = false
+    ) {
+
+      openEffect();
+
+      setEffect(
+        badge,
+        icon,
+        title,
+        text
+      );
+
+      effectCenter.classList.add(
+        "effectPop"
+      );
+
+      if (className) {
+
+        effectIcon.classList.add(
+          className
+        );
+
+      }
+
+      if (sparkles) {
+
+        addSparkles(
+          18
+        );
+
+      }
+
+      await wait(
+        duration
+      );
+
+      closeEffect();
+
+      await wait(
+        120
+      );
+
+    }
+
+
+    /* =====================================================
+       ★ 宝箱演出
+    ===================================================== */
+
+    async function playTreasureReveal(
+      icon,
+      itemName
+    ) {
+
+      openEffect();
+
+      setEffect(
+        "🎁 ITEM CHANCE!",
+        "🎁",
+        "アイテムチャンス！",
+        "なにがでるかな？"
+      );
+
+      effectCenter.classList.add(
+        "effectPop"
+      );
+
+      await wait(
+        450
+      );
+
+      effectIcon.className =
+        "treasureShake";
+
+      await wait(
+        850
+      );
+
+      effectIcon.className =
+        "treasureOpen";
+
+      effectTitle.textContent =
+        "パカッ！";
+
+      effectText.textContent =
+        "";
+
+      addSparkles(
+        20
+      );
+
+      await wait(
+        650
+      );
+
+      effectIcon.className =
+        "effectPop";
+
+      effectIcon.textContent =
+        icon;
+
+      effectTitle.textContent =
+        itemName;
+
+      effectText.textContent =
+        "GET！";
+
+      addSparkles(
+        20
+      );
+
+      await wait(
+        1150
+      );
+
+      closeEffect();
+
+      await wait(
+        120
+      );
+
+    }
+
+
+    async function playStealReveal() {
+
+      openEffect();
+
+      setEffect(
+        "🎁 ITEM CHANCE!",
+        "🎁",
+        "アイテムチャンス！",
+        "なにがでるかな？"
+      );
+
+      effectCenter.classList.add(
+        "effectPop"
+      );
+
+      await wait(
+        450
+      );
+
+      effectIcon.className =
+        "treasureShake";
+
+      await wait(
+        800
+      );
+
+      effectIcon.className =
+        "treasureOpen";
+
+      addSparkles(
+        14
+      );
+
+      await wait(
+        550
+      );
+
+      effectIcon.textContent =
+        "😈";
+
+      effectIcon.className =
+        "attackEffect";
+
+      effectTitle.textContent =
+        "よこどり発生！";
+
+      effectText.textContent =
+        "相手のアイテムをねらう！";
+
+      await wait(
+        1200
+      );
+
+      closeEffect();
+
+      await wait(
+        120
+      );
+
+    }
+
+
+    /* =====================================================
+       ★ 宇宙イベント発生演出
+    ===================================================== */
+
+    async function playEventIntro() {
+
+      openEffect();
+
+      setEffect(
+        "🚨 WARNING",
+        "🌠",
+        "宇宙イベント発生！",
+        "なにがおこる！？"
+      );
+
+      effectCenter.classList.add(
+        "effectPop"
+      );
+
+      addSparkles(
+        10
+      );
+
+      await wait(
+        1250
+      );
+
+      closeEffect();
+
+      await wait(
+        180
+      );
+
+    }
+
+
+    async function playEventResult(
+      event
+    ) {
+
+      if (
+        event.type === "wormhole"
+      ) {
+
+        await playSimpleEffect(
+          "SPACE EVENT",
+          "🌀",
+          "ワームホール！",
+          event.text,
+          "wormhole",
+          1650,
+          true
+        );
+
+        return;
+
+      }
+
+
+      if (
+        event.type === "meteor"
+      ) {
+
+        openEffect();
+
+        setEffect(
+          "⚠️ DANGER!",
+          "☄️",
+          "いん石！",
+          event.text
+        );
+
+        effectIcon.classList.add(
+          "meteorFall"
+        );
+
+        await wait(
+          800
+        );
+
+        effectLayer.classList.add(
+          "screenShake"
+        );
+
+        addSparkles(
+          12
+        );
+
+        await wait(
+          900
+        );
+
+        closeEffect();
+
+        await wait(
+          120
+        );
+
+        return;
+
+      }
+
+
+      if (
+        event.type === "star"
+      ) {
+
+        await playSimpleEffect(
+          "LUCKY!",
+          "🌟",
+          "スーパースター！",
+          event.text,
+          "superStar",
+          1600,
+          true
+        );
+
+        return;
+
+      }
+
+
+      if (
+        event.type === "wobble"
+      ) {
+
+        openEffect();
+
+        setEffect(
+          "SPACE EVENT",
+          "🌑",
+          "宇宙のゆらぎ！",
+          event.text
+        );
+
+        effectCenter.classList.add(
+          "effectPop"
+        );
+
+        effectLayer.classList.add(
+          "spaceWobble"
+        );
+
+        await wait(
+          1550
+        );
+
+        closeEffect();
+
+        await wait(
+          120
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       サイコロ
+    ===================================================== */
+
+    function getDiceFace(number) {
+
+      const faces = {
+        1: "⚀",
+        2: "⚁",
+        3: "⚂",
+        4: "⚃",
+        5: "⚄",
+        6: "⚅"
+      };
+
+      return faces[number];
 
     }
 
@@ -2814,12 +3602,10 @@
           </span>
         `;
 
-
       const dice =
         document.getElementById(
           "rollingDice1"
         );
-
 
       const interval =
         setInterval(
@@ -2830,7 +3616,6 @@
                 Math.random() * 6
               ) + 1;
 
-
             dice.textContent =
               getDiceFace(
                 temporary
@@ -2840,38 +3625,31 @@
           80
         );
 
-
       await wait(
         1200
       );
 
-
       clearInterval(
         interval
       );
-
 
       const result =
         Math.floor(
           Math.random() * 6
         ) + 1;
 
-
       dice.classList.remove(
         "diceRolling"
       );
-
 
       dice.textContent =
         getDiceFace(
           result
         );
 
-
       await wait(
         500
       );
-
 
       return result;
 
@@ -2897,18 +3675,15 @@
           </span>
         `;
 
-
       const dice1 =
         document.getElementById(
           "rollingDice1"
         );
 
-
       const dice2 =
         document.getElementById(
           "rollingDice2"
         );
-
 
       const interval =
         setInterval(
@@ -2921,7 +3696,6 @@
                 ) + 1
               );
 
-
             dice2.textContent =
               getDiceFace(
                 Math.floor(
@@ -2933,55 +3707,45 @@
           80
         );
 
-
       await wait(
         1400
       );
 
-
       clearInterval(
         interval
       );
-
 
       const result1 =
         Math.floor(
           Math.random() * 6
         ) + 1;
 
-
       const result2 =
         Math.floor(
           Math.random() * 6
         ) + 1;
 
-
       dice1.classList.remove(
         "diceRolling"
       );
 
-
       dice2.classList.remove(
         "diceRolling"
       );
-
 
       dice1.textContent =
         getDiceFace(
           result1
         );
 
-
       dice2.textContent =
         getDiceFace(
           result2
         );
 
-
       await wait(
         600
       );
-
 
       return [
         result1,
@@ -3003,21 +3767,15 @@
           moving ||
           gameEnded
         ) {
-
           return;
-
         }
 
-
         moving = true;
-
 
         rollButton.disabled =
           true;
 
-
         renderInventory();
-
 
         const player =
           players[currentPlayer];
@@ -3030,10 +3788,8 @@
           player.exact =
             false;
 
-
           const number =
             await chooseExactNumber();
-
 
           diceDisplay.innerHTML =
             `
@@ -3042,17 +3798,14 @@
               </span>
             `;
 
-
           messageBox.textContent =
             "🎯 " +
             number +
             "マスすすむ！";
 
-
           await wait(
             500
           );
-
 
           await moveForward(
             player,
@@ -3060,9 +3813,7 @@
             true
           );
 
-
           return;
-
         }
 
 
@@ -3073,19 +3824,15 @@
           player.double =
             false;
 
-
           messageBox.textContent =
             "🎲🎲 ダブルサイコロ！";
-
 
           const results =
             await animateTwoDice();
 
-
           const total =
             results[0] +
             results[1];
-
 
           messageBox.textContent =
             results[0] +
@@ -3095,11 +3842,9 @@
             total +
             "！";
 
-
           await wait(
             450
           );
-
 
           await moveForward(
             player,
@@ -3107,29 +3852,23 @@
             true
           );
 
-
           return;
-
         }
 
 
         messageBox.textContent =
           "🎲 なにがでるかな？";
 
-
         const roll =
           await animateOneDice();
-
 
         messageBox.textContent =
           roll +
           "がでた！";
 
-
         await wait(
           450
         );
-
 
         await moveForward(
           player,
@@ -3153,13 +3892,9 @@
             item[0] === nodeId
         );
 
-
       if (!link) {
-
         return null;
-
       }
-
 
       return link[1];
 
@@ -3183,32 +3918,24 @@
             player.node
           );
 
-
         if (!next) {
-
           break;
-
         }
-
 
         player.node =
           next;
-
 
         player.history.push(
           next
         );
 
-
         renderPieces();
 
         updatePositionsOnly();
 
-
         await wait(
           300
         );
-
 
         if (
           next === "goal"
@@ -3218,9 +3945,7 @@
             player
           );
 
-
           return;
-
         }
 
       }
@@ -3241,17 +3966,12 @@
         moving =
           false;
 
-
         updateUI();
 
       }
 
     }
 
-
-    /* =====================================================
-       後退
-    ===================================================== */
 
     async function moveBackward(
       player,
@@ -3267,25 +3987,19 @@
         if (
           player.history.length <= 1
         ) {
-
           break;
-
         }
 
-
         player.history.pop();
-
 
         player.node =
           player.history[
             player.history.length - 1
           ];
 
-
         renderPieces();
 
         updatePositionsOnly();
-
 
         await wait(
           300
@@ -3307,25 +4021,19 @@
           player.node
         );
 
-
       await practice();
-
 
       if (
         gameEnded
       ) {
-
         return;
-
       }
-
 
       if (!node) {
 
         finishTurn();
 
         return;
-
       }
 
 
@@ -3354,7 +4062,6 @@
         player.skip =
           true;
 
-
         await showInfo(
           "💤 1回休み",
           player.name +
@@ -3362,7 +4069,6 @@
         );
 
       }
-
 
       finishTurn();
 
@@ -3391,7 +4097,6 @@
         };
 
       }
-
 
       return {
 
@@ -3478,7 +4183,6 @@
 
       };
 
-
       return (
         pictureMap[word] ||
         "🗣️"
@@ -3500,25 +4204,20 @@
               )
             ];
 
-
           const item =
             normalizeWord(
               raw
             );
 
-
           practicePicture.textContent =
             item.image;
-
 
           practiceWord.textContent =
             item.word;
 
-
           practiceModal.classList.add(
             "show"
           );
-
 
           const handler =
             () => {
@@ -3528,16 +4227,13 @@
                 handler
               );
 
-
               practiceModal.classList.remove(
                 "show"
               );
 
-
               resolve();
 
             };
-
 
           practiceOK.addEventListener(
             "click",
@@ -3551,7 +4247,7 @@
 
 
     /* =====================================================
-       アイテム入手
+       ★ アイテム入手
     ===================================================== */
 
     async function itemLanding(player) {
@@ -3560,13 +4256,13 @@
         Math.random() < 0.08
       ) {
 
+        await playStealReveal();
+
         await stealItem(
           player
         );
 
-
         return;
-
       }
 
 
@@ -3578,14 +4274,17 @@
         player.items.length >= 3
       ) {
 
-        await showInfo(
-          "🎒 アイテムいっぱい",
-          "アイテムは3こまで！"
+        await playSimpleEffect(
+          "🎒 INVENTORY",
+          "🎒",
+          "アイテムいっぱい！",
+          "アイテムは3こまで！",
+          "effectPop",
+          1300,
+          false
         );
 
-
         return;
-
       }
 
 
@@ -3594,10 +4293,8 @@
       );
 
 
-      await showInfo(
-        "🎁 アイテムゲット！",
-        item.icon +
-        " " +
+      await playTreasureReveal(
+        item.icon,
         item.name
       );
 
@@ -3613,11 +4310,9 @@
           0
         );
 
-
       let random =
         Math.random() *
         total;
-
 
       for (
         const item of ITEM_POOL
@@ -3625,7 +4320,6 @@
 
         random -=
           item.weight;
-
 
         if (
           random <= 0
@@ -3637,14 +4331,13 @@
 
       }
 
-
       return ITEM_POOL[0];
 
     }
 
 
     /* =====================================================
-       横どり
+       ★ 横どり
     ===================================================== */
 
     async function stealItem(player) {
@@ -3655,7 +4348,6 @@
             ? 1
             : 0
         ];
-
 
       const barrierIndex =
         opponent.items.findIndex(
@@ -3673,16 +4365,18 @@
           1
         );
 
-
-        await showInfo(
-          "🛡️ バリア！",
+        await playSimpleEffect(
+          "BLOCK!",
+          "🛡️",
+          "バリア発動！",
           opponent.name +
-          "のバリアが横どりを防いだ！"
+          "が横どりを防いだ！",
+          "barrierEffect",
+          1500,
+          true
         );
 
-
         return;
-
       }
 
 
@@ -3690,14 +4384,17 @@
         opponent.items.length === 0
       ) {
 
-        await showInfo(
-          "🎁 よこどり！",
-          "でも相手はアイテムを持っていなかった！"
+        await playSimpleEffect(
+          "😈 よこどり",
+          "😵",
+          "ざんねん！",
+          "相手はアイテムを持っていなかった！",
+          "effectPop",
+          1350,
+          false
         );
 
-
         return;
-
       }
 
 
@@ -3705,14 +4402,17 @@
         player.items.length >= 3
       ) {
 
-        await showInfo(
-          "🎁 よこどり！",
-          "でもアイテムがいっぱい！"
+        await playSimpleEffect(
+          "😈 よこどり",
+          "🎒",
+          "アイテムいっぱい！",
+          "これ以上もてない！",
+          "effectPop",
+          1350,
+          false
         );
 
-
         return;
-
       }
 
 
@@ -3722,32 +4422,33 @@
           opponent.items.length
         );
 
-
       const stolen =
         opponent.items.splice(
           index,
           1
         )[0];
 
-
       player.items.push(
         stolen
       );
 
 
-      await showInfo(
-        "🎁 よこどり！",
-        stolen.icon +
-        " " +
+      await playSimpleEffect(
+        "😈 STEAL!",
+        stolen.icon,
+        "よこどり成功！",
         stolen.name +
-        " をゲット！"
+        " をゲット！",
+        "effectPop",
+        1550,
+        true
       );
 
     }
 
 
     /* =====================================================
-       アイテム使用
+       ★ アイテム使用
     ===================================================== */
 
     async function useItem(index) {
@@ -3756,24 +4457,18 @@
         moving ||
         gameEnded
       ) {
-
         return;
-
       }
 
 
       const player =
         players[currentPlayer];
 
-
       const item =
         player.items[index];
 
-
       if (!item) {
-
         return;
-
       }
 
 
@@ -3781,14 +4476,17 @@
         item.id === "barrier"
       ) {
 
-        await showInfo(
-          "🛡️ バリア",
-          "攻撃されたとき自動で使います"
+        await playSimpleEffect(
+          "🛡️ BARRIER",
+          "🛡️",
+          "バリア",
+          "攻撃されたとき自動で発動！",
+          "barrierEffect",
+          1300,
+          false
         );
 
-
         return;
-
       }
 
 
@@ -3797,25 +4495,33 @@
         1
       );
 
-
       moving =
         true;
-
 
       rollButton.disabled =
         true;
 
-
       renderInventory();
 
+
+      /* 3マス */
 
       if (
         item.id === "plus3"
       ) {
 
+        await playSimpleEffect(
+          "ITEM USE!",
+          "🚀",
+          "ロケットブースト！",
+          "3マスすすむ！",
+          "rocketEffect",
+          1250,
+          true
+        );
+
         messageBox.textContent =
           "🚀 3マスすすむ！";
-
 
         await moveForward(
           player,
@@ -3823,80 +4529,101 @@
           true
         );
 
-
         return;
-
       }
 
+
+      /* ダブル */
 
       if (
         item.id === "double"
       ) {
 
+        await playSimpleEffect(
+          "ITEM USE!",
+          "🎲🎲",
+          "ダブルサイコロ！",
+          "次のサイコロが2こになる！",
+          "effectPop",
+          1300,
+          true
+        );
+
         player.double =
           true;
-
 
         moving =
           false;
 
-
         messageBox.textContent =
           "🎲🎲 次はダブルサイコロ！";
 
-
         updateUI();
 
-
         return;
-
       }
 
+
+      /* ぴったり */
 
       if (
         item.id === "exact"
       ) {
 
+        await playSimpleEffect(
+          "ITEM USE!",
+          "🎯",
+          "ぴったりサイコロ！",
+          "好きな目をえらべる！",
+          "effectPop",
+          1300,
+          true
+        );
+
         player.exact =
           true;
-
 
         moving =
           false;
 
-
         messageBox.textContent =
           "🎯 次は好きな目をえらべる！";
 
-
         updateUI();
 
-
         return;
-
       }
 
+
+      /* 入れ替え */
 
       if (
         item.id === "swap"
       ) {
 
-        swapPlayers();
-
-
-        await showInfo(
-          "🔄 いれかえ！",
-          "ふたりの場所が入れ替わった！"
+        await playSimpleEffect(
+          "ITEM USE!",
+          "🔄",
+          "いれかえ！",
+          "ふたりの場所が入れ替わる！",
+          "swapEffect",
+          1400,
+          true
         );
 
+        swapPlayers();
+
+        await wait(
+          350
+        );
 
         finishTurn();
 
-
         return;
-
       }
 
+
+      /* 3マス戻す */
 
       if (
         item.id === "back3"
@@ -3909,13 +4636,22 @@
               : 0
           ];
 
+        await playSimpleEffect(
+          "ATTACK!",
+          "🌀",
+          "スペースアタック！",
+          opponent.name +
+          "を3マスもどす！",
+          "attackEffect",
+          1250,
+          false
+        );
 
         const barrierIndex =
           opponent.items.findIndex(
             item =>
               item.id === "barrier"
           );
-
 
         if (
           barrierIndex >= 0
@@ -3926,11 +4662,15 @@
             1
           );
 
-
-          await showInfo(
-            "🛡️ バリア！",
+          await playSimpleEffect(
+            "BLOCK!",
+            "🛡️",
+            "バリア発動！",
             opponent.name +
-            "のバリアが攻撃を防いだ！"
+            "が攻撃をはじいた！",
+            "barrierEffect",
+            1500,
+            true
           );
 
         }
@@ -3942,7 +4682,6 @@
             opponent.name +
             "が3マスもどる！";
 
-
           await moveBackward(
             opponent,
             3
@@ -3950,42 +4689,45 @@
 
         }
 
-
         finishTurn();
 
-
         return;
-
       }
 
+
+      /* もう1回 */
 
       if (
         item.id === "again"
       ) {
 
+        await playSimpleEffect(
+          "BONUS!",
+          "🎲",
+          "もう1回！",
+          "もう一度サイコロをふれる！",
+          "effectPop",
+          1400,
+          true
+        );
+
         extraTurn =
           true;
-
 
         moving =
           false;
 
-
         messageBox.textContent =
           "🎲 もう1回サイコロをふれる！";
 
-
         updateUI();
 
-
         return;
-
       }
 
 
       moving =
         false;
-
 
       updateUI();
 
@@ -4001,26 +4743,20 @@
       const aNode =
         players[0].node;
 
-
       const aHistory =
         [...players[0].history];
-
 
       players[0].node =
         players[1].node;
 
-
       players[0].history =
         [...players[1].history];
-
 
       players[1].node =
         aNode;
 
-
       players[1].history =
         aHistory;
-
 
       renderPieces();
 
@@ -4030,7 +4766,7 @@
 
 
     /* =====================================================
-       宇宙イベント
+       ★ 宇宙イベント
     ===================================================== */
 
     async function eventLanding() {
@@ -4038,6 +4774,8 @@
       const events = [
 
         {
+          type: "wormhole",
+
           title:
             "🌀 ワームホール！",
 
@@ -4049,6 +4787,8 @@
         },
 
         {
+          type: "meteor",
+
           title:
             "☄️ いん石！",
 
@@ -4060,6 +4800,8 @@
         },
 
         {
+          type: "star",
+
           title:
             "🌟 スーパースター！",
 
@@ -4071,6 +4813,8 @@
         },
 
         {
+          type: "wobble",
+
           title:
             "🌑 宇宙のゆらぎ！",
 
@@ -4084,6 +4828,11 @@
       ];
 
 
+      /* まず「何が起きる？」 */
+
+      await playEventIntro();
+
+
       const event =
         events[
           Math.floor(
@@ -4093,11 +4842,14 @@
         ];
 
 
-      await showInfo(
-        event.title,
-        event.text
+      /* 結果専用演出 */
+
+      await playEventResult(
+        event
       );
 
+
+      /* 実際に移動 */
 
       if (
         event.amount > 0
@@ -4111,6 +4863,12 @@
             player,
             event.amount
           );
+
+          if (
+            gameEnded
+          ) {
+            return;
+          }
 
         }
 
@@ -4152,32 +4910,24 @@
             player.node
           );
 
-
         if (!next) {
-
           break;
-
         }
-
 
         player.node =
           next;
-
 
         player.history.push(
           next
         );
 
-
         renderPieces();
 
         updatePositionsOnly();
 
-
         await wait(
           230
         );
-
 
         if (
           player.node === "goal"
@@ -4187,9 +4937,7 @@
             player
           );
 
-
           return;
-
         }
 
       }
@@ -4206,11 +4954,8 @@
       if (
         gameEnded
       ) {
-
         return;
-
       }
-
 
       moving =
         false;
@@ -4223,17 +4968,13 @@
         extraTurn =
           false;
 
-
         messageBox.textContent =
           players[currentPlayer].name +
           "はもう1回！";
 
-
         updateUI();
 
-
         return;
-
       }
 
 
@@ -4254,28 +4995,22 @@
         player.skip =
           false;
 
-
         const skippedName =
           player.name;
-
 
         currentPlayer =
           currentPlayer === 0
             ? 1
             : 0;
 
-
         messageBox.textContent =
           "💤 " +
           skippedName +
           "は1回休み！";
 
-
         updateUI();
 
-
         return;
-
       }
 
 
@@ -4284,7 +5019,6 @@
         " " +
         player.name +
         "のばん！";
-
 
       updateUI();
 
@@ -4300,29 +5034,28 @@
       gameEnded =
         true;
 
-
       renderPieces();
-
 
       await practice();
 
-
-      await showInfo(
-        "🌌 GOAL！",
+      await playSimpleEffect(
+        "🌌 GOAL!",
+        "🏆",
+        "未知の惑星に到着！",
         player.icon +
         " " +
         player.name +
-        "の勝ち！"
+        "の勝ち！",
+        "superStar",
+        2200,
+        true
       );
-
 
       moving =
         false;
 
-
       rollButton.disabled =
         true;
-
 
       messageBox.textContent =
         "🎉 " +
@@ -4347,15 +5080,12 @@
           infoTitle.textContent =
             title;
 
-
           infoText.textContent =
             text;
-
 
           infoModal.classList.add(
             "show"
           );
-
 
           const handler =
             () => {
@@ -4365,16 +5095,13 @@
                 handler
               );
 
-
               infoModal.classList.remove(
                 "show"
               );
 
-
               resolve();
 
             };
-
 
           infoOK.addEventListener(
             "click",
@@ -4400,12 +5127,10 @@
             "show"
           );
 
-
           const buttons =
             exactModal.querySelectorAll(
               ".exactButton"
             );
-
 
           function choose(event) {
 
@@ -4420,11 +5145,9 @@
               }
             );
 
-
             exactModal.classList.remove(
               "show"
             );
-
 
             resolve(
               Number(
@@ -4433,7 +5156,6 @@
             );
 
           }
-
 
           buttons.forEach(
             button => {
@@ -4463,19 +5185,14 @@
         if (
           moving
         ) {
-
           return;
-
         }
-
 
         app.style.display =
           "none";
 
-
         nameScreen.style.display =
           "none";
-
 
         soundScreen.style.display =
           "flex";
