@@ -2483,15 +2483,13 @@
           const data =
             window.WORD_DATA;
 
-          ALL_WORDS = [
-
-            ...(data.start || []),
-
-            ...(data.end || []),
-
-            ...(data.middle || [])
-
-          ];
+          ALL_WORDS = data.groups
+  ? Object.values(data.groups).flat()
+  : [
+      ...(data.start || []),
+      ...(data.end || []),
+      ...(data.middle || [])
+    ];
 
           if (
             ALL_WORDS.length === 0
