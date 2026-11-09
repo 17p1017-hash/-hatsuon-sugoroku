@@ -4108,7 +4108,9 @@
         node.type === "event"
       ) {
 
-        await eventLanding();
+        await eventLanding(
+          player
+        );
 
       }
 
@@ -4826,7 +4828,7 @@
        ★ 宇宙イベント
     ===================================================== */
 
-    async function eventLanding() {
+    async function eventLanding(player) {
 
       const events = [
 
@@ -4837,7 +4839,7 @@
             "🌀 ワームホール！",
 
           text:
-            "ふたりとも5マスすすむ！",
+            "この人だけ5マスすすむ！",
 
           amount:
             5
@@ -4850,7 +4852,7 @@
             "☄️ いん石！",
 
           text:
-            "ふたりとも3マスもどる！",
+            "この人だけ3マスもどる！",
 
           amount:
             -3
@@ -4863,7 +4865,7 @@
             "🌟 スーパースター！",
 
           text:
-            "ふたりとも2マスすすむ！",
+            "この人だけ2マスすすむ！",
 
           amount:
             2
@@ -4876,7 +4878,7 @@
             "🌑 宇宙のゆらぎ！",
 
           text:
-            "ふたりとも1マスもどる！",
+            "この人だけ1マスもどる！",
 
           amount:
             -1
@@ -4906,46 +4908,12 @@
       );
 
 
-      /* 実際に移動 */
-
-      if (
-        event.amount > 0
-      ) {
-
-        for (
-          const player of players
-        ) {
-
-          await moveWithoutLanding(
-            player,
-            event.amount
-          );
-
-          if (
-            gameEnded
-          ) {
-            return;
-          }
-
-        }
-
-      }
-
-      else {
-
-        for (
-          const player of players
-        ) {
-
-          await moveBackward(
-            player,
-            Math.abs(
-              event.amount
-            )
-          );
-
-        }
-
+      /* イベントマスに止まったプレイヤーのみ移動 */
+      if (event.amount > 0) {
+        await moveWithoutLanding(player, event.amount);
+        if (gameEnded) return;
+      } else {
+        await moveBackward(player, Math.abs(event.amount));
       }
 
     }
