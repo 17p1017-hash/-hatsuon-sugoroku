@@ -6,6 +6,7 @@ const SOUND_LIST = [
   { id: "ki", label: "キ", file: "./words/ki.js" },
   { id: "ke", label: "ケ", file: "./words/ke.js" },
   { id: "chi", label: "チ", file: "./words/chi.js" },
+  { id: "ga", label: "ガ", file: "./words/ga.js" },
   {
     id: "rya-ryu-ryo",
     label: "リャ・リュ・リョ",
